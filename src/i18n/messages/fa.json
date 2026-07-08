@@ -1364,6 +1364,7 @@
         "productNamePlaceholder": "نام محصول را وارد کنید",
         "slug": "نامک",
         "slugPlaceholder": "nike-air-max-black",
+        "slugHelper": "شناسه URL-friendly. در صورت خالی بودن از نام محصول ساخته می‌شود.",
         "shortDescription": "توضیح کوتاه",
         "shortDescriptionPlaceholder": "توضیح کوتاه محصول را بنویسید...",
         "description": "توضیحات"
@@ -1377,6 +1378,7 @@
         "status": "وضعیت",
         "selectStatus": "انتخاب وضعیت",
         "featuredProduct": "محصول ویژه",
+        "featuredHelper": "این محصول در بخش‌های ویژه فروشگاه نمایش داده می‌شود.",
         "selectOption": "انتخاب گزینه",
         "yes": "بله",
         "no": "خیر",
@@ -1395,6 +1397,12 @@
         "discountPlaceholder": "0",
         "sku": "شناسه SKU",
         "skuPlaceholder": "PROD-001",
+        "skuTitle": "کدهای SKU",
+        "skuHelper": "کدهای SKU هنگام ذخیره محصول به‌صورت خودکار ایجاد می‌شوند. برای ساخت چند SKU، ویژگی‌های متغیر (مثل رنگ، سایز) را در بخش زیر اضافه کنید.",
+        "skuVariantHint": "{count} ویژگی انتخاب شده — ترکیب‌های متعدد SKU ایجاد می‌شود.",
+        "skuGenerated": "SKUهای ایجادشده: {codes}",
+        "lowStockThreshold": "آستانه موجودی کم",
+        "lowStockThresholdHelper": "هشدار زمانی که موجودی به این مقدار یا کمتر برسد.",
         "stockQuantity": "تعداد موجودی",
         "stockPlaceholder": "تعداد موجودی را وارد کنید",
         "compareAtPrice": "قیمت قبل از تخفیف",
@@ -1402,22 +1410,30 @@
       },
       "attributes": {
         "title": "ویژگی‌های محصول",
+        "subtitle": "ویژگی‌ها و مقادیر کاتالوگ را انتخاب کنید تا SKUهای متغیر ساخته شوند.",
         "addAttribute": "افزودن ویژگی",
+        "removeAttribute": "حذف ویژگی",
         "attribute": "ویژگی",
         "selectAttribute": "انتخاب ویژگی",
         "value": "مقدار",
-        "selectValue": "انتخاب مقدار"
+        "selectValue": "انتخاب مقدار",
+        "noValues": "مقداری برای این ویژگی در تنظیمات کاتالوگ تعریف نشده است.",
+        "emptyCatalog": "ویژگی کاتالوگی یافت نشد. ابتدا در تنظیمات محصول ویژگی ایجاد کنید.",
+        "valuesRequired": "برای هر ویژگی اضافه‌شده حداقل یک مقدار انتخاب کنید."
       },
       "images": {
         "title": "تصاویر محصول",
         "mainImage": "تصویر اصلی",
         "mainImageDropzone": "برای آپلود تصویر اصلی کلیک کنید",
         "dropzone": "تصاویر را اینجا بکشید و رها کنید، یا برای آپلود کلیک کنید",
-        "mainBadge": "اصلی"
+        "mainBadge": "اصلی",
+        "uploading": "در حال آپلود تصاویر…",
+        "uploadFailed": "آپلود تصویر ناموفق بود. دوباره تلاش کنید."
       },
       "actions": {
         "cancel": "انصراف",
-        "saveProduct": "ذخیره محصول"
+        "saveProduct": "ذخیره محصول",
+        "saveFailed": "ایجاد محصول ناموفق بود"
       }
     }
   },

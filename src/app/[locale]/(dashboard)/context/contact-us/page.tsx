@@ -9,13 +9,14 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { PageHeader } from "@/components/shared/page-elements";
 import { PageTransition } from "@/components/shared/page-transition";
+import { FileDropzone } from "@/components/shared/file-dropzone";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getContextSection, updateContextSection } from "@/services/data.service";
+import { getContextSection, updateContextSection, uploadFile } from "@/services/data.service";
 
 const schema = z.object({
   heading: z.string(),
@@ -25,6 +26,7 @@ const schema = z.object({
   showPhoneField: z.boolean(),
   showSubjectField: z.boolean(),
   showMessageField: z.boolean(),
+  imageUrl: z.string().optional(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -50,6 +52,7 @@ export default function ContactUsPage() {
       showPhoneField: false,
       showSubjectField: true,
       showMessageField: true,
+      imageUrl: "",
     },
   });
 
@@ -67,6 +70,13 @@ export default function ContactUsPage() {
       toast.success(tc("save"));
     },
   });
+
+  const handleImageUpload = async (files: File[]) => {
+    const file = files[0];
+    if (!file) return;
+    const { url } = await uploadFile(file);
+    form.setValue("imageUrl", url);
+  };
 
   const fieldToggles: { key: keyof FormData; label: string }[] = [
     { key: "showNameField", label: "Name" },
@@ -92,6 +102,13 @@ export default function ContactUsPage() {
             <div className="flex flex-col gap-2">
               <Label>Body</Label>
               <Textarea {...form.register("body")} placeholder={t("description")} rows={4} />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label>Section Image</Label>
+              {form.watch("imageUrl") ? (
+                <img src={form.watch("imageUrl")} alt="" className="h-24 w-full rounded-lg object-cover" />
+              ) : null}
+              <FileDropzone onDrop={handleImageUpload} accept={{ "image/*": [] }} label="Upload section image" />
             </div>
 
             <div className="flex flex-col gap-3">

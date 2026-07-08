@@ -1362,6 +1362,7 @@
         "productNamePlaceholder": "Enter product name",
         "slug": "Slug",
         "slugPlaceholder": "nike-air-max-black",
+        "slugHelper": "URL-friendly identifier. Auto-generated from name if left empty.",
         "shortDescription": "Short Description",
         "shortDescriptionPlaceholder": "Write a short product description...",
         "description": "Description"
@@ -1375,6 +1376,7 @@
         "status": "Status",
         "selectStatus": "Select Status",
         "featuredProduct": "Featured Product",
+        "featuredHelper": "Show this product in featured sections on the storefront.",
         "selectOption": "Select Option",
         "yes": "Yes",
         "no": "No",
@@ -1393,6 +1395,12 @@
         "discountPlaceholder": "0",
         "sku": "SKU",
         "skuPlaceholder": "PROD-001",
+        "skuTitle": "SKU codes",
+        "skuHelper": "SKU codes are generated automatically when the product is saved. Add variant attributes (e.g. Color, Size) below to create multiple SKUs.",
+        "skuVariantHint": "{count} attribute(s) selected — multiple SKU combinations will be created.",
+        "skuGenerated": "Generated SKUs: {codes}",
+        "lowStockThreshold": "Low stock threshold",
+        "lowStockThresholdHelper": "Alert when quantity falls at or below this number.",
         "stockQuantity": "Stock Quantity",
         "stockPlaceholder": "Enter stock quantity",
         "compareAtPrice": "Compare at Price",
@@ -1400,22 +1408,30 @@
       },
       "attributes": {
         "title": "Product Attributes",
+        "subtitle": "Select catalog attributes and values to generate SKU variants.",
         "addAttribute": "Add Attribute",
+        "removeAttribute": "Remove attribute",
         "attribute": "Attribute",
         "selectAttribute": "Select Attribute",
         "value": "Value",
-        "selectValue": "Select Value"
+        "selectValue": "Select Value",
+        "noValues": "No values defined for this attribute in catalog settings.",
+        "emptyCatalog": "No catalog attributes found. Create attributes in Product Settings first.",
+        "valuesRequired": "Select at least one value for each added attribute."
       },
       "images": {
         "title": "Product Images",
         "mainImage": "Main Image",
         "mainImageDropzone": "Click to upload main image",
         "dropzone": "Drag & drop images here, or click to upload",
-        "mainBadge": "MAIN"
+        "mainBadge": "MAIN",
+        "uploading": "Uploading images…",
+        "uploadFailed": "Failed to upload image. Please try again."
       },
       "actions": {
         "cancel": "Cancel",
-        "saveProduct": "Save Product"
+        "saveProduct": "Save Product",
+        "saveFailed": "Failed to create product"
       }
     }
   },

@@ -51,6 +51,11 @@ apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 let isRefreshing = false;
 let refreshQueue: Array<(token: string) => void> = [];
 
+type TokenResponse = {
+  access_token: string;
+  refresh_token?: string;
+};
+
 apiClient.interceptors.response.use(
   (response) => response,
   async (error: AxiosError<{ message?: string }>) => {
@@ -83,15 +88,15 @@ apiClient.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const { data } = await axios.post<{ accessToken: string; refreshToken?: string }>(
+        const { data } = await axios.post<TokenResponse>(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/refresh`,
-          { refreshToken },
+          { refresh_token: refreshToken },
         );
-        setTokens(data.accessToken, data.refreshToken);
-        refreshQueue.forEach((cb) => cb(data.accessToken));
+        setTokens(data.access_token, data.refresh_token);
+        refreshQueue.forEach((cb) => cb(data.access_token));
         refreshQueue = [];
         if (originalRequest.headers) {
-          originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
+          originalRequest.headers.Authorization = `Bearer ${data.access_token}`;
         }
         return apiClient(originalRequest);
       } catch {
@@ -105,8 +110,14 @@ apiClient.interceptors.response.use(
       }
     }
 
-    const message =
-      error.response?.data?.message ?? error.message ?? "An unexpected error occurred";
+    const maybeMessage =
+      typeof error.response?.data === "object" &&
+      error.response?.data !== null &&
+      "message" in error.response.data
+        ? String((error.response.data as { message?: unknown }).message ?? "")
+        : "";
+
+    const message = maybeMessage || error.message || "An unexpected error occurred";
     throw new ApiError(message, error.response?.status, error.response?.data);
   },
 );

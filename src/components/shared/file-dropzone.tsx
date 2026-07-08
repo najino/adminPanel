@@ -11,6 +11,7 @@ interface FileDropzoneProps {
   multiple?: boolean;
   label?: string;
   className?: string;
+  disabled?: boolean;
 }
 
 export function FileDropzone({
@@ -19,6 +20,7 @@ export function FileDropzone({
   multiple = false,
   label = "Drop files or click to browse",
   className,
+  disabled = false,
 }: FileDropzoneProps) {
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -31,6 +33,7 @@ export function FileDropzone({
     onDrop: handleDrop,
     accept,
     multiple,
+    disabled,
   });
 
   return (
@@ -39,6 +42,7 @@ export function FileDropzone({
       className={cn(
         "flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-border bg-muted/30 p-8 transition-colors hover:border-primary/50 hover:bg-muted/50",
         isDragActive && "border-primary bg-primary/5",
+        disabled && "pointer-events-none opacity-50",
         className,
       )}
     >

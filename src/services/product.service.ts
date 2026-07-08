@@ -1,0 +1,218 @@
+import { apiClient } from "@/api/client";
+import { IS_MOCK_MODE } from "@/config/mock";
+import { mockCategories, mockProducts } from "@/lib/mock-data";
+import type {
+  AdminBrand,
+  AdminCategory,
+  AdminProductResponse,
+  CatalogAttribute,
+  CatalogAttributeValue,
+  CreateProductPayload,
+  PaginatedData,
+  UploadResponse,
+} from "@/types/api/products";
+
+const USE_MOCK = IS_MOCK_MODE;
+const ADMIN = "/admin";
+
+function delay(ms = 300) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+export const mockBrands: AdminBrand[] = [
+  { id: "brand-1", name: "Apple", slug: "apple", is_active: true },
+  { id: "brand-2", name: "Samsung", slug: "samsung", is_active: true },
+  { id: "brand-3", name: "Nike", slug: "nike", is_active: true },
+  { id: "brand-4", name: "Adidas", slug: "adidas", is_active: true },
+];
+
+export const mockCatalogAttributes: CatalogAttribute[] = [
+  { id: "attr-color", name: "Color", slug: "color", is_active: true, sort_order: 0 },
+  { id: "attr-size", name: "Size", slug: "size", is_active: true, sort_order: 1 },
+  { id: "attr-material", name: "Material", slug: "material", is_active: true, sort_order: 2 },
+];
+
+export const mockCatalogAttributeValues: CatalogAttributeValue[] = [
+  { id: "val-1", attribute_id: "attr-color", value: "Black", is_active: true },
+  { id: "val-2", attribute_id: "attr-color", value: "White", is_active: true },
+  { id: "val-3", attribute_id: "attr-color", value: "Blue", is_active: true },
+  { id: "val-4", attribute_id: "attr-size", value: "S", is_active: true },
+  { id: "val-5", attribute_id: "attr-size", value: "M", is_active: true },
+  { id: "val-6", attribute_id: "attr-size", value: "L", is_active: true },
+  { id: "val-7", attribute_id: "attr-material", value: "Cotton", is_active: true },
+  { id: "val-8", attribute_id: "attr-material", value: "Leather", is_active: true },
+];
+
+function cartesianSkus(
+  attributes: { name: string; values: string[] }[],
+  productId: string,
+): { id: string; code: string; attributes: Record<string, string> }[] {
+  if (!attributes.length) {
+    return [
+      {
+        id: `sku-${productId}-default`,
+        code: `SKU-${productId.slice(-6).toUpperCase()}`,
+        attributes: {},
+      },
+    ];
+  }
+
+  const combos: Record<string, string>[] = [{}];
+  for (const attr of attributes) {
+    const next: Record<string, string>[] = [];
+    for (const combo of combos) {
+      for (const value of attr.values) {
+        next.push({ ...combo, [attr.name]: value });
+      }
+    }
+    combos.splice(0, combos.length, ...next);
+  }
+
+  return combos.map((attrs, i) => {
+    const suffix = Object.values(attrs)
+      .join("-")
+      .replace(/\s+/g, "")
+      .toUpperCase()
+      .slice(0, 12);
+    return {
+      id: `sku-${productId}-${i}`,
+      code: suffix ? `SKU-${suffix}` : `SKU-${productId.slice(-6).toUpperCase()}-${i + 1}`,
+      attributes: attrs,
+    };
+  });
+}
+
+export async function getAdminBrands(): Promise<AdminBrand[]> {
+  if (USE_MOCK) {
+    await delay();
+    return mockBrands.filter((b) => b.is_active !== false);
+  }
+  const { data } = await apiClient.get<PaginatedData<AdminBrand>>(`${ADMIN}/brands`, {
+    params: { per_page: 100, is_active: true },
+  });
+  return data.data;
+}
+
+export async function getAdminCategories(tree = false): Promise<AdminCategory[]> {
+  if (USE_MOCK) {
+    await delay();
+    return mockCategories.map((c) => ({
+      id: c.id,
+      name: c.name,
+      is_active: true,
+    }));
+  }
+  const { data } = await apiClient.get<PaginatedData<AdminCategory>>(`${ADMIN}/categories`, {
+    params: { per_page: 100, is_active: true, tree },
+  });
+  return data.data;
+}
+
+export async function getCatalogAttributes(): Promise<CatalogAttribute[]> {
+  if (USE_MOCK) {
+    await delay();
+    return mockCatalogAttributes.filter((a) => a.is_active !== false);
+  }
+  const { data } = await apiClient.get<PaginatedData<CatalogAttribute>>(
+    `${ADMIN}/product-attributes`,
+    { params: { per_page: 100 } },
+  );
+  return data.data;
+}
+
+export async function getCatalogAttributeValues(
+  attributeId: string,
+): Promise<CatalogAttributeValue[]> {
+  if (USE_MOCK) {
+    await delay(150);
+    return mockCatalogAttributeValues.filter(
+      (v) => v.attribute_id === attributeId && v.is_active !== false,
+    );
+  }
+  const { data } = await apiClient.get<PaginatedData<CatalogAttributeValue>>(
+    `${ADMIN}/product-attribute-values`,
+    { params: { attribute_id: attributeId, per_page: 100 } },
+  );
+  return data.data;
+}
+
+export async function uploadProductImage(file: File): Promise<UploadResponse> {
+  if (USE_MOCK) {
+    await delay(400);
+    return {
+      url: URL.createObjectURL(file),
+      filename: file.name,
+      content_type: file.type,
+      size: file.size,
+    };
+  }
+  const formData = new FormData();
+  formData.append("file", file);
+  const { data } = await apiClient.post<UploadResponse>(`${ADMIN}/uploads`, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return data;
+}
+
+export async function createAdminProduct(
+  payload: CreateProductPayload,
+): Promise<AdminProductResponse> {
+  if (USE_MOCK) {
+    await delay(500);
+    const id = String(Date.now());
+    const skus = cartesianSkus(payload.attributes ?? [], id);
+    const categoryName =
+      mockCategories.find((c) => c.id === payload.category_id)?.name ?? "";
+    const response: AdminProductResponse = {
+      id,
+      name: payload.name,
+      slug: payload.slug,
+      description: payload.description,
+      short_description: payload.short_description,
+      price: payload.price,
+      sale_price: payload.sale_price,
+      brand: payload.brand,
+      category_id: payload.category_id,
+      status: payload.status ?? "draft",
+      is_featured: payload.is_featured,
+      attributes: payload.attributes?.map((a, i) => ({
+        id: `attr-${id}-${i}`,
+        name: a.name,
+        values: a.values,
+      })),
+      images: payload.images?.map((img, i) => ({
+        id: `img-${id}-${i}`,
+        url: img.url,
+        alt_text: img.alt_text,
+        sort_order: img.sort_order ?? i,
+      })),
+      inventory: {
+        quantity: payload.inventory?.quantity ?? 0,
+        low_stock_threshold: payload.inventory?.low_stock_threshold ?? 5,
+        is_low_stock: (payload.inventory?.quantity ?? 0) <= (payload.inventory?.low_stock_threshold ?? 5),
+        is_out_of_stock: (payload.inventory?.quantity ?? 0) === 0,
+      },
+      skus,
+      created_at: new Date().toISOString(),
+    };
+    mockProducts.push({
+      id,
+      name: payload.name,
+      description: payload.description ?? "",
+      sku: skus[0]?.code ?? `SKU-${id.slice(-6)}`,
+      price: payload.price,
+      compareAtPrice: payload.sale_price,
+      category: categoryName,
+      tags: [],
+      brand: payload.brand ?? "",
+      status: payload.status === "active" ? "active" : "inactive",
+      stock: payload.inventory?.quantity ?? 0,
+      images: payload.images?.map((i) => i.url) ?? [],
+      attributes: payload.attributes?.map((a) => ({ key: a.name, values: a.values })) ?? [],
+      variants: skus.length,
+    });
+    return response;
+  }
+  const { data } = await apiClient.post<AdminProductResponse>(`${ADMIN}/products`, payload);
+  return data;
+}

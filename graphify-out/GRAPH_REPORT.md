@@ -1,16 +1,16 @@
-# Graph Report - store-front  (2026-07-07)
+# Graph Report - store-front  (2026-07-08)
 
 ## Corpus Check
-- 140 files · ~75,046 words
+- 144 files · ~102,153 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1019 nodes · 2099 edges · 76 communities (69 shown, 7 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 6 edges (avg confidence: 0.8)
+- 1070 nodes · 2228 edges · 78 communities (72 shown, 6 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 7 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `ca8e0a16`
+- Built from commit: `3fd79926`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -88,39 +88,41 @@
 - [[_COMMUNITY_Community 73|Community 73]]
 - [[_COMMUNITY_Community 74|Community 74]]
 - [[_COMMUNITY_Community 75|Community 75]]
+- [[_COMMUNITY_Community 76|Community 76]]
+- [[_COMMUNITY_Community 77|Community 77]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `cn()` - 111 edges
-2. `Button()` - 39 edges
+1. `cn()` - 113 edges
+2. `Button()` - 40 edges
 3. `delay()` - 39 edges
 4. `PageTransition()` - 33 edges
 5. `PageHeader()` - 29 edges
 6. `Input()` - 26 edges
-7. `Card()` - 21 edges
-8. `CardContent()` - 21 edges
-9. `Label()` - 21 edges
+7. `Label()` - 22 edges
+8. `Card()` - 21 edges
+9. `CardContent()` - 21 edges
 10. `CardHeader()` - 20 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `_generate_intelligent_overrides()` --calls--> `search()`  [INFERRED]
   .cursor/skills/ui-ux-pro-max/scripts/design_system.py → .cursor/skills/ui-ux-pro-max/scripts/core.py
+- `SignUpPage()` --calls--> `useAuth()`  [EXTRACTED]
+  src/app/[locale]/(auth)/signup/page.tsx → src/providers/auth-provider.tsx
+- `CreateProductPage()` --calls--> `cn()`  [INFERRED]
+  src/app/[locale]/(dashboard)/products/create/page.tsx → src/lib/utils.ts
 - `UserDetailPage()` --calls--> `formatDate()`  [INFERRED]
   src/app/[locale]/(dashboard)/users/[id]/page.tsx → src/lib/utils.ts
-- `DropdownMenuCheckboxItem()` --calls--> `cn()`  [EXTRACTED]
-  src/components/ui/dropdown-menu.tsx → src/lib/utils.ts
-- `DropdownMenuRadioItem()` --calls--> `cn()`  [EXTRACTED]
-  src/components/ui/dropdown-menu.tsx → src/lib/utils.ts
-- `DropdownMenuShortcut()` --calls--> `cn()`  [EXTRACTED]
-  src/components/ui/dropdown-menu.tsx → src/lib/utils.ts
+- `AvatarImage()` --calls--> `cn()`  [EXTRACTED]
+  src/components/ui/avatar.tsx → src/lib/utils.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (76 total, 7 thin omitted)
+## Communities (78 total, 6 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.11
-Nodes (34): createCategory(), createCoupon(), createOrder(), createPost(), createPostCategory(), createProduct(), delay(), deleteCategory() (+26 more)
+Cohesion: 0.09
+Nodes (41): ApiListResponse, CONTEXT_SECTION_ENDPOINTS, ContextData, createCategory(), createCoupon(), createOrder(), createPost(), createPostCategory() (+33 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.05
@@ -135,40 +137,40 @@ Cohesion: 0.10
 Nodes (19): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+11 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.06
-Nodes (72): Brand, BrandsPage(), FormData, schema, sections, ProductForm, productSchema, CustomerReviewsPage() (+64 more)
+Cohesion: 0.09
+Nodes (47): Brand, BrandsPage(), FormData, schema, sections, ProductForm, productSchema, CustomerReviewsPage() (+39 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.14
-Nodes (16): cn(), defaultActions, QuickAction, QuickActions(), AlertDialogOverlay(), Avatar(), AvatarFallback(), AvatarImage() (+8 more)
+Cohesion: 0.15
+Nodes (15): CreateProductPage(), cn(), FilterBar(), RichTextEditor(), RichTextEditorProps, AlertDialogOverlay(), CardAction(), CardFooter() (+7 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.14
-Nodes (13): HeaderProps, DropdownMenu(), DropdownMenuCheckboxItem(), DropdownMenuContent(), DropdownMenuItem(), DropdownMenuLabel(), DropdownMenuRadioItem(), DropdownMenuSeparator() (+5 more)
+Cohesion: 0.12
+Nodes (16): HeaderProps, Avatar(), AvatarFallback(), AvatarImage(), DropdownMenu(), DropdownMenuCheckboxItem(), DropdownMenuContent(), DropdownMenuItem() (+8 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.13
 Nodes (14): CHART_PERIODS, CHECKOUT_THEMES, CONTEXT_SECTIONS, COUPON_STATUSES, CUSTOMER_STATUSES, DISCOUNT_TYPES, ORDER_STATUSES, POST_STATUSES (+6 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.18
-Nodes (19): CouponForm, couponSchema, MenuItem, DataTable(), AlertDialog(), AlertDialogAction(), AlertDialogCancel(), AlertDialogContent() (+11 more)
+Cohesion: 0.08
+Nodes (44): CouponForm, couponSchema, Review, DashboardPage(), OrderDetailPage(), UserDetailPage(), InvoicePage(), formatCurrency() (+36 more)
 
 ### Community 9 - "Community 9"
-Cohesion: 0.07
-Nodes (32): apiClient, ApiError, clearTokens(), getAccessToken(), refreshQueue, setTokens(), AuthLayout(), highlights (+24 more)
+Cohesion: 0.11
+Nodes (26): AdminBrand, AdminCategory, AdminProductResponse, AdminProductStatus, CatalogAttribute, CatalogAttributeValue, CreateProductPayload, PaginatedData (+18 more)
 
 ### Community 10 - "Community 10"
-Cohesion: 0.20
-Nodes (7): SheetContent(), SheetDescription(), SheetFooter(), SheetHeader(), SheetOverlay(), SheetTitle(), sheetVariants
+Cohesion: 0.18
+Nodes (8): Sheet(), SheetContent(), SheetDescription(), SheetFooter(), SheetHeader(), SheetOverlay(), SheetTitle(), sheetVariants
 
 ### Community 11 - "Community 11"
-Cohesion: 0.08
-Nodes (30): SalesChart(), mockCategories, mockChartData, mockComments, mockContactMessages, mockCoupons, mockCustomers, mockDashboardStats (+22 more)
+Cohesion: 0.10
+Nodes (26): mockCategories, mockChartData, mockComments, mockContactMessages, mockCoupons, mockCustomers, mockDashboardStats, mockGeneralSettings (+18 more)
 
 ### Community 12 - "Community 12"
 Cohesion: 0.15
-Nodes (11): mockContextSections, mockStoreStyle, ContextStore, getMockContextSection(), getMockStoreStyle(), setMockContextSection(), setMockStoreStyle(), storeStyle (+3 more)
+Nodes (12): mockContextSections, mockStoreStyle, ContextStore, getMockContextSection(), getMockStoreStyle(), setMockContextSection(), setMockStoreStyle(), storeStyle (+4 more)
 
 ### Community 13 - "Community 13"
 Cohesion: 0.25
@@ -193,6 +195,10 @@ Nodes (4): API Endpoint Mapping Matrix, Auth Scheme, Integration Steps, Folder S
 ### Community 19 - "Community 19"
 Cohesion: 0.11
 Nodes (17): `AppLayout`, `AuthLayout`, `DataTable`, `FileDropzone`, `Header`, Layout Components, `PageHeader`, `PageTransition` (+9 more)
+
+### Community 20 - "Community 20"
+Cohesion: 0.28
+Nodes (5): navigationConfig, NavItem, publicRoutes, Breadcrumbs(), navFlat
 
 ### Community 22 - "Community 22"
 Cohesion: 0.25
@@ -235,12 +241,12 @@ Cohesion: 0.40
 Nodes (4): Auth Storage (Client), Environment Variables, Example, OpenAPI Code Generation
 
 ### Community 36 - "Community 36"
-Cohesion: 0.28
-Nodes (5): AppLayout(), Header(), Sidebar(), LoadingSpinner(), Sheet()
+Cohesion: 0.18
+Nodes (10): AppLayout(), Header(), Sidebar(), useAuth(), FormField(), LoadingSpinner(), SignInForm, SignInPage() (+2 more)
 
 ### Community 37 - "Community 37"
-Cohesion: 0.14
-Nodes (12): Locale, routing, inter, vazirmatn, AuthProvider(), QueryProvider(), ThemeProvider(), config (+4 more)
+Cohesion: 0.08
+Nodes (30): apiClient, ApiError, clearTokens(), getAccessToken(), refreshQueue, setTokens(), TokenResponse, AuthLayout() (+22 more)
 
 ### Community 38 - "Community 38"
 Cohesion: 0.29
@@ -331,8 +337,8 @@ Cohesion: 0.33
 Nodes (5): Best Practices, Common Issues, Detailed patterns and worked examples, Responsive Design, When to Use This Skill
 
 ### Community 61 - "Community 61"
-Cohesion: 0.33
-Nodes (6): _detect_page_type(), format_page_override_md(), _generate_intelligent_overrides(), Detect page type from context and search results., Format a page-specific override file with intelligent AI-generated content., Generate intelligent overrides based on page type using layered search.
+Cohesion: 0.20
+Nodes (9): SalesChart(), getChartData(), getDashboardStats(), getOrders(), getProducts(), StatCard(), ChartDataPoint, Order (+1 more)
 
 ### Community 62 - "Community 62"
 Cohesion: 0.33
@@ -350,6 +356,10 @@ Nodes (5): Common Rules for Professional UI, Icons & Visual Elements, Interactio
 Cohesion: 0.40
 Nodes (5): Example Workflow, Step 1: Analyze Requirements, Step 2: Generate Design System (REQUIRED), Step 3: Supplement with Detailed Searches (as needed), Step 4: Stack Guidelines
 
+### Community 66 - "Community 66"
+Cohesion: 0.13
+Nodes (13): authRoutes, Locale, routing, inter, vazirmatn, AuthProvider(), QueryProvider(), ThemeProvider() (+5 more)
+
 ### Community 67 - "Community 67"
 Cohesion: 0.50
 Nodes (4): Common Sticking Points, Pre-Delivery Checklist, Query Strategy, Tips for Better Results
@@ -363,8 +373,8 @@ Cohesion: 0.11
 Nodes (18): Accessibility & Responsive, App shell, Audit — UX Problems Identified, Core shared components, Dashboard redesign, DataTable enhancements, Design Direction, Design tokens (`globals.css`) (+10 more)
 
 ### Community 71 - "Community 71"
-Cohesion: 0.24
-Nodes (6): authRoutes, navigationConfig, NavItem, publicRoutes, Breadcrumbs(), navFlat
+Cohesion: 0.50
+Nodes (3): defaultActions, QuickAction, QuickActions()
 
 ### Community 72 - "Community 72"
 Cohesion: 0.25
@@ -382,24 +392,28 @@ Nodes (5): 1. Built-in variants, 2. Tailwind classes via `className`, 3. Add a n
 Cohesion: 0.50
 Nodes (3): name, private, version
 
+### Community 76 - "Community 76"
+Cohesion: 0.33
+Nodes (6): _detect_page_type(), format_page_override_md(), _generate_intelligent_overrides(), Detect page type from context and search results., Format a page-specific override file with intelligent AI-generated content., Generate intelligent overrides based on page type using layered search.
+
 ## Knowledge Gaps
-- **472 isolated node(s):** `__filename`, `__dirname`, `compat`, `eslintConfig`, `withNextIntl` (+467 more)
+- **486 isolated node(s):** `__filename`, `__dirname`, `compat`, `eslintConfig`, `withNextIntl` (+481 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `cn()` connect `Community 5` to `Community 4`, `Community 36`, `Community 6`, `Community 71`, `Community 8`, `Community 9`, `Community 10`, `Community 13`, `Community 20`, `Community 23`?**
-  _High betweenness centrality (0.033) - this node is a cross-community bridge._
-- **Why does `Button()` connect `Community 4` to `Community 66`, `Community 5`, `Community 6`, `Community 8`, `Community 9`, `Community 13`?**
-  _High betweenness centrality (0.008) - this node is a cross-community bridge._
-- **Why does `shadcn CLI Reference` connect `Community 44` to `Community 47`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
+- **Why does `cn()` connect `Community 5` to `Community 4`, `Community 36`, `Community 6`, `Community 71`, `Community 8`, `Community 10`, `Community 13`, `Community 77`, `Community 20`, `Community 23`, `Community 61`?**
+  _High betweenness centrality (0.049) - this node is a cross-community bridge._
+- **Why does `Button()` connect `Community 8` to `Community 4`, `Community 5`, `Community 37`, `Community 6`, `Community 36`, `Community 13`?**
+  _High betweenness centrality (0.010) - this node is a cross-community bridge._
+- **Why does `shadcn/ui` connect `Community 40` to `Community 47`?**
+  _High betweenness centrality (0.004) - this node is a cross-community bridge._
 - **What connects `Generate full 16-token color row from 4 base colors.`, `Generate ui-reasoning row from products.csv row.`, `BM25 ranking algorithm for text search` to the rest of the system?**
-  _503 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _517 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.11260504201680673 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09191583610188261 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.047619047619047616 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**

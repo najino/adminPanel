@@ -19,6 +19,27 @@ export interface SignUpPayload {
   password: string;
 }
 
+interface TokenResponse {
+  access_token: string;
+  refresh_token?: string;
+}
+
+interface CurrentUserResponse {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+}
+
+function mapCurrentUser(user: CurrentUserResponse): User {
+  return {
+    id: user.id,
+    firstName: user.first_name,
+    lastName: user.last_name,
+    email: user.email,
+  };
+}
+
 export async function signIn(payload: SignInPayload): Promise<AuthResponse> {
   if (USE_MOCK) {
     await delay(500);
@@ -35,28 +56,34 @@ export async function signIn(payload: SignInPayload): Promise<AuthResponse> {
     localStorage.setItem(AUTH_USER_KEY, JSON.stringify(response.user));
     return response;
   }
-  const { data } = await apiClient.post<AuthResponse>("/auth/signin", payload);
-  setTokens(data.accessToken, data.refreshToken);
-  localStorage.setItem(AUTH_USER_KEY, JSON.stringify(data.user));
-  return data;
+  const { data: tokenData } = await apiClient.post<TokenResponse>("/auth/login", {
+    email: payload.email,
+    password: payload.password,
+  });
+  setTokens(tokenData.access_token, tokenData.refresh_token);
+  const { data: userData } = await apiClient.get<CurrentUserResponse>("/auth/me");
+  const response: AuthResponse = {
+    accessToken: tokenData.access_token,
+    refreshToken: tokenData.refresh_token,
+    user: mapCurrentUser(userData),
+  };
+  localStorage.setItem(AUTH_USER_KEY, JSON.stringify(response.user));
+  return response;
 }
 
-export async function signUp(payload: SignUpPayload): Promise<AuthResponse> {
+export async function signUp(_payload: SignUpPayload): Promise<AuthResponse> {
   if (USE_MOCK) {
     await delay(500);
     const response: AuthResponse = {
       accessToken: "mock-access-token",
       refreshToken: "mock-refresh-token",
-      user: { ...mockUser, ...payload, id: "new-user" },
+      user: { ...mockUser, ..._payload, id: "new-user" },
     };
     setTokens(response.accessToken, response.refreshToken);
     localStorage.setItem(AUTH_USER_KEY, JSON.stringify(response.user));
     return response;
   }
-  const { data } = await apiClient.post<AuthResponse>("/auth/signup", payload);
-  setTokens(data.accessToken, data.refreshToken);
-  localStorage.setItem(AUTH_USER_KEY, JSON.stringify(data.user));
-  return data;
+  throw new Error("Signup endpoint is not defined in current OpenAPI.");
 }
 
 export async function resetPassword(email: string): Promise<void> {
@@ -64,7 +91,7 @@ export async function resetPassword(email: string): Promise<void> {
     await delay(500);
     return;
   }
-  await apiClient.post("/auth/reset-password", { email });
+  await apiClient.post("/auth/forgot-password", { email });
 }
 
 export async function signOut(): Promise<void> {
