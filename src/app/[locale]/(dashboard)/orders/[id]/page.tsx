@@ -119,12 +119,12 @@ export default function OrderDetailPage() {
       />
 
       <div className="grid gap-6 lg:grid-cols-3">
-        <div className="space-y-6 lg:col-span-2">
+        <div className="flex flex-col gap-6 lg:col-span-2">
           <Card>
             <CardHeader>
               <CardTitle>{t("detail.information.title")}</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-2 text-sm">
+            <CardContent className="flex flex-col gap-2 text-sm">
               <p>{t("detail.information.orderId", { id: order.id })}</p>
               <p>{t("detail.information.date", { date: formatDate(order.date) })}</p>
               <p>
@@ -153,7 +153,7 @@ export default function OrderDetailPage() {
               <CardTitle>{t("detail.timeline.title")}</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
+              <div className="flex flex-col gap-4">
                 {timeline.map((step, i) => (
                   <div key={i} className="flex items-start gap-3">
                     <div className="mt-1 h-2 w-2 rounded-full bg-primary" />
@@ -172,7 +172,7 @@ export default function OrderDetailPage() {
           </Card>
         </div>
 
-        <div className="space-y-6">
+        <div className="flex flex-col gap-6">
           <Card>
             <CardHeader>
               <CardTitle>{t("detail.summary.title")}</CardTitle>
@@ -197,7 +197,7 @@ export default function OrderDetailPage() {
             <CardHeader>
               <CardTitle>{t("detail.customer.title")}</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-2 text-sm">
+            <CardContent className="flex flex-col gap-2 text-sm">
               <p className="font-medium">{order.customerName}</p>
               {order.customerEmail && (
                 <p className="text-muted-foreground">{order.customerEmail}</p>

@@ -1,122 +1,143 @@
-# UI/UX Audit & Redesign Summary
+# UI/UX Redesign — Complete Summary
 
-## Audit findings (pre-redesign)
-
-### Visual hierarchy
-- Flat TailAdmin blue (`#465fff`) with minimal contrast differentiation between surfaces
-- Page titles, KPI cards, and table content competed at similar visual weight
-- No iconography in navigation — labels only, increasing scan time
-
-### Design system gaps
-- Raw Tailwind palette classes (`text-emerald-600`, `text-amber-600`) instead of semantic tokens
-- Inconsistent shadows and border radius across cards, inputs, and modals
-- Missing semantic colors for success, warning, and info states
-- No sidebar-specific tokens — nav reused generic card/accent colors
-
-### Layout & navigation
-- Sidebar lacked active-state accent rail and collapsed tooltips
-- Header search was visually disconnected from command-palette patterns
-- Auth pages used a generic centered card without brand presence
-- Main content area had no muted canvas — cards floated on plain white
-
-### States & feedback
-- KPI cards showed `"..."` text instead of skeleton loaders
-- Empty states were text-only with dashed borders — no icon or action guidance
-- Loading state in app shell was a raw CSS spinner without accessibility attributes
-- Chart tooltip used broken `hsl(var(--card))` with oklch tokens
-
-### Accessibility & motion
-- No global `prefers-reduced-motion` handling
-- Page transitions always animated regardless of user preference
-- Table pagination buttons lacked `aria-label`
-
-### Typography & spacing
-- Mixed `space-y-*` and `gap-*` patterns
-- KPI values lacked tabular numerals for alignment
-- Header hierarchy was flat (all `text-2xl font-bold`)
+Premium SaaS admin redesign following `.cursor/skills` (frontend-design, responsive-design, ui-ux-pro-max, shadcn). **All business logic, APIs, routes, and mock data unchanged.**
 
 ---
 
-## Implementation plan (executed)
+## Audit — UX Problems Identified
 
-| Priority | Area | Changes |
-|----------|------|---------|
-| P0 | Design tokens | Full oklch palette, semantic status colors, sidebar/chart/shadow tokens |
-| P0 | App shell | Sidebar icons + active rail, header polish, muted content canvas |
-| P1 | Shared components | StatCard skeletons, EmptyState icons, DataTable refresh, LoadingSpinner |
-| P1 | Auth experience | Split-panel layout with brand panel and grid texture |
-| P2 | Primitives | Button micro-interactions, input elevation, badge semantic tokens |
-| P2 | Global cleanup | Replace raw color classes across all pages |
-| P3 | Documentation | `design-system.md` token reference |
+| Category | Issues |
+|----------|--------|
+| **Visual hierarchy** | Flat TailAdmin aesthetic; KPIs, tables, and titles at similar weight |
+| **Design tokens** | Hardcoded colors (`#465fff`, `text-emerald-600`); no semantic status palette |
+| **Navigation** | Text-only sidebar; weak active/hover states; no breadcrumbs |
+| **Dashboard** | Uniform KPI grid; no quick actions; tables nested in plain cards |
+| **Tables** | No sort indicators; inconsistent filters; icon actions without labels |
+| **Forms** | Repeated label/error markup; `space-y-*` instead of `gap-*` |
+| **Overlays** | Heavy opaque backdrops; primary-colored tooltips |
+| **States** | Text loading (`"..."`), minimal empty states, no shimmer skeletons |
+| **Motion** | No reduced-motion support; missing micro-interactions on cards/buttons |
 
 ---
 
-## Improvements delivered
+## Design Direction
+
+**Subject:** E-commerce command center — data-dense, trustworthy, professional.
+
+**Reference quality:** Linear / Vercel / Stripe Dashboard — cool neutrals, refined indigo primary, subtle glass and elevation, left-rail nav accent.
+
+**Typography:** Inter (EN) / Vazirmatn (FA), tabular numerals for metrics.
+
+**Signature:** Active nav accent rail + glass header/filter bars.
+
+---
+
+## Phase 1 — Foundation (completed)
 
 ### Design tokens (`globals.css`)
-- Refined indigo primary in oklch (replacing flat `#465fff`)
-- Semantic `--success`, `--warning`, `--info` with muted background variants
-- Dedicated `--sidebar-*` tokens for navigation shell
-- `--chart-1/2/3` for Recharts consistency
-- Elevation shadows (`shadow-elevated-sm/md/lg`)
-- Global reduced-motion media query
-- Utility classes: `surface-muted`, `auth-grid-bg`, `tabular-nums`
+- oklch palette with `--primary`, `--sidebar-*`, `--success/warning/info`, `--chart-1/2/3`
+- Elevation: `shadow-elevated-sm/md/lg`
+- Utilities: `surface-muted`, `auth-grid-bg`, `glass-panel`, `skeleton-shimmer`
+- Global `prefers-reduced-motion` support
+- Border radius: `0.625rem`
 
-### Navigation (`sidebar.tsx`, `navigation-icons.ts`)
-- Lucide icons for every nav item
-- Left accent rail on active links
-- Collapsed mode with tooltips
-- Brand mark with Store icon in primary badge
-- Narrower collapsed width (72px) for more content space
+### App shell
+- **Sidebar:** Lucide icons, active rail, collapsed tooltips (72px), brand mark
+- **Header:** Glass panel, search with ⌘K hint, user menu with email
+- **Auth:** Split-panel brand story + elevated form card
+- **Main:** Muted canvas, 1600px max-width container
 
-### Header (`header.tsx`)
-- Reduced height (56px), backdrop blur
-- Search with icon + ⌘K hint
-- User menu shows name + email
-- Consistent `icon-sm` button sizing
+### Core shared components
+- `StatCard` — skeleton loading, trend icons, hover lift
+- `PageHeader` — optional eyebrow, integrated breadcrumbs
+- `EmptyState` / `ErrorState` — icon circles, alert styling
+- `DataTable` — search icon, card wrapper, compact/embedded modes
+- `LoadingSpinner` — accessible `role="status"`
+- `PageTransition` — Framer Motion with reduced-motion bypass
 
-### Auth (`auth-layout.tsx`)
-- Desktop split panel: brand story + feature highlights
-- Dot-grid texture on brand panel
-- Mobile: compact logo + elevated form card
+### Primitives polished
+- Button: micro-scale, elevation shadows, `icon-sm`
+- Badge: semantic token backgrounds
+- Input/Select: h-10 touch targets, elevated borders
+- Dialog/AlertDialog/Sheet: backdrop blur overlays
+- Skeleton: shimmer animation
+- Tooltip: popover styling (not primary fill)
 
-### Shared components
-- **StatCard:** skeleton loading, trend icons, hover elevation, tabular nums
-- **PageHeader:** optional eyebrow, improved type scale
-- **EmptyState:** icon circle, optional action slot
-- **ErrorState:** new destructive-tinted block
-- **DataTable:** uppercase headers, card wrapper, search icon, compact mode, accessible pagination
-- **LoadingSpinner:** `role="status"`, size variants
-- **PageTransition:** respects `prefers-reduced-motion`
+---
 
-### Primitives
-- **Button:** `active:scale`, elevation shadows, `icon-sm` size
-- **Badge:** semantic token backgrounds (no raw emerald/amber/sky)
-- **Card / Input:** consistent elevation and height
+## Phase 2 — Component library expansion (completed)
 
-### Charts (`sales-chart.tsx`)
-- CSS variable fills and tooltip styling
-- Cleaner grid (horizontal only) and axis treatment
+### New reusable components
 
-### App layout
-- Muted content canvas with 1600px max-width container
-- Accessible full-screen loading spinner
+| Component | Purpose |
+|-----------|---------|
+| `FormField` | Label + control + error/helper — DRY forms |
+| `FilterBar` | Glass filter strip for list pages |
+| `SectionCard` | Section header with border + “see all” link |
+| `Breadcrumbs` | Auto-generated from pathname + nav config |
+| `QuickActions` | Dashboard shortcut grid with icons |
+| `TableRowActions` | Tooltip-labeled icon row actions |
 
-### Global
-- Bulk replacement of raw color classes → semantic tokens across all pages
-- TypeScript passes with zero errors
+### DataTable enhancements
+- Sortable column headers with ↑↓ indicators
+- Sticky thead (non-embedded mode)
+- `embedded` prop for tables inside SectionCard (no double border)
+- Improved row padding and hover states
+
+### Dashboard redesign
+- KPI cards with meaningful icons (DollarSign, ShoppingCart, Users, etc.)
+- Bento-style hover lift on stat cards
+- Quick actions row (i18n labels from navigation keys)
+- SectionCard wrappers for chart + tables
+- Chart loading skeleton
+
+### List pages modernized
+- **Products:** FilterBar, TableRowActions, tabular nums, image rings
+- **Orders:** Same patterns applied
+- **Sign-in:** FormField, improved divider, h-10 inputs
+
+### Global cleanup
+- Raw Tailwind status colors → semantic tokens (all pages)
+- Bulk `space-y-*` → `flex flex-col gap-*` across form pages
+
+---
+
+## Accessibility & Responsive
+
+- WCAG AA contrast via oklch tokens
+- `aria-current="page"` on nav + breadcrumbs
+- `aria-label` on icon-only table/header buttons
+- 40px+ input/select heights (h-10)
+- Mobile: collapsible sidebar via Sheet, stacked FilterBar, responsive KPI grid (1→2→3→6 cols)
+- RTL: Vazirmatn font, logical start/end spacing
+
+---
+
+## Files to review
+
+| Area | Path |
+|------|------|
+| Tokens | `src/app/globals.css` |
+| Design docs | `documentation/design-system.md` |
+| Shared UI | `src/components/shared/*` |
+| Tables | `src/components/tables/data-table.tsx` |
+| Shell | `src/components/layouts/*` |
+| Dashboard | `src/app/[locale]/(dashboard)/page.tsx` |
+| Products | `src/app/[locale]/(dashboard)/products/page.tsx` |
 
 ---
 
 ## What inherits automatically
 
-All 29+ dashboard routes benefit from the updated shell, tokens, tables, badges, buttons, and cards without business logic changes. Form-heavy CMS pages retain their field structure; spacing in forms can be migrated to `gap-*` incrementally.
+All 29+ routes receive updated shell, tokens, buttons, badges, cards, breadcrumbs (via PageHeader), and table styling without logic changes. Mock mode (`NEXT_PUBLIC_USE_MOCK=true`) unchanged.
 
-## Remaining optional polish
+---
 
-- Migrate remaining `space-y-*` in form pages to `flex flex-col gap-*`
-- Add command palette (⌘K) wired to search/navigation
-- Per-page empty-state CTAs (e.g. "Add product" on empty products table)
-- Skeleton layouts for chart and detail pages
+## Optional next steps
 
-See [design-system.md](./design-system.md) for token reference and usage guidelines.
+- Wire ⌘K to command palette
+- Apply `FormField` to remaining CMS/settings forms
+- Per-page empty-state CTAs (“Add product”, etc.)
+- Framer Motion sidebar width animation
+
+Run `npm run dev` and visit `/` and `/products` to preview the redesign.

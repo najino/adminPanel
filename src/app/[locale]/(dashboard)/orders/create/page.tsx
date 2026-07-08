@@ -53,16 +53,16 @@ export default function CreateOrderPage() {
           <CardTitle>{t("addButton")}</CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="space-y-4">
+          <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="flex flex-col gap-4">
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="space-y-2">
+              <div className="flex flex-col gap-2">
                 <Label>{t("table.columns.customer")}</Label>
                 <Input placeholder="Customer name" {...register("customerName")} />
                 {errors.customerName && (
                   <p className="text-sm text-destructive">{errors.customerName.message}</p>
                 )}
               </div>
-              <div className="space-y-2">
+              <div className="flex flex-col gap-2">
                 <Label>{tCommon("table.products")}</Label>
                 <Input placeholder="Product IDs (comma-separated)" {...register("productIds")} />
                 {errors.productIds && (

@@ -3,9 +3,11 @@
 /.pnp
 .pnp.*
 .yarn/*
+graphify-out/
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
+graphify-out
 !.yarn/versions
 
 # testing

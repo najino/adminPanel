@@ -120,13 +120,13 @@ export default function CreateProductPage() {
     <PageTransition>
       <PageHeader title={t("addProductTitle")} />
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
         <Card>
           <CardHeader>
             <CardTitle>{t("form.information.title")}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2 sm:col-span-2">
+            <div className="flex flex-col gap-2 sm:col-span-2">
               <Label>{t("form.information.productName")}</Label>
               <Input
                 placeholder={t("form.information.productNamePlaceholder")}
@@ -134,18 +134,18 @@ export default function CreateProductPage() {
               />
               {errors.name && <p className="text-sm text-destructive">{errors.name.message}</p>}
             </div>
-            <div className="space-y-2 sm:col-span-2">
+            <div className="flex flex-col gap-2 sm:col-span-2">
               <Label>{t("form.information.description")}</Label>
               <Textarea rows={4} {...register("description")} />
               {errors.description && (
                 <p className="text-sm text-destructive">{errors.description.message}</p>
               )}
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("form.pricing.sku")}</Label>
               <Input placeholder={t("form.pricing.skuPlaceholder")} {...register("sku")} />
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("form.organization.brand")}</Label>
               <Input {...register("brand")} />
             </div>
@@ -157,19 +157,19 @@ export default function CreateProductPage() {
             <CardTitle>{t("form.pricing.title")}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("form.pricing.price")}</Label>
               <Input type="number" step="0.01" {...register("price")} />
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("form.pricing.compareAtPrice")}</Label>
               <Input type="number" step="0.01" {...register("compareAtPrice")} />
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("form.pricing.cost")}</Label>
               <Input type="number" step="0.01" {...register("cost")} />
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("form.pricing.stockQuantity")}</Label>
               <Input type="number" {...register("stock")} />
             </div>
@@ -181,7 +181,7 @@ export default function CreateProductPage() {
             <CardTitle>{t("form.organization.title")}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("form.organization.category")}</Label>
               <Select onValueChange={(v) => setValue("category", v)}>
                 <SelectTrigger className="w-full">
@@ -196,7 +196,7 @@ export default function CreateProductPage() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("form.organization.status")}</Label>
               <Select value={status} onValueChange={(v) => setValue("status", v as ProductForm["status"])}>
                 <SelectTrigger className="w-full">
@@ -210,7 +210,7 @@ export default function CreateProductPage() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="space-y-2 sm:col-span-2">
+            <div className="flex flex-col gap-2 sm:col-span-2">
               <Label>Tags</Label>
               <Input placeholder="apple, laptop" {...register("tags")} />
             </div>
@@ -230,7 +230,7 @@ export default function CreateProductPage() {
               {t("form.attributes.addAttribute")}
             </Button>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="flex flex-col gap-3">
             {fields.map((field, index) => (
               <div key={field.id} className="flex items-end gap-3">
                 <div className="flex-1 space-y-2">

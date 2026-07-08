@@ -97,26 +97,26 @@ export default function SeoSettingsPage() {
         }
       />
 
-      <form onSubmit={form.handleSubmit((v) => mutation.mutate(v))} className="space-y-6">
+      <form onSubmit={form.handleSubmit((v) => mutation.mutate(v))} className="flex flex-col gap-6">
         <Card>
           <CardHeader>
             <CardTitle>{t("general.title")}</CardTitle>
             <CardDescription>{t("general.description")}</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("general.siteTitle")}</Label>
               <Input {...form.register("siteTitle")} placeholder={t("general.siteTitlePlaceholder")} />
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("general.metaDescription")}</Label>
               <Textarea {...form.register("metaDescription")} placeholder={t("general.metaDescriptionPlaceholder")} />
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("general.metaKeywords")}</Label>
               <Input {...form.register("metaKeywords")} placeholder={t("general.metaKeywordsPlaceholder")} />
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("general.canonicalUrl")}</Label>
               <Input {...form.register("canonicalUrl")} placeholder={t("general.canonicalUrlPlaceholder")} />
             </div>
@@ -129,15 +129,15 @@ export default function SeoSettingsPage() {
             <CardDescription>{t("openGraph.description")}</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("openGraph.ogTitle")}</Label>
               <Input {...form.register("ogTitle")} placeholder={t("openGraph.ogTitlePlaceholder")} />
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("openGraph.ogImageUrl")}</Label>
               <Input {...form.register("ogImageUrl")} placeholder={t("openGraph.ogImagePlaceholder")} />
             </div>
-            <div className="space-y-2 sm:col-span-2">
+            <div className="flex flex-col gap-2 sm:col-span-2">
               <Label>{t("openGraph.ogDescription")}</Label>
               <Textarea {...form.register("ogDescription")} placeholder={t("openGraph.ogDescriptionPlaceholder")} />
             </div>
@@ -150,15 +150,15 @@ export default function SeoSettingsPage() {
             <CardDescription>{t("analytics.description")}</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("analytics.gaId")}</Label>
               <Input {...form.register("googleAnalyticsId")} placeholder={t("analytics.gaIdPlaceholder")} />
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("analytics.gtmId")}</Label>
               <Input {...form.register("gtmId")} placeholder={t("analytics.gtmIdPlaceholder")} />
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("analytics.fbPixel")}</Label>
               <Input {...form.register("facebookPixelId")} placeholder={t("analytics.fbPixelPlaceholder")} />
             </div>
@@ -170,11 +170,11 @@ export default function SeoSettingsPage() {
             <CardTitle>{t("performance.hreflang")}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>hreflang EN</Label>
               <Input {...form.register("hreflangEn")} placeholder="https://example.com/en" />
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>hreflang FA</Label>
               <Input {...form.register("hreflangFa")} placeholder="https://example.com/fa" />
             </div>
@@ -186,15 +186,15 @@ export default function SeoSettingsPage() {
             <CardTitle>{t("schema.title")}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-3">
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>JSON-LD</Label>
               <FileDropzone onDrop={(f) => handleFileUpload("jsonLdFile", f)} accept={{ "application/json": [".json"] }} label="Upload JSON-LD" />
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("sitemap.title")}</Label>
               <FileDropzone onDrop={(f) => handleFileUpload("sitemapFile", f)} accept={{ "application/xml": [".xml"] }} label="Upload Sitemap" />
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("robots.title")}</Label>
               <FileDropzone onDrop={(f) => handleFileUpload("robotsFile", f)} accept={{ "text/plain": [".txt"] }} label="Upload robots.txt" />
             </div>

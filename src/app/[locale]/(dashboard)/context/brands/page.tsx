@@ -134,8 +134,8 @@ export default function BrandsPage() {
             <DialogTitle>{editing?.title ? tc("edit") : t("addBrand")}</DialogTitle>
           </DialogHeader>
           {editing && (
-            <div className="space-y-4">
-              <div className="space-y-2">
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
                 <Label>{t("brandTitle")}</Label>
                 <Input
                   value={editing.title}
@@ -143,7 +143,7 @@ export default function BrandsPage() {
                   placeholder={t("brandTitlePlaceholder")}
                 />
               </div>
-              <div className="space-y-2">
+              <div className="flex flex-col gap-2">
                 <Label>{t("brandDescription")}</Label>
                 <Textarea
                   value={editing.description}
@@ -151,7 +151,7 @@ export default function BrandsPage() {
                   placeholder={t("brandDescriptionPlaceholder")}
                 />
               </div>
-              <div className="space-y-2">
+              <div className="flex flex-col gap-2">
                 <Label>{t("images")}</Label>
                 {editing.logo && (
                   <img src={editing.logo} alt="" className="mb-2 h-16 rounded object-contain" />

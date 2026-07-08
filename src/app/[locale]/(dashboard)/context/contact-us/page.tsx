@@ -84,17 +84,17 @@ export default function ContactUsPage() {
           <CardHeader>
             <CardTitle>{t("title")}</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="space-y-2">
+          <CardContent className="flex flex-col gap-6">
+            <div className="flex flex-col gap-2">
               <Label>Section Heading</Label>
               <Input {...form.register("heading")} placeholder={t("title")} />
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>Body</Label>
               <Textarea {...form.register("body")} placeholder={t("description")} rows={4} />
             </div>
 
-            <div className="space-y-3">
+            <div className="flex flex-col gap-3">
               <p className="font-medium">Form Field Configuration</p>
               {fieldToggles.map(({ key, label }) => (
                 <div key={key} className="flex items-center justify-between rounded-lg border border-border p-3">

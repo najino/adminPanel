@@ -5,9 +5,11 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { ColumnDef } from "@tanstack/react-table";
-import { Eye } from "lucide-react";
+import { Eye, Search } from "lucide-react";
 import { PageTransition } from "@/components/shared/page-transition";
 import { PageHeader, StatusBadge } from "@/components/shared/page-elements";
+import { FilterBar } from "@/components/shared/filter-bar";
+import { TableRowActions } from "@/components/shared/table-row-actions";
 import { DataTable } from "@/components/tables/data-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -43,7 +45,10 @@ export default function OrdersPage() {
       accessorKey: "id",
       header: t("table.columns.orderId"),
       cell: ({ row }) => (
-        <Link href={`/orders/${row.original.id}`} className="font-medium text-primary hover:underline">
+        <Link
+          href={`/orders/${row.original.id}`}
+          className="font-medium text-primary hover:underline"
+        >
           {row.original.id}
         </Link>
       ),
@@ -55,17 +60,23 @@ export default function OrdersPage() {
     {
       accessorKey: "products",
       header: tCommon("table.products"),
-      cell: ({ row }) => row.original.products.join(", "),
+      cell: ({ row }) => (
+        <span className="max-w-[200px] truncate">{row.original.products.join(", ")}</span>
+      ),
     },
     {
       accessorKey: "date",
       header: t("table.columns.date"),
-      cell: ({ row }) => formatDate(row.original.date),
+      cell: ({ row }) => (
+        <span className="tabular-nums text-muted-foreground">{formatDate(row.original.date)}</span>
+      ),
     },
     {
       accessorKey: "amount",
       header: t("table.columns.total"),
-      cell: ({ row }) => formatCurrency(row.original.amount),
+      cell: ({ row }) => (
+        <span className="tabular-nums font-medium">{formatCurrency(row.original.amount)}</span>
+      ),
     },
     {
       accessorKey: "status",
@@ -76,11 +87,15 @@ export default function OrdersPage() {
       id: "actions",
       header: t("table.columns.actions"),
       cell: ({ row }) => (
-        <Button variant="ghost" size="sm" asChild>
-          <Link href={`/orders/${row.original.id}`}>
-            <Eye className="h-4 w-4" />
-          </Link>
-        </Button>
+        <TableRowActions
+          actions={[
+            {
+              label: tCommon("view"),
+              icon: Eye,
+              href: `/orders/${row.original.id}`,
+            },
+          ]}
+        />
       ),
     },
   ];
@@ -96,15 +111,22 @@ export default function OrdersPage() {
         }
       />
 
-      <div className="mb-4 flex flex-wrap gap-3">
-        <Input
-          placeholder={t("filters.searchPlaceholder")}
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="max-w-xs"
-        />
+      <FilterBar>
+        <div className="relative min-w-[200px] flex-1 sm:max-w-xs">
+          <Search
+            className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+            aria-hidden
+          />
+          <Input
+            placeholder={t("filters.searchPlaceholder")}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="h-10 ps-9"
+            aria-label={t("filters.searchPlaceholder")}
+          />
+        </div>
         <Select value={status} onValueChange={setStatus}>
-          <SelectTrigger className="w-44">
+          <SelectTrigger className="h-10 w-full sm:w-44">
             <SelectValue placeholder={t("filters.allStatus")} />
           </SelectTrigger>
           <SelectContent>
@@ -116,7 +138,7 @@ export default function OrdersPage() {
             <SelectItem value="cancelled">{t("filters.status.cancelled")}</SelectItem>
           </SelectContent>
         </Select>
-      </div>
+      </FilterBar>
 
       <DataTable
         columns={columns}

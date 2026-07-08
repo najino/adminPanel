@@ -118,8 +118,8 @@ export default function NavigationPage() {
             <DialogTitle>{editing?.label ? tc("edit") : t("addMenuItem")}</DialogTitle>
           </DialogHeader>
           {editing && (
-            <div className="space-y-4">
-              <div className="space-y-2">
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
                 <Label>{t("label")}</Label>
                 <Input
                   value={editing.label}
@@ -127,7 +127,7 @@ export default function NavigationPage() {
                   placeholder={t("labelPlaceholder")}
                 />
               </div>
-              <div className="space-y-2">
+              <div className="flex flex-col gap-2">
                 <Label>{t("href")}</Label>
                 <Input
                   value={editing.url}
@@ -135,7 +135,7 @@ export default function NavigationPage() {
                   placeholder={t("hrefPlaceholder")}
                 />
               </div>
-              <div className="space-y-2">
+              <div className="flex flex-col gap-2">
                 <Label>Order</Label>
                 <Input
                   type="number"

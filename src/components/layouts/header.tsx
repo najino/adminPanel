@@ -48,7 +48,7 @@ export function Header({ onToggleSidebar }: HeaderProps) {
     : "AD";
 
   return (
-    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-3 border-b border-border bg-background/80 px-4 backdrop-blur-md supports-[backdrop-filter]:bg-background/60 lg:px-6">
+    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-3 border-b border-border/80 glass-panel px-4 lg:px-6">
       <Button
         variant="ghost"
         size="icon-sm"

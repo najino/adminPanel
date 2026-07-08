@@ -44,8 +44,8 @@ export default function ResetPasswordPage() {
   return (
     <AuthLayout title={t("resetPassword.title")} subtitle={t("resetPassword.subtitle")}>
       <PageTransition>
-        <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="space-y-4">
-          <div className="space-y-2">
+        <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
             <Label htmlFor="email">{t("email")}</Label>
             <Input
               id="email"

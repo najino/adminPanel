@@ -99,7 +99,7 @@ export default function ContactPage() {
             <DialogTitle>{t("modal.title")}</DialogTitle>
           </DialogHeader>
           {selected && (
-            <div className="space-y-4">
+            <div className="flex flex-col gap-4">
               <div className="grid gap-2 text-sm">
                 <p><strong>{t("modal.fields.name")}:</strong> {selected.name}</p>
                 <p><strong>{t("modal.fields.email")}:</strong> {selected.email}</p>
@@ -112,8 +112,8 @@ export default function ContactPage() {
                 <CardHeader>
                   <CardTitle className="text-base">Reply</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="space-y-2">
+                <CardContent className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-2">
                     <Label>Reply message</Label>
                     <Textarea value={reply} onChange={(e) => setReply(e.target.value)} rows={4} />
                   </div>

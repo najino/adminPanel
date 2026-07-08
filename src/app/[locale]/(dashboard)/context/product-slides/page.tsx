@@ -90,16 +90,16 @@ export default function ProductSlidesPage() {
               <CardHeader>
                 <CardTitle>{tabLabels[tab]}</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="flex flex-col gap-4">
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="space-y-2">
+                  <div className="flex flex-col gap-2">
                     <Label>{t("sectionTitle")}</Label>
                     <Input
                       value={slides[tab].title}
                       onChange={(e) => updateSlide(tab, "title", e.target.value)}
                     />
                   </div>
-                  <div className="space-y-2">
+                  <div className="flex flex-col gap-2">
                     <Label>{t("autoplayInterval")}</Label>
                     <Input
                       type="number"
@@ -109,7 +109,7 @@ export default function ProductSlidesPage() {
                   </div>
                 </div>
 
-                <div className="space-y-2">
+                <div className="flex flex-col gap-2">
                   <Label>{t("products")}</Label>
                   <div className="flex gap-2">
                     <Input
@@ -124,7 +124,7 @@ export default function ProductSlidesPage() {
                   {slides[tab].productIds.length === 0 ? (
                     <p className="text-sm text-muted-foreground">{t("noProducts")}</p>
                   ) : (
-                    <ul className="space-y-1">
+                    <ul className="flex flex-col gap-1">
                       {slides[tab].productIds.map((id, i) => (
                         <li key={i} className="rounded-md border border-border px-3 py-2 text-sm">
                           {id}

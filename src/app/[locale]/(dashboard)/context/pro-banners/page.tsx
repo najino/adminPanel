@@ -71,7 +71,7 @@ export default function ProBannersPage() {
       {banners.length === 0 ? (
         <EmptyState title="No banners yet" description={t("description")} />
       ) : (
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           {banners.map((banner, index) => (
             <Card key={banner.id}>
               <CardHeader className="flex flex-row items-center justify-between">
@@ -82,8 +82,8 @@ export default function ProBannersPage() {
                   <Trash2 className="h-4 w-4 text-destructive" />
                 </Button>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
+              <CardContent className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
                   <Label>{t("link")}</Label>
                   <Input
                     value={banner.link}
@@ -92,7 +92,7 @@ export default function ProBannersPage() {
                   />
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="space-y-2">
+                  <div className="flex flex-col gap-2">
                     <Label>{t("desktopImage")}</Label>
                     <FileDropzone
                       onDrop={(files) => handleUpload(banner.id, "desktopImage", files)}
@@ -100,7 +100,7 @@ export default function ProBannersPage() {
                       label={t("uploadDesktop")}
                     />
                   </div>
-                  <div className="space-y-2">
+                  <div className="flex flex-col gap-2">
                     <Label>{t("mobileImage")}</Label>
                     <FileDropzone
                       onDrop={(files) => handleUpload(banner.id, "mobileImage", files)}

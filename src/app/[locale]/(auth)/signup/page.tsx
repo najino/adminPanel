@@ -53,7 +53,7 @@ export default function SignUpPage() {
   return (
     <AuthLayout title={t("signUp.title")} subtitle={t("signUp.subtitle")}>
       <PageTransition>
-        <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="space-y-4">
+        <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="flex flex-col gap-4">
           <div className="grid grid-cols-2 gap-3">
             <Button type="button" variant="outline" className="w-full">
               {t("signUp.withGoogle")}
@@ -69,7 +69,7 @@ export default function SignUpPage() {
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label htmlFor="firstName">{t("firstName")}</Label>
               <Input
                 id="firstName"
@@ -80,7 +80,7 @@ export default function SignUpPage() {
                 <p className="text-sm text-destructive">{errors.firstName.message}</p>
               )}
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label htmlFor="lastName">{t("lastName")}</Label>
               <Input
                 id="lastName"
@@ -93,7 +93,7 @@ export default function SignUpPage() {
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <Label htmlFor="email">{t("email")}</Label>
             <Input
               id="email"
@@ -106,7 +106,7 @@ export default function SignUpPage() {
             )}
           </div>
 
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <Label htmlFor="password">{t("password")}</Label>
             <Input
               id="password"

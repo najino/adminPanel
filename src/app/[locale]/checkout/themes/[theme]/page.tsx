@@ -94,7 +94,7 @@ export default async function CheckoutThemePreviewPage({
             ))}
           </div>
 
-          <div className="space-y-2 py-4 text-sm">
+          <div className="flex flex-col gap-2 py-4 text-sm">
             <div className="flex justify-between" style={{ color: theme.muted }}>
               <span>Subtotal</span>
               <span>$153.00</span>
@@ -117,7 +117,7 @@ export default async function CheckoutThemePreviewPage({
               <CreditCard className="h-4 w-4" style={{ color: theme.accent }} />
               Payment Details
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <div className="h-9 rounded-md" style={{ backgroundColor: theme.bg, border: `1px solid ${theme.border}` }} />
               <div className="grid grid-cols-2 gap-2">
                 <div className="h-9 rounded-md" style={{ backgroundColor: theme.bg, border: `1px solid ${theme.border}` }} />

@@ -5,10 +5,12 @@ import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { ColumnDef } from "@tanstack/react-table";
-import { Eye, Pencil, Trash2 } from "lucide-react";
+import { Eye, Pencil, Search, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { PageTransition } from "@/components/shared/page-transition";
 import { PageHeader, StatusBadge } from "@/components/shared/page-elements";
+import { FilterBar } from "@/components/shared/filter-bar";
+import { TableRowActions } from "@/components/shared/table-row-actions";
 import { DataTable } from "@/components/tables/data-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -78,11 +80,11 @@ export default function ProductsPage() {
             <img
               src={row.original.images[0]}
               alt={row.original.name}
-              className="h-10 w-10 rounded-lg object-cover"
+              className="size-10 rounded-lg object-cover ring-1 ring-border"
             />
           )}
-          <div>
-            <p className="font-medium">{row.original.name}</p>
+          <div className="min-w-0">
+            <p className="truncate font-medium">{row.original.name}</p>
             <p className="text-xs text-muted-foreground">{row.original.sku}</p>
           </div>
         </div>
@@ -95,7 +97,9 @@ export default function ProductsPage() {
     {
       accessorKey: "price",
       header: t("table.columns.price"),
-      cell: ({ row }) => formatCurrency(row.original.price),
+      cell: ({ row }) => (
+        <span className="tabular-nums font-medium">{formatCurrency(row.original.price)}</span>
+      ),
     },
     {
       accessorKey: "status",
@@ -105,30 +109,32 @@ export default function ProductsPage() {
     {
       accessorKey: "stock",
       header: t("table.columns.stock"),
+      cell: ({ row }) => <span className="tabular-nums">{row.original.stock}</span>,
     },
     {
       id: "actions",
       header: t("table.columns.actions"),
       cell: ({ row }) => (
-        <div className="flex items-center gap-1">
-          <Button variant="ghost" size="sm" asChild>
-            <Link href={`/products/${row.original.id}`}>
-              <Eye className="h-4 w-4" />
-            </Link>
-          </Button>
-          <Button variant="ghost" size="sm" asChild>
-            <Link href={`/products/${row.original.id}/edit`}>
-              <Pencil className="h-4 w-4" />
-            </Link>
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setDeleteId(row.original.id)}
-          >
-            <Trash2 className="h-4 w-4 text-destructive" />
-          </Button>
-        </div>
+        <TableRowActions
+          actions={[
+            {
+              label: tCommon("view"),
+              icon: Eye,
+              href: `/products/${row.original.id}`,
+            },
+            {
+              label: tCommon("edit"),
+              icon: Pencil,
+              href: `/products/${row.original.id}/edit`,
+            },
+            {
+              label: tCommon("delete"),
+              icon: Trash2,
+              variant: "destructive",
+              onClick: () => setDeleteId(row.original.id),
+            },
+          ]}
+        />
       ),
     },
   ];
@@ -144,15 +150,22 @@ export default function ProductsPage() {
         }
       />
 
-      <div className="mb-4 flex flex-wrap gap-3">
-        <Input
-          placeholder={t("filters.searchPlaceholder")}
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="max-w-xs"
-        />
+      <FilterBar>
+        <div className="relative min-w-[200px] flex-1 sm:max-w-xs">
+          <Search
+            className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+            aria-hidden
+          />
+          <Input
+            placeholder={t("filters.searchPlaceholder")}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="h-10 ps-9"
+            aria-label={t("filters.searchPlaceholder")}
+          />
+        </div>
         <Select value={category} onValueChange={setCategory}>
-          <SelectTrigger className="w-40">
+          <SelectTrigger className="h-10 w-full sm:w-44">
             <SelectValue placeholder={t("filters.allCategories")} />
           </SelectTrigger>
           <SelectContent>
@@ -165,7 +178,7 @@ export default function ProductsPage() {
           </SelectContent>
         </Select>
         <Select value={status} onValueChange={setStatus}>
-          <SelectTrigger className="w-40">
+          <SelectTrigger className="h-10 w-full sm:w-44">
             <SelectValue placeholder={t("filters.allStatus")} />
           </SelectTrigger>
           <SelectContent>
@@ -175,7 +188,7 @@ export default function ProductsPage() {
             <SelectItem value="outOfStock">{tCommon("status.outOfStock")}</SelectItem>
           </SelectContent>
         </Select>
-      </div>
+      </FilterBar>
 
       <DataTable
         columns={columns}

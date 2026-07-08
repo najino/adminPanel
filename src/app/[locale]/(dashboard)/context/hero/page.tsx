@@ -81,27 +81,27 @@ export default function HeroSettingsPage() {
           <CardHeader>
             <CardTitle>{t("title")}</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="flex flex-col gap-6">
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="space-y-2">
+              <div className="flex flex-col gap-2">
                 <Label>{t("buttonName")}</Label>
                 <Input {...form.register("headline")} placeholder={t("buttonNamePlaceholder")} />
               </div>
-              <div className="space-y-2">
+              <div className="flex flex-col gap-2">
                 <Label>{t("button2")}</Label>
                 <Input {...form.register("subtitle")} placeholder={t("buttonNamePlaceholder")} />
               </div>
-              <div className="space-y-2">
+              <div className="flex flex-col gap-2">
                 <Label>{t("buttonName")}</Label>
                 <Input {...form.register("ctaText")} placeholder={t("buttonNamePlaceholder")} />
               </div>
-              <div className="space-y-2">
+              <div className="flex flex-col gap-2">
                 <Label>{t("buttonLink")}</Label>
                 <Input {...form.register("ctaLink")} placeholder={t("buttonLinkPlaceholder")} />
               </div>
             </div>
 
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("uploadVideo")}</Label>
               {form.watch("backgroundImage") && (
                 <img

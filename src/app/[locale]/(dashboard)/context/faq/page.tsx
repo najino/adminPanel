@@ -65,7 +65,7 @@ export default function FaqPage() {
         }
       />
 
-      <div className="space-y-3">
+      <div className="flex flex-col gap-3">
         {items.map((item, index) => (
           <Card key={item.id}>
             <button
@@ -93,8 +93,8 @@ export default function FaqPage() {
               </div>
             </button>
             {openId === item.id && (
-              <CardContent className="space-y-4 border-t border-border pt-4">
-                <div className="space-y-2">
+              <CardContent className="flex flex-col gap-4 border-t border-border pt-4">
+                <div className="flex flex-col gap-2">
                   <Label>{t("question")}</Label>
                   <Input
                     value={item.question}
@@ -102,7 +102,7 @@ export default function FaqPage() {
                     placeholder={t("questionPlaceholder")}
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="flex flex-col gap-2">
                   <Label>{t("answer")}</Label>
                   <Textarea
                     value={item.answer}

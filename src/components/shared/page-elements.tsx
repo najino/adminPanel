@@ -1,7 +1,8 @@
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { TrendingDown, TrendingUp, Inbox } from "lucide-react";
+import { TrendingDown, TrendingUp, Inbox, type LucideIcon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 
 const statusVariants: Record<
   string,
@@ -40,12 +41,14 @@ export function StatCard({
   value,
   trend,
   isLoading,
+  icon: Icon,
   className,
 }: {
   title: string;
   value: string;
   trend?: number;
   isLoading?: boolean;
+  icon?: LucideIcon;
   className?: string;
 }) {
   const isPositive = trend !== undefined && trend >= 0;
@@ -53,18 +56,26 @@ export function StatCard({
   return (
     <div
       className={cn(
-        "group relative flex flex-col gap-2 overflow-hidden rounded-xl border border-border bg-card p-4 shadow-elevated-sm transition-shadow duration-200 hover:shadow-elevated-md motion-reduce:transition-none lg:p-5",
+        "group relative flex flex-col gap-3 overflow-hidden rounded-xl border border-border/80 bg-card p-4 shadow-elevated-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/20 hover:shadow-elevated-md motion-reduce:transition-none motion-reduce:hover:translate-y-0 lg:p-5",
         className,
       )}
     >
-      <div className="absolute inset-y-0 start-0 w-0.5 bg-primary/0 transition-colors duration-200 group-hover:bg-primary/40 motion-reduce:transition-none" />
-      <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-        {title}
-      </p>
+      <div className="flex items-start justify-between gap-2">
+        <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+          {title}
+        </p>
+        {Icon && (
+          <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+            <Icon className="size-4" aria-hidden />
+          </div>
+        )}
+      </div>
       {isLoading ? (
-        <Skeleton className="h-8 w-24" />
+        <Skeleton className="h-8 w-28" />
       ) : (
-        <p className="text-2xl font-semibold tracking-tight tabular-nums">{value}</p>
+        <p className="text-2xl font-semibold tracking-tight tabular-nums lg:text-[1.75rem]">
+          {value}
+        </p>
       )}
       {trend !== undefined && !isLoading && (
         <div
@@ -93,22 +104,29 @@ export function PageHeader({
   description,
   action,
   eyebrow,
+  showBreadcrumbs = true,
 }: {
   title: string;
   description?: string;
   action?: React.ReactNode;
   eyebrow?: string;
+  showBreadcrumbs?: boolean;
 }) {
   return (
-    <header className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-      <div className="flex flex-col gap-1">
-        {eyebrow && (
-          <p className="text-xs font-medium tracking-wider text-primary uppercase">{eyebrow}</p>
-        )}
-        <h1 className="text-2xl font-semibold tracking-tight lg:text-3xl">{title}</h1>
-        {description && <p className="max-w-2xl text-sm text-muted-foreground">{description}</p>}
+    <header className="mb-8 flex flex-col gap-4">
+      {showBreadcrumbs && <Breadcrumbs className="mb-0" />}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="flex flex-col gap-1.5">
+          {eyebrow && (
+            <p className="text-xs font-medium tracking-wider text-primary uppercase">{eyebrow}</p>
+          )}
+          <h1 className="text-2xl font-semibold tracking-tight lg:text-3xl">{title}</h1>
+          {description && (
+            <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">{description}</p>
+          )}
+        </div>
+        {action && <div className="flex shrink-0 items-center gap-2">{action}</div>}
       </div>
-      {action && <div className="flex shrink-0 items-center gap-2">{action}</div>}
     </header>
   );
 }

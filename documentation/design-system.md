@@ -46,6 +46,12 @@ All colors live in `src/app/globals.css` as CSS custom properties. Components mu
 | `ErrorState` | `shared/page-elements.tsx` | Destructive-tinted alert block |
 | `DataTable` | `tables/data-table.tsx` | Search, pagination, empty/loading |
 | `LoadingSpinner` | `shared/loading-spinner.tsx` | Accessible spinner with label |
+| `FormField` | `shared/form-field.tsx` | Label + input + error + helper |
+| `FilterBar` | `shared/filter-bar.tsx` | Glass filter strip for list pages |
+| `SectionCard` | `shared/section-card.tsx` | Card with header border + action link |
+| `Breadcrumbs` | `shared/breadcrumbs.tsx` | Auto path breadcrumbs from nav config |
+| `QuickActions` | `shared/quick-actions.tsx` | Dashboard shortcut grid |
+| `TableRowActions` | `shared/table-row-actions.tsx` | Icon row actions with tooltips |
 | Navigation icons | `config/navigation-icons.ts` | Lucide map per route |
 
 ## Accessibility

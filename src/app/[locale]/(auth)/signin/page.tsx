@@ -10,6 +10,7 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { AuthLayout } from "@/components/layouts/auth-layout";
 import { PageTransition } from "@/components/shared/page-transition";
+import { FormField } from "@/components/shared/form-field";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -55,55 +56,50 @@ export default function SignInPage() {
     },
   });
 
-  const onSubmit = (data: SignInForm) => {
-    mutation.mutate(data);
-  };
-
   return (
     <AuthLayout title={t("signIn.title")} subtitle={t("signIn.subtitle")}>
       <PageTransition>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="flex flex-col gap-5">
           <div className="grid grid-cols-2 gap-3">
-            <Button type="button" variant="outline" className="w-full">
+            <Button type="button" variant="outline" className="h-10 w-full">
               {t("signIn.withGoogle")}
             </Button>
-            <Button type="button" variant="outline" className="w-full">
+            <Button type="button" variant="outline" className="h-10 w-full">
               {t("signIn.withX")}
             </Button>
           </div>
 
-          <div className="relative text-center">
-            <span className="bg-card px-2 text-sm text-muted-foreground">{t("or")}</span>
-            <div className="absolute inset-x-0 top-1/2 -z-10 border-t border-border" />
+          <div className="relative flex items-center justify-center py-1">
+            <div className="absolute inset-x-0 border-t border-border" aria-hidden />
+            <span className="relative bg-card px-3 text-xs text-muted-foreground">{t("or")}</span>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="email">{t("email")}</Label>
+          <FormField label={t("email")} htmlFor="email" error={errors.email?.message} required>
             <Input
               id="email"
               type="email"
               placeholder={t("placeholder.email")}
+              className="h-10"
               {...register("email")}
             />
-            {errors.email && (
-              <p className="text-sm text-destructive">{errors.email.message}</p>
-            )}
-          </div>
+          </FormField>
 
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="password">{t("password")}</Label>
+          <FormField
+            label={t("password")}
+            htmlFor="password"
+            error={errors.password?.message}
+            required
+          >
             <Input
               id="password"
               type="password"
               placeholder={t("placeholder.password")}
+              className="h-10"
               {...register("password")}
             />
-            {errors.password && (
-              <p className="text-sm text-destructive">{errors.password.message}</p>
-            )}
-          </div>
+          </FormField>
 
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <Checkbox
                 id="rememberMe"
@@ -114,12 +110,15 @@ export default function SignInPage() {
                 {t("rememberMe")}
               </Label>
             </div>
-            <Link href="/reset-password" className="text-sm text-primary hover:underline">
+            <Link
+              href="/reset-password"
+              className="text-sm font-medium text-primary hover:underline"
+            >
               {t("forgotPassword")}
             </Link>
           </div>
 
-          <Button type="submit" className="w-full" disabled={mutation.isPending}>
+          <Button type="submit" className="h-10 w-full" disabled={mutation.isPending}>
             {mutation.isPending ? "..." : t("signIn.submit")}
           </Button>
 
@@ -127,16 +126,6 @@ export default function SignInPage() {
             {t("noAccount")}{" "}
             <Link href="/signup" className="font-medium text-primary hover:underline">
               {t("signIn.signUpLink")}
-            </Link>
-          </p>
-
-          <p className="text-center text-xs text-muted-foreground">
-            {t("termsPrefix")}{" "}
-            <Link href="#" className="text-primary hover:underline">
-              {t("termsAndConditions")}
-            </Link>{" "}
-            <Link href="#" className="text-primary hover:underline">
-              {t("privacyPolicy")}
             </Link>
           </p>
         </form>

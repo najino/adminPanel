@@ -8,15 +8,24 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
+  type Header,
   type SortingState,
 } from "@tanstack/react-table";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowUp,
+  ArrowUpDown,
+  ChevronLeft,
+  ChevronRight,
+  Search,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { EmptyState } from "@/components/shared/page-elements";
+import { cn } from "@/lib/utils";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -26,6 +35,33 @@ interface DataTableProps<TData, TValue> {
   isLoading?: boolean;
   emptyTitle?: string;
   compact?: boolean;
+  embedded?: boolean;
+}
+
+function SortableHeader<TData>({ header }: { header: Header<TData, unknown> }) {
+  const canSort = header.column.getCanSort();
+  const sorted = header.column.getIsSorted();
+
+  if (!canSort) {
+    return flexRender(header.column.columnDef.header, header.getContext());
+  }
+
+  return (
+    <button
+      type="button"
+      className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
+      onClick={header.column.getToggleSortingHandler()}
+    >
+      {flexRender(header.column.columnDef.header, header.getContext())}
+      {sorted === "asc" ? (
+        <ArrowUp className="size-3.5" aria-hidden />
+      ) : sorted === "desc" ? (
+        <ArrowDown className="size-3.5" aria-hidden />
+      ) : (
+        <ArrowUpDown className="size-3.5 opacity-40" aria-hidden />
+      )}
+    </button>
+  );
 }
 
 export function DataTable<TData, TValue>({
@@ -36,6 +72,7 @@ export function DataTable<TData, TValue>({
   isLoading,
   emptyTitle,
   compact = false,
+  embedded = false,
 }: DataTableProps<TData, TValue>) {
   const t = useTranslations("common");
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -82,20 +119,23 @@ export function DataTable<TData, TValue>({
         </div>
       )}
 
-      <div className="overflow-hidden rounded-xl border border-border bg-card shadow-elevated-sm">
+      <div
+        className={cn(
+          "overflow-hidden",
+          !embedded && "rounded-xl border border-border bg-card shadow-elevated-sm",
+        )}
+      >
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead>
+            <thead className={cn(!embedded && "sticky top-0 z-10")}>
               {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id} className="border-b border-border bg-muted/40">
+                <tr key={headerGroup.id} className="border-b border-border bg-muted/50">
                   {headerGroup.headers.map((header) => (
                     <th
                       key={header.id}
                       className="px-4 py-3 text-start text-xs font-medium tracking-wide text-muted-foreground uppercase"
                     >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
+                      {header.isPlaceholder ? null : <SortableHeader header={header} />}
                     </th>
                   ))}
                 </tr>
@@ -115,7 +155,7 @@ export function DataTable<TData, TValue>({
                     className="border-b border-border/60 transition-colors last:border-0 hover:bg-muted/30 motion-reduce:transition-none"
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <td key={cell.id} className="px-4 py-3">
+                      <td key={cell.id} className="px-4 py-3.5">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </td>
                     ))}

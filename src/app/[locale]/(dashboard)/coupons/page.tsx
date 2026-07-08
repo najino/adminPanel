@@ -170,9 +170,9 @@ export default function CouponsPage() {
               </DialogHeader>
               <form
                 onSubmit={handleSubmit((data) => createMutation.mutate(data))}
-                className="space-y-4"
+                className="flex flex-col gap-4"
               >
-                <div className="space-y-2">
+                <div className="flex flex-col gap-2">
                   <Label>{t("modal.couponCode")}</Label>
                   <Input
                     placeholder={t("modal.codePlaceholder")}
@@ -182,7 +182,7 @@ export default function CouponsPage() {
                     <p className="text-sm text-destructive">{errors.couponCode.message}</p>
                   )}
                 </div>
-                <div className="space-y-2">
+                <div className="flex flex-col gap-2">
                   <Label>{t("modal.discountType")}</Label>
                   <Select
                     value={discountType}
@@ -197,7 +197,7 @@ export default function CouponsPage() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-2">
+                <div className="flex flex-col gap-2">
                   <Label>{t("modal.discountValue")}</Label>
                   <Input
                     type="number"
@@ -209,16 +209,16 @@ export default function CouponsPage() {
                     {...register("discountValue")}
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="flex flex-col gap-2">
                   <Label>{t("modal.expiryDate")}</Label>
                   <Input type="date" {...register("expiryDate")} />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-2">
+                  <div className="flex flex-col gap-2">
                     <Label>{t("modal.minOrder")}</Label>
                     <Input type="number" {...register("minOrder")} />
                   </div>
-                  <div className="space-y-2">
+                  <div className="flex flex-col gap-2">
                     <Label>{t("modal.usageLimit")}</Label>
                     <Input type="number" {...register("usageLimit")} />
                   </div>

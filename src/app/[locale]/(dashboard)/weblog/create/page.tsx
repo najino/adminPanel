@@ -89,21 +89,21 @@ export default function CreatePostPage() {
   return (
     <PageTransition>
       <PageHeader title={tp("titles.addPost")} />
-      <form onSubmit={form.handleSubmit((v) => mutation.mutate(v))} className="space-y-6">
+      <form onSubmit={form.handleSubmit((v) => mutation.mutate(v))} className="flex flex-col gap-6">
         <Card>
           <CardHeader>
             <CardTitle>{t("form.information.title")}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("form.information.productName")}</Label>
               <Input {...form.register("title")} placeholder={t("form.information.productNamePlaceholder")} />
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("form.information.slug")}</Label>
               <Input {...form.register("slug")} placeholder={t("form.information.slugPlaceholder")} />
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("form.settings.category")}</Label>
               <Controller
                 control={form.control}
@@ -124,11 +124,11 @@ export default function CreatePostPage() {
                 )}
               />
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("form.seo.keywords")}</Label>
               <Input {...form.register("tags")} placeholder={t("form.seo.keywordsPlaceholder")} />
             </div>
-            <div className="space-y-2 sm:col-span-2">
+            <div className="flex flex-col gap-2 sm:col-span-2">
               <Label>{t("form.settings.publishDate")}</Label>
               <Input type="date" {...form.register("publishedDate")} />
             </div>
@@ -171,11 +171,11 @@ export default function CreatePostPage() {
             <CardTitle>{t("form.seo.title")}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4">
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("form.seo.metaTitle")}</Label>
               <Input {...form.register("seoTitle")} placeholder={t("form.seo.metaTitlePlaceholder")} />
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("form.seo.metaDescription")}</Label>
               <Textarea {...form.register("seoDescription")} placeholder={t("form.seo.metaDescriptionPlaceholder")} />
             </div>

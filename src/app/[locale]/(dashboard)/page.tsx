@@ -5,12 +5,22 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { ColumnDef } from "@tanstack/react-table";
+import {
+  AlertTriangle,
+  Clock,
+  DollarSign,
+  Package,
+  ShoppingCart,
+  Users,
+} from "lucide-react";
 import { PageTransition } from "@/components/shared/page-transition";
 import { PageHeader, StatCard, StatusBadge } from "@/components/shared/page-elements";
+import { QuickActions } from "@/components/shared/quick-actions";
+import { SectionCard } from "@/components/shared/section-card";
 import { DataTable } from "@/components/tables/data-table";
 import { SalesChart } from "@/components/charts/sales-chart";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Skeleton } from "@/components/ui/skeleton";
 import { getDashboardStats, getChartData, getProducts, getOrders } from "@/services/data.service";
 import { formatCurrency } from "@/lib/utils";
 import type { Product, Order } from "@/types";
@@ -18,6 +28,7 @@ import type { Product, Order } from "@/types";
 export default function DashboardPage() {
   const t = useTranslations("home");
   const tCommon = useTranslations("common");
+  const tNav = useTranslations("navigation");
   const [chartPeriod, setChartPeriod] = useState<"monthly" | "quarterly" | "annually">("monthly");
 
   const { data: stats, isLoading: statsLoading } = useQuery({
@@ -44,6 +55,33 @@ export default function DashboardPage() {
   const recentOrders = orders.slice(0, 5);
   const lowStockProducts = products.filter((p) => p.stock <= 10);
 
+  const quickActions = [
+    {
+      href: "/products/create",
+      label: tNav("addProduct"),
+      description: t("featuredProducts.title"),
+      icon: Package,
+    },
+    {
+      href: "/orders/create",
+      label: tNav("allOrders"),
+      description: t("recentOrders.title"),
+      icon: ShoppingCart,
+    },
+    {
+      href: "/coupons",
+      label: tNav("coupons"),
+      description: t("kpi.totalOrders"),
+      icon: DollarSign,
+    },
+    {
+      href: "/weblog/create",
+      label: tNav("addPost"),
+      description: tNav("weblog"),
+      icon: Users,
+    },
+  ];
+
   const featuredColumns: ColumnDef<Product>[] = [
     {
       accessorKey: "name",
@@ -54,7 +92,7 @@ export default function DashboardPage() {
             <img
               src={row.original.images[0]}
               alt={row.original.name}
-              className="h-10 w-10 rounded-lg object-cover"
+              className="size-10 rounded-lg object-cover ring-1 ring-border"
             />
           )}
           <span className="font-medium">{row.original.name}</span>
@@ -64,7 +102,9 @@ export default function DashboardPage() {
     {
       accessorKey: "price",
       header: t("featuredProducts.columns.price"),
-      cell: ({ row }) => formatCurrency(row.original.price),
+      cell: ({ row }) => (
+        <span className="tabular-nums">{formatCurrency(row.original.price)}</span>
+      ),
     },
     {
       accessorKey: "category",
@@ -76,7 +116,9 @@ export default function DashboardPage() {
     {
       accessorKey: "products",
       header: t("recentOrders.columns.products"),
-      cell: ({ row }) => row.original.products.join(", "),
+      cell: ({ row }) => (
+        <span className="max-w-[180px] truncate">{row.original.products.join(", ")}</span>
+      ),
     },
     {
       accessorKey: "customerName",
@@ -86,7 +128,9 @@ export default function DashboardPage() {
     {
       accessorKey: "amount",
       header: t("recentOrders.columns.price"),
-      cell: ({ row }) => formatCurrency(row.original.amount),
+      cell: ({ row }) => (
+        <span className="tabular-nums font-medium">{formatCurrency(row.original.amount)}</span>
+      ),
     },
     {
       accessorKey: "status",
@@ -105,7 +149,7 @@ export default function DashboardPage() {
             <img
               src={row.original.images[0]}
               alt={row.original.name}
-              className="h-10 w-10 rounded-lg object-cover"
+              className="size-10 rounded-lg object-cover ring-1 ring-border"
             />
           )}
           <span>{row.original.name}</span>
@@ -125,7 +169,11 @@ export default function DashboardPage() {
 
   return (
     <PageTransition>
-      <PageHeader title={tCommon("meta.dashboardTitle")} />
+      <PageHeader
+        title={tCommon("meta.dashboardTitle")}
+        description={t("chart.subtitle")}
+        showBreadcrumbs={false}
+      />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
         <StatCard
@@ -133,115 +181,108 @@ export default function DashboardPage() {
           value={formatCurrency(stats?.totalRevenue ?? 0)}
           trend={stats?.revenueTrend}
           isLoading={statsLoading}
+          icon={DollarSign}
         />
         <StatCard
           title={t("kpi.totalOrders")}
           value={String(stats?.totalOrders ?? 0)}
           trend={stats?.ordersTrend}
           isLoading={statsLoading}
+          icon={ShoppingCart}
         />
         <StatCard
           title={t("kpi.totalCustomers")}
           value={String(stats?.totalCustomers ?? 0)}
           trend={stats?.customersTrend}
           isLoading={statsLoading}
+          icon={Users}
         />
         <StatCard
           title={t("kpi.totalProducts")}
           value={String(stats?.totalProducts ?? 0)}
           trend={stats?.productsTrend}
           isLoading={statsLoading}
+          icon={Package}
         />
         <StatCard
           title={t("kpi.pendingOrders")}
           value={String(stats?.pendingOrders ?? 0)}
           trend={stats?.pendingTrend}
           isLoading={statsLoading}
+          icon={Clock}
         />
         <StatCard
           title={t("kpi.lowStockProducts")}
           value={String(stats?.lowStockProducts ?? 0)}
           trend={stats?.lowStockTrend}
           isLoading={statsLoading}
+          icon={AlertTriangle}
         />
       </div>
 
-      <Card className="mt-6">
-        <CardHeader>
-          <CardTitle>{t("chart.title")}</CardTitle>
-          <p className="text-sm text-muted-foreground">{t("chart.subtitle")}</p>
-        </CardHeader>
-        <CardContent>
-          <Tabs
-            value={chartPeriod}
-            onValueChange={(v) => setChartPeriod(v as typeof chartPeriod)}
-          >
-            <TabsList>
-              <TabsTrigger value="monthly">{tCommon("chartTab.monthly")}</TabsTrigger>
-              <TabsTrigger value="quarterly">{tCommon("chartTab.quarterly")}</TabsTrigger>
-              <TabsTrigger value="annually">{tCommon("chartTab.annually")}</TabsTrigger>
-            </TabsList>
-            <TabsContent value={chartPeriod} className="mt-4">
-              {chartLoading ? (
-                <div className="flex h-80 items-center justify-center text-muted-foreground">
-                  {tCommon("loading")}
-                </div>
-              ) : (
-                <SalesChart data={chartData} />
-              )}
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
-
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>{t("featuredProducts.title")}</CardTitle>
-            <Link href="/products" className="text-sm text-primary hover:underline">
-              {tCommon("seeAll")}
-            </Link>
-          </CardHeader>
-          <CardContent>
-            <DataTable
-              columns={featuredColumns}
-              data={featuredProducts}
-              isLoading={productsLoading}
-              compact
-            />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>{t("recentOrders.title")}</CardTitle>
-            <Link href="/orders" className="text-sm text-primary hover:underline">
-              {t("recentOrders.seeAll")}
-            </Link>
-          </CardHeader>
-          <CardContent>
-            <DataTable
-              columns={ordersColumns}
-              data={recentOrders}
-              isLoading={ordersLoading}
-              compact
-            />
-          </CardContent>
-        </Card>
+      <div className="mt-8 flex flex-col gap-3">
+        <h2 className="text-sm font-medium text-muted-foreground">Quick actions</h2>
+        <QuickActions actions={quickActions} />
       </div>
 
-      <Card className="mt-6">
-        <CardHeader>
-          <CardTitle>{t("lowStock.title")}</CardTitle>
-        </CardHeader>
-        <CardContent>
+      <SectionCard title={t("chart.title")} description={t("chart.subtitle")} className="mt-8">
+        <Tabs
+          value={chartPeriod}
+          onValueChange={(v) => setChartPeriod(v as typeof chartPeriod)}
+        >
+          <TabsList className="mb-4">
+            <TabsTrigger value="monthly">{tCommon("chartTab.monthly")}</TabsTrigger>
+            <TabsTrigger value="quarterly">{tCommon("chartTab.quarterly")}</TabsTrigger>
+            <TabsTrigger value="annually">{tCommon("chartTab.annually")}</TabsTrigger>
+          </TabsList>
+          <TabsContent value={chartPeriod}>
+            {chartLoading ? (
+              <Skeleton className="h-80 w-full rounded-lg" />
+            ) : (
+              <SalesChart data={chartData} />
+            )}
+          </TabsContent>
+        </Tabs>
+      </SectionCard>
+
+      <div className="mt-8 grid gap-6 lg:grid-cols-2">
+        <SectionCard
+          title={t("featuredProducts.title")}
+          href="/products"
+          linkLabel={tCommon("seeAll")}
+        >
           <DataTable
-            columns={lowStockColumns}
-            data={lowStockProducts}
+            columns={featuredColumns}
+            data={featuredProducts}
             isLoading={productsLoading}
+            compact
+            embedded
           />
-        </CardContent>
-      </Card>
+        </SectionCard>
+
+        <SectionCard
+          title={t("recentOrders.title")}
+          href="/orders"
+          linkLabel={t("recentOrders.seeAll")}
+        >
+          <DataTable
+            columns={ordersColumns}
+            data={recentOrders}
+            isLoading={ordersLoading}
+            compact
+            embedded
+          />
+        </SectionCard>
+      </div>
+
+      <SectionCard title={t("lowStock.title")} className="mt-8">
+        <DataTable
+          columns={lowStockColumns}
+          data={lowStockProducts}
+          isLoading={productsLoading}
+          embedded
+        />
+      </SectionCard>
     </PageTransition>
   );
 }

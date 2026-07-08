@@ -57,8 +57,8 @@ export default function SetStylePage() {
           <CardHeader>
             <CardTitle>{t("colorsTitle")}</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
+          <CardContent className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
               <Label>{t("colors.primary")}</Label>
               <div className="flex gap-3">
                 <Input
@@ -70,7 +70,7 @@ export default function SetStylePage() {
                 <Input value={primaryColor} onChange={(e) => setPrimaryColor(e.target.value)} />
               </div>
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label>{t("fontsTitle")}</Label>
               <Select value={fontFamily} onValueChange={setFontFamily}>
                 <SelectTrigger className="w-full">
