@@ -1,0 +1,455 @@
+openapi: 3.0.3
+info:
+  title: Commerce Platform Admin API
+  version: 1.0.0
+  description: |
+    Placeholder OpenAPI contract. Replace with your backend spec and run `npm run generate:api`.
+servers:
+  - url: http://localhost:3001/api
+    description: Local development
+security:
+  - BearerAuth: []
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    AuthSignInRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email: { type: string, format: email }
+        password: { type: string, minLength: 6 }
+        rememberMe: { type: boolean }
+    AuthSignInResponse:
+      type: object
+      properties:
+        accessToken: { type: string }
+        refreshToken: { type: string }
+        user: { $ref: "#/components/schemas/User" }
+    AuthSignUpRequest:
+      type: object
+      required: [firstName, lastName, email, password]
+      properties:
+        firstName: { type: string }
+        lastName: { type: string }
+        email: { type: string, format: email }
+        password: { type: string, minLength: 6 }
+    User:
+      type: object
+      properties:
+        id: { type: string }
+        firstName: { type: string }
+        lastName: { type: string }
+        email: { type: string }
+        avatar: { type: string }
+    Product:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        description: { type: string }
+        sku: { type: string }
+        price: { type: number }
+        compareAtPrice: { type: number }
+        cost: { type: number }
+        category: { type: string }
+        tags: { type: array, items: { type: string } }
+        brand: { type: string }
+        status: { type: string, enum: [active, inactive, lowStock, outOfStock] }
+        stock: { type: integer }
+        images: { type: array, items: { type: string } }
+        attributes: { type: array, items: { $ref: "#/components/schemas/ProductAttribute" } }
+    ProductAttribute:
+      type: object
+      properties:
+        key: { type: string }
+        values: { type: array, items: { type: string } }
+    Order:
+      type: object
+      properties:
+        id: { type: string }
+        customerId: { type: string }
+        customerName: { type: string }
+        products: { type: array, items: { type: string } }
+        date: { type: string, format: date-time }
+        amount: { type: number }
+        status: { type: string, enum: [pending, processing, shipped, delivered, cancelled] }
+    Customer:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        email: { type: string }
+        phone: { type: string }
+        orders: { type: integer }
+        status: { type: string, enum: [active, inactive, VIP] }
+        address: { type: string }
+        city: { type: string }
+        country: { type: string }
+    Coupon:
+      type: object
+      properties:
+        id: { type: string }
+        couponCode: { type: string }
+        discountType: { type: string, enum: [percent, fixed] }
+        discountValue: { type: number }
+        expiryDate: { type: string, format: date }
+        minOrder: { type: number }
+        usageLimit: { type: integer }
+        usage: { type: integer }
+        status: { type: string, enum: [active, expired, scheduled] }
+    PaginatedResponse:
+      type: object
+      properties:
+        data: { type: array, items: {} }
+        total: { type: integer }
+        page: { type: integer }
+        pageSize: { type: integer }
+paths:
+  /auth/signin:
+    post:
+      tags: [Auth]
+      security: []
+      operationId: signIn
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/AuthSignInRequest" }
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AuthSignInResponse" }
+  /auth/signup:
+    post:
+      tags: [Auth]
+      security: []
+      operationId: signUp
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/AuthSignUpRequest" }
+      responses:
+        "201":
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AuthSignInResponse" }
+  /auth/reset-password:
+    post:
+      tags: [Auth]
+      security: []
+      operationId: resetPassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email: { type: string, format: email }
+      responses:
+        "200":
+          description: Reset email sent
+  /auth/refresh:
+    post:
+      tags: [Auth]
+      operationId: refreshToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refreshToken]
+              properties:
+                refreshToken: { type: string }
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken: { type: string }
+                  refreshToken: { type: string }
+  /auth/logout:
+    post:
+      tags: [Auth]
+      operationId: logout
+      responses:
+        "204":
+          description: Logged out
+  /dashboard/stats:
+    get:
+      tags: [Dashboard]
+      operationId: getDashboardStats
+      responses:
+        "200":
+          description: Dashboard KPI stats
+  /products:
+    get:
+      tags: [Products]
+      operationId: listProducts
+      parameters:
+        - { name: search, in: query, schema: { type: string } }
+        - { name: category, in: query, schema: { type: string } }
+        - { name: status, in: query, schema: { type: string } }
+        - { name: page, in: query, schema: { type: integer } }
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PaginatedResponse" }
+    post:
+      tags: [Products]
+      operationId: createProduct
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Product" }
+      responses:
+        "201":
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Product" }
+  /products/{id}:
+    get:
+      tags: [Products]
+      operationId: getProduct
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Product" }
+    patch:
+      tags: [Products]
+      operationId: updateProduct
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Product" }
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Product" }
+    delete:
+      tags: [Products]
+      operationId: deleteProduct
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        "204":
+          description: Deleted
+  /products/settings/categories:
+    get:
+      tags: [Products]
+      operationId: listCategories
+      responses:
+        "200":
+          description: Category list
+    post:
+      tags: [Products]
+      operationId: createCategory
+      responses:
+        "201":
+          description: Created
+  /orders:
+    get:
+      tags: [Orders]
+      operationId: listOrders
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PaginatedResponse" }
+    post:
+      tags: [Orders]
+      operationId: createOrder
+      responses:
+        "201":
+          description: Created
+  /orders/{id}:
+    get:
+      tags: [Orders]
+      operationId: getOrder
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Order" }
+    patch:
+      tags: [Orders]
+      operationId: updateOrderStatus
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        "200":
+          description: Updated
+  /users:
+    get:
+      tags: [Users]
+      operationId: listUsers
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PaginatedResponse" }
+  /users/{id}:
+    get:
+      tags: [Users]
+      operationId: getUser
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Customer" }
+  /coupons:
+    get:
+      tags: [Coupons]
+      operationId: listCoupons
+      responses:
+        "200":
+          description: Coupon list
+    post:
+      tags: [Coupons]
+      operationId: createCoupon
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Coupon" }
+      responses:
+        "201":
+          description: Created
+  /coupons/{id}:
+    delete:
+      tags: [Coupons]
+      operationId: deleteCoupon
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        "204":
+          description: Deleted
+  /context/{section}:
+    get:
+      tags: [Context]
+      operationId: getContextSection
+      parameters:
+        - { name: section, in: path, required: true, schema: { type: string } }
+      responses:
+        "200":
+          description: Context section data
+    patch:
+      tags: [Context]
+      operationId: updateContextSection
+      parameters:
+        - { name: section, in: path, required: true, schema: { type: string } }
+      responses:
+        "200":
+          description: Updated
+  /posts:
+    get:
+      tags: [Weblog]
+      operationId: listPosts
+      responses:
+        "200":
+          description: Post list
+    post:
+      tags: [Weblog]
+      operationId: createPost
+      responses:
+        "201":
+          description: Created
+  /posts/categories:
+    get:
+      tags: [Weblog]
+      operationId: listPostCategories
+      responses:
+        "200":
+          description: Categories
+  /comments:
+    get:
+      tags: [Weblog]
+      operationId: listComments
+      responses:
+        "200":
+          description: Comments
+  /settings/general:
+    get:
+      tags: [Settings]
+      operationId: getGeneralSettings
+      responses:
+        "200":
+          description: General settings
+    patch:
+      tags: [Settings]
+      operationId: updateGeneralSettings
+      responses:
+        "200":
+          description: Updated
+  /settings/seo:
+    get:
+      tags: [Settings]
+      operationId: getSeoSettings
+      responses:
+        "200":
+          description: SEO settings
+    patch:
+      tags: [Settings]
+      operationId: updateSeoSettings
+      responses:
+        "200":
+          description: Updated
+  /contact-messages:
+    get:
+      tags: [Contact]
+      operationId: listContactMessages
+      responses:
+        "200":
+          description: Messages
+  /contact-messages/{id}:
+    delete:
+      tags: [Contact]
+      operationId: deleteContactMessage
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        "204":
+          description: Deleted
+  /themes:
+    get:
+      tags: [Themes]
+      operationId: listThemes
+      responses:
+        "200":
+          description: Theme list
+  /store/style:
+    get:
+      tags: [Themes]
+      operationId: getStoreStyle
+      responses:
+        "200":
+          description: Store style
+    patch:
+      tags: [Themes]
+      operationId: updateStoreStyle
+      responses:
+        "200":
+          description: Updated
+  /upload:
+    post:
+      tags: [Upload]
+      operationId: uploadFile
+      responses:
+        "201":
+          description: File uploaded

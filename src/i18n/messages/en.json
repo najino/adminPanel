@@ -1,0 +1,1470 @@
+{
+  "auth": {
+    "backToDashboard": "Back to dashboard",
+    "or": "Or",
+    "email": "Email",
+    "password": "Password",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "keepLoggedIn": "Keep me logged in",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "termsPrefix": "By creating an account means you agree to the",
+    "termsAndConditions": "Terms and Conditions,",
+    "privacyPolicy": "Privacy Policy",
+    "andOur": "and our",
+    "tagline": "Free and Open-Source Tailwind CSS Admin Dashboard Template",
+    "signIn": {
+      "title": "Sign In",
+      "subtitle": "Enter your email and password to sign in!",
+      "withGoogle": "Sign in with Google",
+      "withX": "Sign in with X",
+      "submit": "Sign in",
+      "signUpLink": "Sign Up"
+    },
+    "signUp": {
+      "title": "Sign Up",
+      "subtitle": "Enter your email and password to sign up!",
+      "withGoogle": "Sign up with Google",
+      "withX": "Sign up with X",
+      "submit": "Sign Up",
+      "signInLink": "Sign In"
+    },
+    "placeholder": {
+      "email": "info@gmail.com",
+      "emailFull": "Enter your email",
+      "password": "Enter your password",
+      "firstName": "Enter your first name",
+      "lastName": "Enter your last name"
+    },
+    "rememberMe": "Remember me",
+    "resetPassword": {
+      "title": "Reset Password",
+      "subtitle": "Enter your email address and we will send you a reset link.",
+      "submit": "Send Reset Link",
+      "backToSignIn": "Back to Sign In"
+    }
+  },
+  "common": {
+    "searchPlaceholder": "Search or type command...",
+    "toggleSidebar": "Toggle Sidebar",
+    "language": "Language",
+    "actions": "Actions",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "close": "Close",
+    "home": "Home",
+    "seeAll": "See all",
+    "addProduct": "Add Product",
+    "pageOf": "Page {current} of {total}",
+    "left": "{count} left",
+    "variants": "{count} Variant(s)",
+    "logoAlt": "Logo",
+    "meta": {
+      "dashboardTitle": "Shop Admin Panel",
+      "dashboardDescription": "E-commerce admin dashboard"
+    },
+    "chartTab": {
+      "monthly": "Monthly",
+      "quarterly": "Quarterly",
+      "annually": "Annually"
+    },
+    "sidebarWidget": {
+      "title": "#1 Tailwind CSS Dashboard",
+      "description": "Leading Tailwind CSS Admin Template with 400+ UI Component and Pages.",
+      "cta": "Purchase Plan"
+    },
+    "notification": {
+      "title": "Notification",
+      "viewAll": "View All Notifications",
+      "requestPermission": "requests permission to change",
+      "project": "Project",
+      "timeAgo5": "5 min ago",
+      "timeAgo8": "8 min ago",
+      "timeAgo15": "15 min ago",
+      "timeAgo1h": "1 hr ago"
+    },
+    "user": {
+      "signOut": "Sign out",
+      "userAlt": "User"
+    },
+    "status": {
+      "active": "Active",
+      "draft": "Draft",
+      "archived": "Archived",
+      "lowStock": "Low Stock",
+      "outOfStock": "Out of Stock",
+      "pending": "Pending",
+      "processing": "Processing",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled",
+      "paid": "Paid",
+      "unpaid": "Unpaid",
+      "refunded": "Refunded",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "spam": "Spam",
+      "read": "Read",
+      "unread": "Unread",
+      "published": "Published",
+      "scheduled": "Scheduled",
+      "expired": "Expired",
+      "percent": "Percent",
+      "fixed": "Fixed",
+      "yes": "Yes",
+      "no": "No",
+      "inactive": "Inactive",
+      "VIP": "VIP"
+    },
+    "table": {
+      "product": "Product",
+      "products": "Products",
+      "category": "Category",
+      "price": "Price",
+      "status": "Status",
+      "stock": "Stock",
+      "actions": "Actions"
+    },
+    "add": "Add",
+    "view": "View",
+    "loading": "Loading...",
+    "noData": "No data available",
+    "confirmDelete": "Are you sure you want to delete this item?",
+    "theme": "Theme",
+    "notifications": "Notifications",
+    "signOut": "Sign out"
+  },
+  "contact": {
+    "pageTitle": "All Contact us Comments",
+    "table": {
+      "title": "Contact Messages",
+      "count": "{count} Messages",
+      "columns": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "subject": "Subject",
+        "date": "Date",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "emptyPhone": "—",
+      "viewMessage": "View message",
+      "deleteMessage": "Delete message",
+      "status": {
+        "read": "Read",
+        "unread": "Unread"
+      }
+    },
+    "modal": {
+      "title": "Message Details",
+      "close": "Close",
+      "fields": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "subject": "Subject",
+        "date": "Date",
+        "message": "Message"
+      },
+      "markAsRead": "Mark as Read",
+      "alreadyRead": "Already read"
+    }
+  },
+  "context": {
+    "overview": {
+      "title": "Context",
+      "description": "Manage storefront content and sections configured for your store.",
+      "heroCardTitle": "Hero Section",
+      "heroCardDescription": "Configure the hero video and call-to-action buttons on your homepage."
+    },
+    "hero": {
+      "title": "Hero Settings",
+      "video": "Video",
+      "uploadVideo": "Upload Video",
+      "videoHint": "Supported formats: MP4, WebM",
+      "removeVideo": "Remove",
+      "button1": "Button 1",
+      "button2": "Button 2",
+      "buttonName": "Button Name",
+      "buttonNamePlaceholder": "Enter button text",
+      "buttonLink": "Button Link",
+      "buttonLinkPlaceholder": "https://example.com/shop",
+      "save": "Save Hero Settings"
+    },
+    "productSlides": {
+      "sectionTitle": "Section Title",
+      "autoplayInterval": "Autoplay Interval (ms)",
+      "autoplayHint": "Time between slides in milliseconds (e.g. 4500 = 4.5 seconds)",
+      "tab": "Tab",
+      "tabId": "Tab ID",
+      "tabLabel": "Tab Label",
+      "tabIcon": "Tab Icon",
+      "tabLink": "Tab Link",
+      "iconFlame": "Flame (Bestsellers)",
+      "iconSparkles": "Sparkles (Newest)",
+      "iconBadgePercent": "Badge Percent (Discount)",
+      "products": "Products",
+      "addProduct": "Add product to slide",
+      "noProducts": "No products selected yet",
+      "save": "Save Product Slides",
+      "featured": {
+        "title": "Slide 1 — Featured Products (Tabs)",
+        "description": "Tabbed product carousel with bestsellers, newest, and discounted items."
+      },
+      "bestseller": {
+        "title": "Slide 2 — Bestsellers",
+        "description": "Single carousel for top-selling products."
+      },
+      "discounted": {
+        "title": "Slide 3 — Discounted Products",
+        "description": "Single carousel for discounted products."
+      },
+      "slidesCardTitle": "Product Slides",
+      "slidesCardDescription": "Configure the three homepage product carousels and their items."
+    },
+    "proBanners": {
+      "title": "Pro Banners",
+      "description": "Manage promotional banners with separate desktop and mobile images.",
+      "banner": "Banner",
+      "addBanner": "Add Banner",
+      "removeBanner": "Remove",
+      "link": "Banner Link",
+      "linkPlaceholder": "https://example.com/promo",
+      "desktopImage": "Desktop Image",
+      "mobileImage": "Mobile Image",
+      "uploadDesktop": "Upload desktop banner",
+      "uploadMobile": "Upload mobile banner",
+      "imageHint": "PNG, JPG or WebP",
+      "removeImage": "Remove",
+      "save": "Save Pro Banners",
+      "cardTitle": "Pro Banners",
+      "cardDescription": "Add multiple promo banners with desktop/mobile images and links."
+    },
+    "brands": {
+      "title": "Partner Brands",
+      "description": "Manage brands your store works with. Each brand includes a title, description, and 6 images.",
+      "brand": "Brand",
+      "addBrand": "Add Brand",
+      "removeBrand": "Remove",
+      "brandTitle": "Title",
+      "brandTitlePlaceholder": "Enter brand name",
+      "brandDescription": "Description",
+      "brandDescriptionPlaceholder": "Write a short brand description...",
+      "images": "Brand Images (6)",
+      "imageSlot": "Image {number}",
+      "uploadImage": "Upload image",
+      "imageHint": "PNG, JPG or WebP",
+      "removeImage": "Remove",
+      "save": "Save Brands",
+      "cardTitle": "Partner Brands",
+      "cardDescription": "Add brands with title, description, and 6 images each."
+    },
+    "customerReviews": {
+      "title": "Customer Reviews",
+      "description": "Manage customer testimonials shown on your storefront.",
+      "review": "Review",
+      "addReview": "Add Review",
+      "removeReview": "Remove",
+      "photo": "Photo",
+      "uploadPhoto": "Upload photo",
+      "imageHint": "PNG, JPG or WebP",
+      "removeImage": "Remove",
+      "name": "Customer Name",
+      "namePlaceholder": "Enter customer name",
+      "job": "Job Title",
+      "jobPlaceholder": "e.g. Store Manager",
+      "date": "Date",
+      "text": "Review Text",
+      "textPlaceholder": "Write the customer review...",
+      "save": "Save Reviews",
+      "cardTitle": "Customer Reviews",
+      "cardDescription": "Add reviews with photo, text, name, date, and job title."
+    },
+    "faq": {
+      "imagesTitle": "FAQ Images",
+      "imagesDescription": "Upload FAQ section images separately from questions and answers.",
+      "image": "Image",
+      "addImage": "Add Image",
+      "uploadLabel": "FAQ Image",
+      "uploadImage": "Upload image",
+      "imageHint": "PNG, JPG or WebP",
+      "removeImage": "Remove",
+      "itemsTitle": "Questions & Answers",
+      "itemsDescription": "Manage FAQ items independently from section images.",
+      "item": "FAQ Item",
+      "addItem": "Add FAQ",
+      "removeItem": "Remove",
+      "question": "Question",
+      "questionPlaceholder": "Enter the question",
+      "answer": "Answer",
+      "answerPlaceholder": "Enter the answer",
+      "save": "Save FAQ",
+      "cardTitle": "FAQ",
+      "cardDescription": "Manage FAQ images and Q&A items separately."
+    },
+    "contactUs": {
+      "title": "Contact Us Section",
+      "description": "Upload the image used on the contact us section of your storefront.",
+      "image": "Section Image",
+      "uploadImage": "Upload image",
+      "imageHint": "PNG, JPG or WebP",
+      "removeImage": "Remove",
+      "save": "Save Contact Us",
+      "cardTitle": "Contact Us",
+      "cardDescription": "Set the contact us section image."
+    },
+    "navigation": {
+      "title": "Store Navigation",
+      "description": "Configure mega-menu items with columns, links, badges, and featured blocks.",
+      "menuItem": "Menu Item",
+      "addMenuItem": "Add Menu Item",
+      "removeMenuItem": "Remove",
+      "label": "Menu Label",
+      "labelPlaceholder": "e.g. Cement & Plaster",
+      "href": "Menu Link",
+      "hrefPlaceholder": "/products?q=cement",
+      "summary": "Summary",
+      "summaryPlaceholder": "Short description shown in the mega menu",
+      "columnsTitle": "Columns",
+      "column": "Column",
+      "addColumn": "Add Column",
+      "columnTitle": "Column Title",
+      "columnTitlePlaceholder": "e.g. Main Products",
+      "links": "Links",
+      "link": "Link",
+      "addLink": "Add Link",
+      "linkLabel": "Link Label",
+      "linkLabelPlaceholder": "Link text",
+      "linkHref": "Link URL",
+      "linkHrefPlaceholder": "/products?q=...",
+      "linkBadge": "Badge (optional)",
+      "linkBadgePlaceholder": "e.g. Bestseller",
+      "featuredTitle": "Featured Block",
+      "featuredHeading": "Featured Title",
+      "featuredHeadingPlaceholder": "Featured block title",
+      "featuredDescription": "Featured Description",
+      "featuredDescriptionPlaceholder": "Featured block description",
+      "featuredCta": "CTA Text",
+      "featuredCtaPlaceholder": "Button text",
+      "featuredHref": "Featured Link",
+      "featuredHrefPlaceholder": "/products?q=...",
+      "save": "Save Navigation",
+      "cardTitle": "Navigation",
+      "cardDescription": "Manage storefront mega-menu structure, columns, and featured promos."
+    },
+    "themes": {
+      "exploreTitle": "Explore Themes",
+      "exploreDescription": "Browse available storefront themes. Preview details and purchase the ones you want for your store.",
+      "viewDetails": "View details",
+      "buyTheme": "Buy Theme",
+      "owned": "Owned",
+      "alreadyOwned": "You already own this theme. Configure it from Set Style.",
+      "styleLabel": "Style",
+      "currency": "Toman",
+      "imageCount": "{count} images",
+      "slide": "Slide {number}",
+      "previousSlide": "Previous slide",
+      "nextSlide": "Next slide",
+      "preview": "Preview",
+      "previewMode": "Live preview",
+      "backToThemes": "Back to themes",
+      "openInNewTab": "Open live demo",
+      "cardTitle": "Themes",
+      "cardDescription": "Browse and purchase storefront themes for your shop."
+    },
+    "setStyle": {
+      "title": "Set Style",
+      "description": "Apply a purchased theme and customize colors and typography for your store.",
+      "selectTheme": "Purchased Theme",
+      "selectThemeHint": "Choose one of your purchased themes as the active storefront layout.",
+      "colorsTitle": "Color Palette",
+      "fontsTitle": "Typography",
+      "fontsHint": "Click a font preview image to apply it to your store.",
+      "save": "Save Style Settings",
+      "cardTitle": "Set Style",
+      "cardDescription": "Select a purchased theme, customize 12 colors, and pick a font.",
+      "colors": {
+        "primary": "Primary",
+        "secondary": "Secondary",
+        "background": "Background",
+        "surface": "Surface",
+        "text": "Text",
+        "textMuted": "Text Muted",
+        "accent": "Accent",
+        "border": "Border",
+        "success": "Success",
+        "warning": "Warning",
+        "danger": "Danger",
+        "info": "Info"
+      }
+    }
+  },
+  "coupons": {
+    "pageTitle": "Coupon List",
+    "table": {
+      "title": "Coupons",
+      "activeCount": "{count, plural, one {# active coupon} other {# active coupons}}",
+      "addCoupon": "Add Coupon",
+      "columns": {
+        "code": "Code",
+        "discount": "Discount",
+        "usage": "Usage",
+        "expires": "Expires",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "usageFormat": "{used} / {max}",
+      "empty": {
+        "title": "No coupons yet"
+      }
+    },
+    "types": {
+      "percent": "Percent",
+      "fixed": "Fixed"
+    },
+    "status": {
+      "active": "Active",
+      "expired": "Expired",
+      "scheduled": "Scheduled"
+    },
+    "modal": {
+      "addTitle": "Add New Coupon",
+      "editTitle": "Edit Coupon",
+      "couponCode": "Coupon Code",
+      "codePlaceholder": "e.g. SUMMER20",
+      "discountType": "Discount Type",
+      "percentageOption": "Percentage (%)",
+      "fixedOption": "Fixed Amount ($)",
+      "percentageLabel": "Percentage (%)",
+      "amountLabel": "Amount ($)",
+      "percentagePlaceholder": "20",
+      "amountPlaceholder": "50",
+      "maxUsage": "Max Usage",
+      "maxUsagePlaceholder": "100",
+      "minOrder": "Min Order ($)",
+      "minOrderPlaceholder": "0",
+      "expiryDate": "Expiry Date",
+      "status": "Status",
+      "descriptionOptional": "Description (optional)",
+      "descriptionPlaceholder": "A short note about this coupon",
+      "cancel": "Cancel",
+      "createCoupon": "Create Coupon",
+      "saveChanges": "Save Changes",
+      "discountValue": "Discount Value",
+      "usageLimit": "Usage Limit"
+    },
+    "deleteModal": {
+      "title": "Delete Coupon?",
+      "description": "This action cannot be undone. The coupon will be permanently removed.",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    }
+  },
+  "errors": {
+    "notFound": {
+      "metaTitle": "404 - Page Not Found",
+      "metaDescription": "The page you are looking for does not exist",
+      "heading": "ERROR",
+      "imageAlt": "404",
+      "message": "We can't seem to find the page you are looking for!",
+      "backButton": "Back to Home Page",
+      "footer": "© {year} - TailAdmin"
+    }
+  },
+  "generalSetting": {
+    "baseInformation": {
+      "pageTitle": "Base Information"
+    },
+    "siteInformation": {
+      "title": "Site Information",
+      "siteName": "Site Name",
+      "siteNamePlaceholder": "My Shop",
+      "siteUrl": "Site URL",
+      "siteUrlPlaceholder": "https://myshop.com",
+      "logo": "Logo",
+      "uploadLogo": "Upload Logo",
+      "favicon": "Favicon",
+      "uploadFavicon": "Upload Favicon",
+      "saveSiteInfo": "Save Site Info"
+    },
+    "contactInformation": {
+      "title": "Contact Information",
+      "email": "Email",
+      "emailPlaceholder": "support@yourstore.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+1 234 567 890",
+      "address": "Address",
+      "addressPlaceholder": "Full business address...",
+      "supportUrl": "Support URL",
+      "supportUrlPlaceholder": "https://support.yoursite.com",
+      "saveContactInfo": "Save Contact Info"
+    },
+    "socialMedia": {
+      "title": "Social Media",
+      "facebook": "Facebook",
+      "facebookPlaceholder": "https://facebook.com/yourpage",
+      "instagram": "Instagram",
+      "instagramPlaceholder": "https://instagram.com/yourpage",
+      "twitter": "Twitter",
+      "twitterPlaceholder": "https://twitter.com/yourpage",
+      "youtube": "YouTube",
+      "youtubePlaceholder": "https://youtube.com/yourchannel",
+      "saveContactInfo": "Save Contact Info"
+    },
+    "navigation": {
+      "title": "Navigation Settings",
+      "addMenu": "Add Menu",
+      "menuNamePlaceholder": "Menu name",
+      "pathPlaceholder": "/path",
+      "rootMenu": "Root Menu",
+      "columns": {
+        "menu": "Menu",
+        "path": "Path",
+        "level": "Level",
+        "actions": "Actions"
+      },
+      "levels": {
+        "root": "Root",
+        "child": "Child"
+      },
+      "childPrefix": "↳",
+      "saveNavigation": "Save Navigation"
+    }
+  },
+  "home": {
+    "meta": {
+      "title": "React.js Ecommerce Dashboard | TailAdmin - React.js Admin Dashboard Template",
+      "description": "This is React.js Ecommerce Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template"
+    },
+    "kpi": {
+      "totalRevenue": "Total Revenue",
+      "totalOrders": "Total Orders",
+      "totalCustomers": "Total Customers",
+      "totalProducts": "Total Products",
+      "pendingOrders": "Pending Orders",
+      "lowStockProducts": "Low Stock Products"
+    },
+    "chart": {
+      "title": "Sales & Revenue",
+      "subtitle": "Monthly sales and revenue performance",
+      "sales": "Sales",
+      "revenue": "Revenue",
+      "months": {
+        "jan": "Jan",
+        "feb": "Feb",
+        "mar": "Mar",
+        "apr": "Apr",
+        "may": "May",
+        "jun": "Jun",
+        "jul": "Jul",
+        "aug": "Aug",
+        "sep": "Sep",
+        "oct": "Oct",
+        "nov": "Nov",
+        "dec": "Dec"
+      }
+    },
+    "featuredProducts": {
+      "title": "Featured Products",
+      "columns": {
+        "products": "Products",
+        "price": "Price",
+        "category": "Category"
+      }
+    },
+    "recentOrders": {
+      "title": "Recent Orders",
+      "seeAll": "See all",
+      "columns": {
+        "products": "Products",
+        "category": "Category",
+        "price": "Price",
+        "status": "Status"
+      },
+      "status": {
+        "delivered": "Delivered",
+        "pending": "Pending",
+        "canceled": "Canceled"
+      }
+    },
+    "lowStock": {
+      "title": "Low Stock Products",
+      "columns": {
+        "product": "Product",
+        "stock": "Stock"
+      },
+      "left": "{count} left"
+    },
+    "variants": {
+      "one": "1 Variant",
+      "many": "{count} Variants"
+    }
+  },
+  "navigation": {
+    "menu": "Menu",
+    "others": "Others",
+    "dashboard": "Dashboard",
+    "products": "Products",
+    "allProducts": "All Products",
+    "productSettings": "Product Settings",
+    "addProduct": "Add Product",
+    "orders": "Orders",
+    "allOrders": "All Orders",
+    "users": "Users",
+    "allUsers": "All Users",
+    "coupons": "Coupons",
+    "generalSetting": "General Setting",
+    "baseInformation": "Base information",
+    "navigation": "Navigation",
+    "weblog": "Weblog",
+    "allPosts": "All Posts",
+    "addPost": "Add Post",
+    "postCategories": "Post Categories",
+    "comments": "Comments",
+    "contactComments": "Contact us Comments",
+    "context": "Context",
+    "contextOverview": "Overview",
+    "hero": "Hero",
+    "productSlides": "Product Slides",
+    "proBanners": "Pro Banners",
+    "brands": "Brands",
+    "customerReviews": "Customer Reviews",
+    "faq": "FAQ",
+    "contextContactUs": "Contact Us",
+    "themes": "Themes",
+    "setStyle": "Set Style",
+    "seo": "SEO",
+    "new": "new",
+    "pro": "pro"
+  },
+  "orders": {
+    "pageTitle": "All Orders",
+    "addButton": "Add Order",
+    "kpi": {
+      "totalProducts": "Total Products",
+      "activeProducts": "Active Products",
+      "draftProducts": "Draft Products",
+      "outOfStock": "Out of Stock"
+    },
+    "filters": {
+      "searchPlaceholder": "Search order ID or customer...",
+      "search": "Search",
+      "orderStatus": "Order Status",
+      "paymentStatus": "Payment Status",
+      "dateRange": "Date Range",
+      "allStatus": "All Status",
+      "allPayments": "All Payments",
+      "allTime": "All Time",
+      "today": "Today",
+      "thisWeek": "This Week",
+      "thisMonth": "This Month",
+      "status": {
+        "pending": "Pending",
+        "processing": "Processing",
+        "shipped": "Shipped",
+        "delivered": "Delivered",
+        "cancelled": "Cancelled"
+      },
+      "payment": {
+        "paid": "Paid",
+        "unpaid": "Unpaid",
+        "refunded": "Refunded"
+      }
+    },
+    "table": {
+      "title": "Orders",
+      "count": "{count} Orders",
+      "columns": {
+        "orderId": "Order ID",
+        "customer": "Customer",
+        "date": "Date",
+        "total": "Total",
+        "orderStatus": "Order Status",
+        "payment": "Payment",
+        "actions": "Actions"
+      }
+    },
+    "detail": {
+      "summary": {
+        "title": "Order Summary",
+        "status": "Status",
+        "payment": "Payment",
+        "date": "Date",
+        "total": "Total"
+      },
+      "information": {
+        "title": "Order Information",
+        "orderId": "Order ID: {id}",
+        "date": "Date: {date}",
+        "items": "Items: {count} Products",
+        "source": "Source: Online Store"
+      },
+      "customer": {
+        "title": "Customer Information"
+      },
+      "shipping": {
+        "title": "Shipping Address",
+        "street": "Street: {street}",
+        "postal": "Postal: {code}"
+      },
+      "items": {
+        "title": "Order Items",
+        "columns": {
+          "product": "Product",
+          "qty": "Qty",
+          "price": "Price",
+          "total": "Total"
+        }
+      },
+      "paymentInfo": {
+        "title": "Payment Info",
+        "creditCard": "Credit Card",
+        "transaction": "TXN: {id}",
+        "paid": "Paid"
+      },
+      "timeline": {
+        "title": "Order Timeline",
+        "orderPlaced": "Order Placed",
+        "processing": "Processing",
+        "shipped": "Shipped",
+        "delivered": "Delivered"
+      },
+      "actions": {
+        "title": "Notes & Actions",
+        "notePlaceholder": "Add internal note...",
+        "saveNote": "Save Note",
+        "changeStatus": "Change Status",
+        "printInvoice": "Print Invoice"
+      }
+    },
+    "invoice": {
+      "print": "Print",
+      "downloadPdf": "Download PDF",
+      "title": "INVOICE",
+      "companyName": "Your Company",
+      "billTo": "Bill To:",
+      "columns": {
+        "product": "Product",
+        "qty": "Qty",
+        "price": "Price",
+        "total": "Total"
+      },
+      "subtotal": "Subtotal: {amount}",
+      "tax": "Tax: {amount}",
+      "total": "Total: {amount}",
+      "footer": "Thank you for your purchase ❤️"
+    }
+  },
+  "pages": {
+    "titles": {
+      "dashboard": "Dashboard",
+      "allProducts": "All Products",
+      "productSettings": "Product Settings",
+      "addProduct": "Add Product",
+      "allOrders": "All Orders",
+      "orderDetail": "Order Detail",
+      "allUsers": "All Users",
+      "userDetail": "User Detail",
+      "couponList": "Coupon List",
+      "baseInformation": "Base Information",
+      "navigationSettings": "Navigation Settings",
+      "allPosts": "All Posts",
+      "addPost": "Add Post",
+      "postSettings": "Post Settings",
+      "allPostsComments": "All Posts Comments",
+      "allContactComments": "All Contact us Comments",
+      "seoSettings": "SEO Settings",
+      "context": "Context",
+      "heroSettings": "Hero Settings",
+      "productSlidesSettings": "Product Slides",
+      "proBannersSettings": "Pro Banners",
+      "brandsSettings": "Brands",
+      "customerReviewsSettings": "Customer Reviews",
+      "faqSettings": "FAQ",
+      "contactUsSettings": "Contact Us",
+      "themesSettings": "Explore Themes",
+      "setStyleSettings": "Set Style",
+      "notFound": "Page Not Found",
+      "signIn": "Sign In",
+      "signUp": "Sign Up"
+    },
+    "buttons": {
+      "addProduct": "Add Product",
+      "addOrder": "Add Order",
+      "addPost": "Add Post"
+    },
+    "meta": {
+      "dashboard": {
+        "title": "Dashboard | Commerce Platform",
+        "description": "Monitor revenue, orders, customers, and store performance from a unified dashboard."
+      },
+      "products": {
+        "title": "Products | Commerce Platform",
+        "description": "Manage products, inventory, pricing, collections, and product visibility across your storefront."
+      },
+      "productSettings": {
+        "title": "Product Settings | Commerce Platform",
+        "description": "Configure product options, variants, inventory tracking, and publishing preferences."
+      },
+      "addProduct": {
+        "title": "Add Product | Commerce Platform",
+        "description": "Create a new product with variants, pricing, inventory, media, and SEO settings."
+      },
+      "orders": {
+        "title": "Orders | Commerce Platform",
+        "description": "Track, process, and fulfill customer orders from a centralized order management system."
+      },
+      "orderDetail": {
+        "title": "Order Details | Commerce Platform",
+        "description": "View order information, payment status, fulfillment progress, and customer details."
+      },
+      "users": {
+        "title": "Customers | Commerce Platform",
+        "description": "Manage customer accounts, segments, purchase history, and engagement."
+      },
+      "userDetail": {
+        "title": "Customer Details | Commerce Platform",
+        "description": "Review customer activity, orders, addresses, and account information."
+      },
+      "coupons": {
+        "title": "Discounts | Commerce Platform",
+        "description": "Create discount codes, automatic promotions, and marketing incentives to increase sales."
+      },
+      "generalSetting": {
+        "title": "Store Settings | Commerce Platform",
+        "description": "Configure store information, currencies, localization, notifications, and business preferences."
+      },
+      "navigationSettings": {
+        "title": "Navigation | Commerce Platform",
+        "description": "Manage menus, storefront navigation, and customer browsing experience."
+      },
+      "posts": {
+        "title": "Blog | Commerce Platform",
+        "description": "Publish and manage blog content to improve customer engagement and organic traffic."
+      },
+      "addPost": {
+        "title": "Create Blog Post | Commerce Platform",
+        "description": "Write, optimize, and publish new content for your storefront blog."
+      },
+      "postSettings": {
+        "title": "Blog Settings | Commerce Platform",
+        "description": "Configure blog categories, visibility, SEO preferences, and publishing options."
+      },
+      "postComments": {
+        "title": "Comments | Commerce Platform",
+        "description": "Moderate customer comments and manage blog discussions."
+      },
+      "contact": {
+        "title": "Contact Messages | Commerce Platform",
+        "description": "Manage customer inquiries, support requests, and communication history."
+      },
+      "seo": {
+        "title": "SEO Settings | Commerce Platform",
+        "description": "Optimize metadata, indexing, structured data, and search engine visibility."
+      },
+      "context": {
+        "title": "Context | Commerce Platform",
+        "description": "Manage storefront content sections and contextual settings for your store."
+      },
+      "heroSettings": {
+        "title": "Hero Settings | Commerce Platform",
+        "description": "Configure the homepage hero video and call-to-action buttons."
+      },
+      "productSlidesSettings": {
+        "title": "Product Slides | Commerce Platform",
+        "description": "Configure homepage product carousels, tabs, and featured items."
+      },
+      "proBannersSettings": {
+        "title": "Pro Banners | Commerce Platform",
+        "description": "Manage promotional banners with desktop and mobile images and links."
+      },
+      "brandsSettings": {
+        "title": "Partner Brands | Commerce Platform",
+        "description": "Manage partner brands with titles, descriptions, and images."
+      },
+      "customerReviewsSettings": {
+        "title": "Customer Reviews | Commerce Platform",
+        "description": "Manage customer testimonials for your storefront."
+      },
+      "faqSettings": {
+        "title": "FAQ | Commerce Platform",
+        "description": "Manage FAQ images and question-answer items."
+      },
+      "contactUsSettings": {
+        "title": "Contact Us Section | Commerce Platform",
+        "description": "Configure the contact us section image."
+      },
+      "themesSettings": {
+        "title": "Explore Themes | Commerce Platform",
+        "description": "Browse available storefront themes and purchase the ones you want for your shop."
+      },
+      "themePreview": {
+        "title": "{name} Preview | Commerce Platform",
+        "description": "Live preview of the {name} storefront theme."
+      },
+      "setStyleSettings": {
+        "title": "Set Style | Commerce Platform",
+        "description": "Apply a purchased theme and customize colors and fonts."
+      },
+      "notFound": {
+        "title": "404 - Page Not Found",
+        "description": "The requested page could not be found or may have been moved."
+      },
+      "signIn": {
+        "title": "Sign In | Commerce Platform",
+        "description": "Access your store administration dashboard securely."
+      },
+      "signUp": {
+        "title": "Create Account | Commerce Platform",
+        "description": "Start building and managing your online business."
+      }
+    },
+    "seo": {
+      "header": {
+        "title": "SEO Settings",
+        "subtitle": "Manage all search engine optimization settings for your site",
+        "saveChanges": "Save Changes",
+        "saved": "Saved!"
+      },
+      "general": {
+        "title": "General Meta Tags",
+        "description": "Basic SEO metadata shown in search results",
+        "siteTitle": "Site Title",
+        "siteTitlePlaceholder": "Your Site Name",
+        "siteTitleHint": "Keep under 60 characters. This appears as the browser tab title and in search results.",
+        "titleSeparator": "Title Separator",
+        "titleSeparatorPreview": "Page Title{separator}Site Name",
+        "titleSeparatorHint": "Character that separates page title from site name in the browser tab.",
+        "metaDescription": "Meta Description",
+        "metaDescriptionPlaceholder": "A compelling description of your site...",
+        "metaDescriptionHint": "Ideal length is 120–160 characters. Used as the snippet in Google search results.",
+        "metaKeywords": "Meta Keywords",
+        "metaKeywordsPlaceholder": "keyword1, keyword2, keyword3",
+        "metaKeywordsHint": "Comma-separated keywords. Most modern search engines ignore this, but some still use it.",
+        "canonicalUrl": "Canonical URL",
+        "canonicalUrlPlaceholder": "https://example.com",
+        "canonicalUrlHint": "Tells search engines the preferred URL for this page to avoid duplicate content.",
+        "siteLanguage": "Site Language",
+        "siteLanguageHint": "Sets the lang attribute on your HTML element, helping search engines serve the right audience.",
+        "languages": {
+          "en": "English",
+          "fa": "Persian (فارسی)"
+        }
+      },
+      "indexing": {
+        "title": "Indexing & Crawling",
+        "description": "Control how search engine bots crawl your site",
+        "allowIndexing": "Allow Search Engine Indexing",
+        "allowIndexingHint": "When disabled, a noindex meta tag is added to all pages — search engines will not list your site.",
+        "followLinks": "Follow Links (Pass Link Equity)",
+        "followLinksHint": "Adds follow/nofollow to links. Disabling tells bots not to pass SEO value through your outbound links.",
+        "indexImages": "Index Images in Google Images",
+        "indexImagesHint": "Controls whether your images appear in Google Image Search results.",
+        "noArchive": "No Archive (Prevent Cached Copies)",
+        "noArchiveHint": "Adds noarchive — search engines won't store a cached version of your pages.",
+        "noSnippet": "No Snippet (Hide Meta Descriptions)",
+        "noSnippetHint": "Adds nosnippet — Google will not show text snippets or video previews in search results."
+      },
+      "openGraph": {
+        "title": "Open Graph (Facebook / LinkedIn)",
+        "description": "Control how your site looks when shared on social media",
+        "ogTitle": "OG Title",
+        "ogTitlePlaceholder": "Title shown on share cards",
+        "ogTitleHint": "Overrides the page title when shared on Facebook, LinkedIn, WhatsApp, etc.",
+        "ogType": "OG Type",
+        "ogTypeHint": "Describes the type of content — 'website' is fine for most pages.",
+        "ogDescription": "OG Description",
+        "ogDescriptionPlaceholder": "Description shown on share cards",
+        "ogDescriptionHint": "Shown below the title in social share previews. Aim for 100–200 characters.",
+        "ogImageUrl": "OG Image URL",
+        "ogImagePlaceholder": "https://example.com/og-image.jpg",
+        "ogImageHint": "Recommended size: 1200×630 px. This image appears in social share cards.",
+        "ogLocale": "OG Locale",
+        "ogLocaleHint": "Tells Facebook the language and region of your content.",
+        "types": {
+          "website": "website",
+          "article": "article",
+          "product": "product",
+          "profile": "profile",
+          "video": "video",
+          "music": "music"
+        }
+      },
+      "schema": {
+        "title": "Structured Data (Schema.org)",
+        "description": "Help search engines understand your business entity",
+        "schemaType": "Schema Type",
+        "schemaTypeHint": "The type that best describes your entity. 'Organization' works for most businesses.",
+        "name": "Name",
+        "namePlaceholder": "Your Organization Name",
+        "nameHint": "Official name of your organization or personal brand.",
+        "websiteUrl": "Website URL",
+        "websiteUrlPlaceholder": "https://example.com",
+        "websiteUrlHint": "The canonical URL of your website, used in the schema markup.",
+        "logoUrl": "Logo URL",
+        "logoUrlPlaceholder": "https://example.com/logo.png",
+        "logoUrlHint": "Recommended: 112×112 px minimum. Used by Google Knowledge Panel.",
+        "sameAsLinks": "sameAs Social Links",
+        "sameAsHint": "One URL per line. Links to your official social profiles — helps Google associate them with your brand.",
+        "types": {
+          "Organization": "Organization",
+          "LocalBusiness": "LocalBusiness",
+          "Person": "Person",
+          "WebSite": "WebSite",
+          "Product": "Product",
+          "Article": "Article",
+          "BreadcrumbList": "BreadcrumbList"
+        }
+      },
+      "sitemap": {
+        "title": "XML Sitemap",
+        "description": "Configure automatic sitemap generation",
+        "enable": "Enable XML Sitemap",
+        "enableHint": "Generates a sitemap.xml file that helps search engines discover all your pages.",
+        "updateFrequency": "Update Frequency",
+        "updateFrequencyHint": "Hint to search engines about how often your content changes. 'Weekly' suits most blogs.",
+        "defaultPriority": "Default Priority",
+        "defaultPriorityHint": "A value from 0.0–1.0 indicating page importance relative to other pages on your site.",
+        "includeImages": "Include Images in Sitemap",
+        "includeImagesHint": "Adds image URLs to the sitemap, helping Google Images discover your visual content.",
+        "frequencies": {
+          "always": "Always",
+          "hourly": "Hourly",
+          "daily": "Daily",
+          "weekly": "Weekly",
+          "monthly": "Monthly",
+          "yearly": "Yearly",
+          "never": "Never"
+        }
+      },
+      "robots": {
+        "title": "Robots.txt",
+        "description": "Control which parts of your site search engines can access",
+        "contentLabel": "Robots.txt Content",
+        "contentHint": "Use 'Disallow: /path/' to block specific directories. Always include your sitemap URL at the bottom.",
+        "preview": "Preview",
+        "resetDefault": "Reset to Default"
+      },
+      "analytics": {
+        "title": "Analytics & Tracking",
+        "description": "Connect analytics and tracking services",
+        "gaId": "Google Analytics ID",
+        "gaIdPlaceholder": "G-XXXXXXXXXX or UA-XXXXXXXX-X",
+        "gaIdHint": "Paste your GA4 Measurement ID (G-XXXXXX) or Universal Analytics ID here.",
+        "gtmId": "Google Tag Manager ID",
+        "gtmIdPlaceholder": "GTM-XXXXXXX",
+        "gtmIdHint": "Used to manage all your marketing and analytics tags from one place.",
+        "fbPixel": "Facebook Pixel ID",
+        "fbPixelPlaceholder": "1234567890123456",
+        "fbPixelHint": "Tracks conversions from Facebook ads and enables retargeting audiences.",
+        "hotjarId": "Hotjar Site ID",
+        "hotjarIdPlaceholder": "1234567",
+        "hotjarIdHint": "Enables heatmaps and session recordings to understand user behavior."
+      },
+      "performance": {
+        "title": "Performance & Technical SEO",
+        "description": "Speed and technical optimizations that affect rankings",
+        "lazyLoad": "Lazy Load Images",
+        "lazyLoadHint": "Defers off-screen image loading, improving Core Web Vitals (LCP, CLS) and page speed scores.",
+        "preloadFonts": "Preload Critical Fonts",
+        "preloadFontsHint": "Adds <link rel='preload'> for fonts, reducing render-blocking and improving FCP.",
+        "minifyHtml": "Minify HTML Output",
+        "minifyHtmlHint": "Removes unnecessary whitespace from HTML output, slightly reducing page size.",
+        "hreflang": "Enable hreflang Tags",
+        "hreflangHint": "Adds hreflang annotations to tell Google which language/region each page targets — essential for multilingual sites.",
+        "amp": "Enable AMP Pages",
+        "ampHint": "Generates Accelerated Mobile Pages versions of your content for faster mobile loading."
+      },
+      "security": {
+        "title": "Security & HTTPS",
+        "description": "Security settings that affect SEO trust signals",
+        "sslForce": "Force HTTPS (SSL Redirect)",
+        "sslForceHint": "Redirects all HTTP traffic to HTTPS. HTTPS is a confirmed Google ranking signal — always keep this on.",
+        "hsts": "HTTP Strict Transport Security (HSTS)",
+        "hstsHint": "Tells browsers to only ever connect via HTTPS, even if the user types http://. Adds an extra security layer.",
+        "csp": "Content Security Policy (CSP)",
+        "cspHint": "Defines which sources of scripts, styles, and media are trusted. Reduces XSS risk but requires careful configuration."
+      }
+    }
+  },
+  "posts": {
+    "allPosts": {
+      "pageTitle": "All Posts",
+      "addButton": "Add Post"
+    },
+    "addPost": {
+      "pageTitle": "Add Post"
+    },
+    "postSettings": {
+      "pageTitle": "Post Settings"
+    },
+    "commentsPage": {
+      "pageTitle": "All Posts Comments"
+    },
+    "kpi": {
+      "totalOrders": "Total Orders",
+      "activeOrders": "Active Orders",
+      "draftOrders": "Draft Orders",
+      "outOfStock": "Out of Stock"
+    },
+    "filters": {
+      "searchPlaceholder": "Search posts...",
+      "search": "Search",
+      "category": "Category",
+      "author": "Author",
+      "status": "Status",
+      "allCategories": "All Categories",
+      "allAuthors": "All Authors",
+      "allStatus": "All Status",
+      "published": "Published",
+      "draft": "Draft"
+    },
+    "table": {
+      "title": "Blog Posts",
+      "count": "{count} Posts",
+      "columns": {
+        "post": "Post",
+        "category": "Category",
+        "author": "Author",
+        "views": "Views",
+        "comments": "Comments",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "editPost": "Edit Post",
+      "deletePost": "Delete Post"
+    },
+    "categories": {
+      "title": "Categories",
+      "addCategory": "Add Category",
+      "columns": {
+        "category": "Category",
+        "products": "Products",
+        "actions": "Actions"
+      },
+      "modal": {
+        "title": "Add Category",
+        "placeholder": "Category name",
+        "cancel": "Cancel",
+        "save": "Save Category"
+      }
+    },
+    "commentFilters": {
+      "searchPlaceholder": "Search comments...",
+      "search": "Search",
+      "post": "Post",
+      "status": "Status",
+      "userType": "User Type",
+      "allPosts": "All Posts",
+      "allStatuses": "All Statuses",
+      "allUsers": "All Users",
+      "users": "Users",
+      "admins": "Admins",
+      "approved": "Approved",
+      "pending": "Pending",
+      "rejected": "Rejected",
+      "spam": "Spam"
+    },
+    "commentsTable": {
+      "title": "Comments",
+      "count": "{count} Comments",
+      "columns": {
+        "user": "User",
+        "post": "Post",
+        "comment": "Comment",
+        "date": "Date",
+        "replies": "Replies",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "viewComment": "View comment",
+      "editComment": "Edit comment",
+      "deleteComment": "Delete comment"
+    },
+    "commentModal": {
+      "title": "Comment Details",
+      "close": "Close",
+      "tabs": {
+        "replies": "Replies",
+        "history": "History"
+      },
+      "noReplies": "No replies yet",
+      "replyPlaceholder": "Write a reply...",
+      "send": "Send",
+      "approve": "Approve",
+      "reject": "Reject",
+      "archive": "Archive",
+      "delete": "Delete",
+      "history": {
+        "statusApproved": "Status changed to Approved",
+        "commentSubmitted": "Comment submitted",
+        "by": "by {name} · {date}"
+      }
+    },
+    "form": {
+      "information": {
+        "title": "Post Information",
+        "productName": "Product Name",
+        "productNamePlaceholder": "Enter product name",
+        "slug": "Slug",
+        "slugPlaceholder": "nike-air-max-black",
+        "shortDescription": "Short Description",
+        "shortDescriptionPlaceholder": "Write a short product description...",
+        "description": "Description",
+        "descriptionPlaceholder": "Write a short product description..."
+      },
+      "settings": {
+        "title": "Post Settings",
+        "category": "Category",
+        "selectCategory": "Select Category",
+        "author": "Author",
+        "selectAuthor": "Select Author",
+        "status": "Status",
+        "selectStatus": "Select Status",
+        "publishDate": "Publish Date",
+        "readTime": "Read Time",
+        "readTimePlaceholder": "Enter read time in minutes",
+        "draft": "Draft",
+        "published": "Published"
+      },
+      "images": {
+        "title": "Post Images",
+        "dropzone": "Drag & drop images here, or click to upload",
+        "mainBadge": "MAIN"
+      },
+      "seo": {
+        "title": "SEO Settings",
+        "metaTitle": "Meta Title",
+        "metaTitlePlaceholder": "Enter meta title...",
+        "metaTitleHint": "Recommended: 50-60 characters",
+        "metaDescription": "Meta Description",
+        "metaDescriptionPlaceholder": "Enter meta description...",
+        "metaDescriptionHint": "Recommended: 150-160 characters",
+        "keywords": "Keywords",
+        "keywordsPlaceholder": "seo, blog, ecommerce, tutorial",
+        "keywordsHint": "Separate keywords with commas (,)",
+        "previewTitle": "How to Create a Successful Ecommerce Store",
+        "previewUrl": "https://example.com/blog/ecommerce-store",
+        "previewDescription": "Learn how to launch and grow a successful ecommerce business with practical strategies and tools."
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "savePost": "Save Post"
+      }
+    }
+  },
+  "products": {
+    "pageTitle": "All Products",
+    "addButton": "Add Product",
+    "productSettingsTitle": "Product Settings",
+    "addProductTitle": "Add Product",
+    "kpi": {
+      "totalOrders": "Total Orders",
+      "activeOrders": "Active Orders",
+      "draftOrders": "Draft Orders",
+      "outOfStock": "Out of Stock"
+    },
+    "filters": {
+      "searchPlaceholder": "Search products...",
+      "search": "Search",
+      "category": "Category",
+      "brand": "Brand",
+      "status": "Status",
+      "allCategories": "All Categories",
+      "allBrands": "All Brands",
+      "allStatus": "All Status",
+      "active": "Active"
+    },
+    "table": {
+      "title": "Products",
+      "count": "{count} Products",
+      "columns": {
+        "product": "Product",
+        "category": "Category",
+        "brand": "Brand",
+        "price": "Price",
+        "stock": "Stock",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "editProduct": "Edit Product",
+      "deleteProduct": "Delete Product",
+      "status": {
+        "active": "Active",
+        "lowStock": "Low Stock",
+        "outOfStock": "Out of Stock"
+      }
+    },
+    "categories": {
+      "title": "Categories",
+      "addCategory": "Add Category",
+      "columns": {
+        "image": "Image",
+        "category": "Category",
+        "products": "Products",
+        "actions": "Actions"
+      },
+      "modal": {
+        "title": "Add Category",
+        "placeholder": "Category name",
+        "cancel": "Cancel",
+        "save": "Save Category"
+      }
+    },
+    "attributes": {
+      "title": "Attributes",
+      "addAttribute": "Add Attribute",
+      "columns": {
+        "name": "Attribute Name",
+        "type": "Type",
+        "actions": "Actions"
+      },
+      "types": {
+        "select": "Select",
+        "text": "Text",
+        "number": "Number",
+        "boolean": "Boolean"
+      },
+      "modal": {
+        "title": "Add Attribute",
+        "namePlaceholder": "Attribute name",
+        "typePlaceholder": "Attribute type",
+        "cancel": "Cancel",
+        "save": "Save Attribute"
+      }
+    },
+    "attributeValues": {
+      "title": "Attribute Values",
+      "addValue": "Add Value",
+      "columns": {
+        "value": "Value",
+        "attribute": "Attribute",
+        "actions": "Actions"
+      },
+      "modal": {
+        "title": "Add Attribute Value",
+        "selectAttribute": "Select Attribute",
+        "valuePlaceholder": "Value",
+        "cancel": "Cancel",
+        "save": "Save Value"
+      }
+    },
+    "form": {
+      "information": {
+        "title": "Product Information",
+        "productName": "Product Name",
+        "productNamePlaceholder": "Enter product name",
+        "slug": "Slug",
+        "slugPlaceholder": "nike-air-max-black",
+        "shortDescription": "Short Description",
+        "shortDescriptionPlaceholder": "Write a short product description...",
+        "description": "Description"
+      },
+      "organization": {
+        "title": "Product Organization",
+        "category": "Category",
+        "selectCategory": "Select Category",
+        "brand": "Brand",
+        "selectBrand": "Select Brand",
+        "status": "Status",
+        "selectStatus": "Select Status",
+        "featuredProduct": "Featured Product",
+        "selectOption": "Select Option",
+        "yes": "Yes",
+        "no": "No",
+        "statusOptions": {
+          "active": "Active",
+          "draft": "Draft",
+          "archived": "Archived"
+        }
+      },
+      "pricing": {
+        "title": "Pricing & Inventory",
+        "price": "Price",
+        "pricePlaceholder": "0.00",
+        "salePrice": "Sale Price",
+        "discount": "Discount (%)",
+        "discountPlaceholder": "0",
+        "sku": "SKU",
+        "skuPlaceholder": "PROD-001",
+        "stockQuantity": "Stock Quantity",
+        "stockPlaceholder": "Enter stock quantity",
+        "compareAtPrice": "Compare at Price",
+        "cost": "Cost"
+      },
+      "attributes": {
+        "title": "Product Attributes",
+        "addAttribute": "Add Attribute",
+        "attribute": "Attribute",
+        "selectAttribute": "Select Attribute",
+        "value": "Value",
+        "selectValue": "Select Value"
+      },
+      "images": {
+        "title": "Product Images",
+        "mainImage": "Main Image",
+        "mainImageDropzone": "Click to upload main image",
+        "dropzone": "Drag & drop images here, or click to upload",
+        "mainBadge": "MAIN"
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "saveProduct": "Save Product"
+      }
+    }
+  },
+  "users": {
+    "pageTitle": "All Users",
+    "filters": {
+      "searchPlaceholder": "Search users...",
+      "search": "Search"
+    },
+    "table": {
+      "title": "Users",
+      "count": "{count} Users",
+      "columns": {
+        "user": "User",
+        "email": "Email",
+        "phone": "Phone",
+        "joinDate": "Join Date",
+        "actions": "Actions"
+      },
+      "editUser": "Edit User",
+      "deleteUser": "Delete User"
+    },
+    "detail": {
+      "information": {
+        "title": "User Information",
+        "fullName": "Full Name",
+        "userId": "User ID",
+        "email": "Email",
+        "phone": "Phone",
+        "registrationDate": "Registration Date",
+        "lastOrder": "Last Order"
+      },
+      "addresses": {
+        "title": "Addresses",
+        "homeAddress": "Home Address",
+        "workAddress": "Work Address",
+        "billingAddress": "Billing Address",
+        "sameAsHome": "Same as Home Address"
+      },
+      "orderHistory": {
+        "title": "Order History",
+        "count": "{count} Orders",
+        "columns": {
+          "orderId": "Order ID",
+          "date": "Date",
+          "total": "Total",
+          "status": "Status"
+        }
+      }
+    }
+  }
+}

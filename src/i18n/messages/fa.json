@@ -1,0 +1,1472 @@
+{
+  "auth": {
+    "backToDashboard": "بازگشت به داشبورد",
+    "or": "یا",
+    "email": "ایمیل",
+    "password": "رمز عبور",
+    "firstName": "نام",
+    "lastName": "نام خانوادگی",
+    "keepLoggedIn": "مرا به خاطر بسپار",
+    "forgotPassword": "رمز عبور را فراموش کردید؟",
+    "noAccount": "حساب کاربری ندارید؟",
+    "hasAccount": "قبلاً ثبت‌نام کرده‌اید؟",
+    "termsPrefix": "با ایجاد حساب، موافقت خود را با",
+    "termsAndConditions": "شرایط و ضوابط،",
+    "privacyPolicy": "سیاست حفظ حریم خصوصی",
+    "andOur": "و",
+    "tagline": "قالب رایگان و متن‌باز داشبورد ادمین Tailwind CSS",
+    "signIn": {
+      "title": "ورود",
+      "subtitle": "ایمیل و رمز عبور خود را برای ورود وارد کنید!",
+      "withGoogle": "ورود با Google",
+      "withX": "ورود با X",
+      "submit": "ورود",
+      "signUpLink": "ثبت‌نام"
+    },
+    "signUp": {
+      "title": "ثبت‌نام",
+      "subtitle": "ایمیل و رمز عبور خود را برای ثبت‌نام وارد کنید!",
+      "withGoogle": "ثبت‌نام با Google",
+      "withX": "ثبت‌نام با X",
+      "submit": "ثبت‌نام",
+      "signInLink": "ورود"
+    },
+    "placeholder": {
+      "email": "info@gmail.com",
+      "emailFull": "ایمیل خود را وارد کنید",
+      "password": "رمز عبور خود را وارد کنید",
+      "firstName": "نام خود را وارد کنید",
+      "lastName": "نام خانوادگی خود را وارد کنید"
+    },
+    "rememberMe": "مرا به خاطر بسپار",
+    "resetPassword": {
+      "title": "بازیابی رمز عبور",
+      "subtitle": "آدرس ایمیل خود را وارد کنید تا لینک بازیابی برای شما ارسال شود.",
+      "submit": "ارسال لینک بازیابی",
+      "backToSignIn": "بازگشت به ورود"
+    }
+  },
+  "common": {
+    "searchPlaceholder": "جستجو یا دستور تایپ کنید...",
+    "toggleSidebar": "باز و بسته کردن منو",
+    "language": "زبان",
+    "actions": "عملیات",
+    "cancel": "انصراف",
+    "save": "ذخیره",
+    "delete": "حذف",
+    "edit": "ویرایش",
+    "search": "جستجو",
+    "close": "بستن",
+    "home": "خانه",
+    "seeAll": "مشاهده همه",
+    "addProduct": "افزودن محصول",
+    "pageOf": "صفحه {current} از {total}",
+    "left": "{count} باقی‌مانده",
+    "variants": "{count} نوع",
+    "logoAlt": "لوگو",
+    "meta": {
+      "dashboardTitle": "پنل مدیریت فروشگاه",
+      "dashboardDescription": "داشبورد مدیریت فروشگاه آنلاین"
+    },
+    "chartTab": {
+      "monthly": "ماهانه",
+      "quarterly": "فصلی",
+      "annually": "سالانه"
+    },
+    "sidebarWidget": {
+      "title": "داشبورد شماره ۱ Tailwind CSS",
+      "description": "قالب پیشرو ادمین Tailwind CSS با بیش از ۴۰۰ کامپوننت و صفحه.",
+      "cta": "خرید طرح"
+    },
+    "notification": {
+      "title": "اعلان‌ها",
+      "viewAll": "مشاهده همه اعلان‌ها",
+      "requestPermission": "درخواست مجوز تغییر",
+      "project": "پروژه",
+      "timeAgo5": "۵ دقیقه پیش",
+      "timeAgo8": "۸ دقیقه پیش",
+      "timeAgo15": "۱۵ دقیقه پیش",
+      "timeAgo1h": "۱ ساعت پیش"
+    },
+    "user": {
+      "signOut": "خروج",
+      "userAlt": "کاربر"
+    },
+    "status": {
+      "active": "فعال",
+      "draft": "پیش‌نویس",
+      "archived": "بایگانی‌شده",
+      "lowStock": "موجودی کم",
+      "outOfStock": "ناموجود",
+      "pending": "در انتظار",
+      "processing": "در حال پردازش",
+      "shipped": "ارسال‌شده",
+      "delivered": "تحویل‌شده",
+      "cancelled": "لغو‌شده",
+      "paid": "پرداخت‌شده",
+      "unpaid": "پرداخت‌نشده",
+      "refunded": "بازپرداخت‌شده",
+      "approved": "تأیید‌شده",
+      "rejected": "رد‌شده",
+      "spam": "هرزنامه",
+      "read": "خوانده‌شده",
+      "unread": "خوانده‌نشده",
+      "published": "منتشر‌شده",
+      "scheduled": "زمان‌بندی‌شده",
+      "expired": "منقضی‌شده",
+      "percent": "درصدی",
+      "fixed": "ثابت",
+      "yes": "بله",
+      "no": "خیر",
+      "inactive": "غیرفعال",
+      "VIP": "VIP"
+    },
+    "table": {
+      "product": "محصول",
+      "products": "محصولات",
+      "category": "دسته‌بندی",
+      "price": "قیمت",
+      "status": "وضعیت",
+      "stock": "موجودی",
+      "actions": "عملیات"
+    },
+    "add": "افزودن",
+    "view": "مشاهده",
+    "loading": "در حال بارگذاری...",
+    "noData": "داده‌ای موجود نیست",
+    "confirmDelete": "آیا از حذف این مورد اطمینان دارید؟",
+    "theme": "تم",
+    "notifications": "اعلان‌ها",
+    "signOut": "خروج"
+  },
+  "contact": {
+    "pageTitle": "همه پیام‌های تماس با ما",
+    "table": {
+      "title": "پیام‌های تماس",
+      "count": "{count} پیام",
+      "columns": {
+        "name": "نام",
+        "email": "ایمیل",
+        "phone": "تلفن",
+        "subject": "موضوع",
+        "date": "تاریخ",
+        "status": "وضعیت",
+        "actions": "عملیات"
+      },
+      "emptyPhone": "—",
+      "viewMessage": "مشاهده پیام",
+      "deleteMessage": "حذف پیام",
+      "status": {
+        "read": "خوانده‌شده",
+        "unread": "خوانده‌نشده"
+      }
+    },
+    "modal": {
+      "title": "جزئیات پیام",
+      "close": "بستن",
+      "fields": {
+        "name": "نام",
+        "email": "ایمیل",
+        "phone": "تلفن",
+        "subject": "موضوع",
+        "date": "تاریخ",
+        "message": "پیام"
+      },
+      "markAsRead": "علامت‌گذاری به‌عنوان خوانده‌شده",
+      "alreadyRead": "قبلاً خوانده شده"
+    }
+  },
+  "context": {
+    "overview": {
+      "title": "Context",
+      "description": "محتوا و بخش‌های فروشگاه را از اینجا مدیریت کنید.",
+      "heroCardTitle": "بخش Hero",
+      "heroCardDescription": "ویدئو و دکمه‌های فراخوان (CTA) صفحه اصلی را تنظیم کنید."
+    },
+    "hero": {
+      "title": "تنظیمات Hero",
+      "video": "ویدئو",
+      "uploadVideo": "آپلود ویدئو",
+      "videoHint": "فرمت‌های پشتیبانی‌شده: MP4، WebM",
+      "removeVideo": "حذف",
+      "button1": "دکمه ۱",
+      "button2": "دکمه ۲",
+      "buttonName": "نام دکمه",
+      "buttonNamePlaceholder": "متن دکمه را وارد کنید",
+      "buttonLink": "لینک دکمه",
+      "buttonLinkPlaceholder": "https://example.com/shop",
+      "save": "ذخیره تنظیمات Hero"
+    },
+    "productSlides": {
+      "sectionTitle": "عنوان بخش",
+      "autoplayInterval": "فاصله پخش خودکار (میلی‌ثانیه)",
+      "autoplayHint": "زمان بین اسلایدها به میلی‌ثانیه (مثلاً ۴۵۰۰ = ۴.۵ ثانیه)",
+      "tab": "تب",
+      "tabId": "شناسه تب",
+      "tabLabel": "برچسب تب",
+      "tabIcon": "آیکون تب",
+      "tabLink": "لینک تب",
+      "iconFlame": "شعله (پرفروش‌ترین‌ها)",
+      "iconSparkles": "درخشش (جدیدترین‌ها)",
+      "iconBadgePercent": "درصد (تخفیف‌دار)",
+      "products": "محصولات",
+      "addProduct": "افزودن محصول به اسلاید",
+      "noProducts": "هنوز محصولی انتخاب نشده",
+      "save": "ذخیره اسلایدهای محصول",
+      "featured": {
+        "title": "اسلاید ۱ — محصولات پیشنهادی (تب‌دار)",
+        "description": "کاروسل محصول با تب‌های پرفروش‌ترین‌ها، جدیدترین‌ها و تخفیف‌دار."
+      },
+      "bestseller": {
+        "title": "اسلاید ۲ — پرفروش‌ترین‌ها",
+        "description": "کاروسل تک‌بخشی برای محصولات پرفروش."
+      },
+      "discounted": {
+        "title": "اسلاید ۳ — تخفیف‌دارها",
+        "description": "کاروسل تک‌بخشی برای محصولات تخفیف‌دار."
+      },
+      "slidesCardTitle": "اسلایدهای محصول",
+      "slidesCardDescription": "سه کاروسل محصول صفحه اصلی و آیتم‌های هر کدام را تنظیم کنید."
+    },
+    "proBanners": {
+      "title": "Pro Bannerها",
+      "description": "بنرهای تبلیغاتی با تصویر جداگانه برای دسکتاپ و موبایل را مدیریت کنید.",
+      "banner": "بنر",
+      "addBanner": "افزودن بنر",
+      "removeBanner": "حذف",
+      "link": "لینک بنر",
+      "linkPlaceholder": "https://example.com/promo",
+      "desktopImage": "تصویر دسکتاپ",
+      "mobileImage": "تصویر موبایل",
+      "uploadDesktop": "آپلود بنر دسکتاپ",
+      "uploadMobile": "آپلود بنر موبایل",
+      "imageHint": "PNG، JPG یا WebP",
+      "removeImage": "حذف",
+      "empty": "هنوز بنری وجود ندارد. روی «افزودن بنر» کلیک کنید.",
+      "save": "ذخیره Pro Bannerها",
+      "cardTitle": "Pro Bannerها",
+      "cardDescription": "چند بنر تبلیغاتی با تصویر دسکتاپ/موبایل و لینک اضافه کنید."
+    },
+    "brands": {
+      "title": "برندهای همکار",
+      "description": "برندهایی که فروشگاه با آن‌ها کار می‌کند. هر برند شامل عنوان، توضیحات و ۶ تصویر است.",
+      "brand": "برند",
+      "addBrand": "افزودن برند",
+      "removeBrand": "حذف",
+      "brandTitle": "عنوان",
+      "brandTitlePlaceholder": "نام برند را وارد کنید",
+      "brandDescription": "توضیحات",
+      "brandDescriptionPlaceholder": "توضیح کوتاه برند را بنویسید...",
+      "images": "تصاویر برند (۶ عدد)",
+      "imageSlot": "تصویر {number}",
+      "uploadImage": "آپلود تصویر",
+      "imageHint": "PNG، JPG یا WebP",
+      "removeImage": "حذف",
+      "save": "ذخیره برندها",
+      "cardTitle": "برندهای همکار",
+      "cardDescription": "برندها را با عنوان، توضیحات و ۶ تصویر برای هر برند اضافه کنید."
+    },
+    "customerReviews": {
+      "title": "نظرات مشتریان",
+      "description": "نظرات و بازخورد مشتریان نمایش‌داده‌شده در فروشگاه را مدیریت کنید.",
+      "review": "نظر",
+      "addReview": "افزودن نظر",
+      "removeReview": "حذف",
+      "photo": "عکس",
+      "uploadPhoto": "آپلود عکس",
+      "imageHint": "PNG، JPG یا WebP",
+      "removeImage": "حذف",
+      "name": "نام مشتری",
+      "namePlaceholder": "نام مشتری را وارد کنید",
+      "job": "شغل",
+      "jobPlaceholder": "مثلاً مدیر فروشگاه",
+      "date": "تاریخ",
+      "text": "متن نظر",
+      "textPlaceholder": "متن نظر مشتری را بنویسید...",
+      "save": "ذخیره نظرات",
+      "cardTitle": "نظرات مشتریان",
+      "cardDescription": "نظرات با عکس، متن، نام، تاریخ و شغل اضافه کنید."
+    },
+    "faq": {
+      "imagesTitle": "تصاویر FAQ",
+      "imagesDescription": "تصاویر بخش سوالات متداول را جدا از سوال و جواب‌ها آپلود کنید.",
+      "image": "تصویر",
+      "addImage": "افزودن تصویر",
+      "uploadLabel": "تصویر FAQ",
+      "uploadImage": "آپلود تصویر",
+      "imageHint": "PNG، JPG یا WebP",
+      "removeImage": "حذف",
+      "itemsTitle": "سوالات و پاسخ‌ها",
+      "itemsDescription": "آیتم‌های FAQ را مستقل از تصاویر بخش مدیریت کنید.",
+      "item": "آیتم FAQ",
+      "addItem": "افزودن FAQ",
+      "removeItem": "حذف",
+      "question": "سوال",
+      "questionPlaceholder": "سوال را وارد کنید",
+      "answer": "پاسخ",
+      "answerPlaceholder": "پاسخ را وارد کنید",
+      "save": "ذخیره FAQ",
+      "cardTitle": "FAQ",
+      "cardDescription": "تصاویر و سوال‌وجواب‌های FAQ را جداگانه مدیریت کنید."
+    },
+    "contactUs": {
+      "title": "بخش تماس با ما",
+      "description": "تصویر بخش تماس با ما در فروشگاه را آپلود کنید.",
+      "image": "تصویر بخش",
+      "uploadImage": "آپلود تصویر",
+      "imageHint": "PNG، JPG یا WebP",
+      "removeImage": "حذف",
+      "save": "ذخیره تماس با ما",
+      "cardTitle": "تماس با ما",
+      "cardDescription": "تصویر بخش تماس با ما را تنظیم کنید."
+    },
+    "navigation": {
+      "title": "ناوبری فروشگاه",
+      "description": "آیتم‌های مگامنو را با ستون‌ها، لینک‌ها، نشان‌ها و بلوک ویژه تنظیم کنید.",
+      "menuItem": "آیتم منو",
+      "addMenuItem": "افزودن آیتم منو",
+      "removeMenuItem": "حذف",
+      "label": "برچسب منو",
+      "labelPlaceholder": "مثلاً سیمان و گچ",
+      "href": "لینک منو",
+      "hrefPlaceholder": "/products?q=سیمان+و+گچ",
+      "summary": "خلاصه",
+      "summaryPlaceholder": "توضیح کوتاه نمایش‌داده‌شده در مگامنو",
+      "columnsTitle": "ستون‌ها",
+      "column": "ستون",
+      "addColumn": "افزودن ستون",
+      "columnTitle": "عنوان ستون",
+      "columnTitlePlaceholder": "مثلاً محصولات اصلی",
+      "links": "لینک‌ها",
+      "link": "لینک",
+      "addLink": "افزودن لینک",
+      "linkLabel": "برچسب لینک",
+      "linkLabelPlaceholder": "متن لینک",
+      "linkHref": "آدرس لینک",
+      "linkHrefPlaceholder": "/products?q=...",
+      "linkBadge": "نشان (اختیاری)",
+      "linkBadgePlaceholder": "مثلاً پرفروش",
+      "featuredTitle": "بلوک ویژه",
+      "featuredHeading": "عنوان ویژه",
+      "featuredHeadingPlaceholder": "عنوان بلوک ویژه",
+      "featuredDescription": "توضیحات ویژه",
+      "featuredDescriptionPlaceholder": "توضیحات بلوک ویژه",
+      "featuredCta": "متن دکمه",
+      "featuredCtaPlaceholder": "متن دکمه فراخوان",
+      "featuredHref": "لینک ویژه",
+      "featuredHrefPlaceholder": "/products?q=...",
+      "save": "ذخیره ناوبری",
+      "cardTitle": "ناوبری",
+      "cardDescription": "ساختار مگامنو، ستون‌ها و پیشنهادهای ویژه فروشگاه را مدیریت کنید."
+    },
+    "themes": {
+      "exploreTitle": "کاوش تم‌ها",
+      "exploreDescription": "تم‌های موجود فروشگاه را ببینید. جزئیات را پیش‌نمایش کنید و تم مورد نظر را برای فروشگاه خود بخرید.",
+      "viewDetails": "مشاهده جزئیات",
+      "buyTheme": "خرید تم",
+      "owned": "خریداری‌شده",
+      "alreadyOwned": "این تم را قبلاً خریده‌اید. از Set Style آن را تنظیم کنید.",
+      "styleLabel": "سبک",
+      "currency": "تومان",
+      "imageCount": "{count} تصویر",
+      "slide": "اسلاید {number}",
+      "previousSlide": "اسلاید قبلی",
+      "nextSlide": "اسلاید بعدی",
+      "preview": "پیش‌نمایش",
+      "previewMode": "پیش‌نمایش زنده",
+      "backToThemes": "بازگشت به تم‌ها",
+      "openInNewTab": "باز کردن دمو",
+      "cardTitle": "تم‌ها",
+      "cardDescription": "تم‌های فروشگاه را ببینید و برای فروشگاه خود خریداری کنید."
+    },
+    "setStyle": {
+      "title": "Set Style",
+      "description": "یک تم خریداری‌شده را اعمال کنید و رنگ‌ها و تایپوگرافی فروشگاه را سفارشی کنید.",
+      "selectTheme": "تم خریداری‌شده",
+      "selectThemeHint": "یکی از تم‌های خریداری‌شده را به‌عنوان چیدمان فعال فروشگاه انتخاب کنید.",
+      "colorsTitle": "پالت رنگ",
+      "fontsTitle": "تایپوگرافی",
+      "fontsHint": "روی تصویر پیش‌نمایش فونت کلیک کنید تا برای فروشگاه اعمال شود.",
+      "save": "ذخیره تنظیمات استایل",
+      "cardTitle": "Set Style",
+      "cardDescription": "تم خریداری‌شده، ۱۲ رنگ و فونت فروشگاه را تنظیم کنید.",
+      "colors": {
+        "primary": "Primary",
+        "secondary": "Secondary",
+        "background": "Background",
+        "surface": "Surface",
+        "text": "Text",
+        "textMuted": "Text Muted",
+        "accent": "Accent",
+        "border": "Border",
+        "success": "Success",
+        "warning": "Warning",
+        "danger": "Danger",
+        "info": "Info"
+      }
+    }
+  },
+  "coupons": {
+    "pageTitle": "فهرست کوپن‌ها",
+    "table": {
+      "title": "کوپن‌ها",
+      "activeCount": "{count, plural, one {# کوپن فعال} other {# کوپن فعال}}",
+      "addCoupon": "افزودن کوپن",
+      "columns": {
+        "code": "کد",
+        "discount": "تخفیف",
+        "usage": "استفاده",
+        "expires": "انقضا",
+        "status": "وضعیت",
+        "actions": "عملیات"
+      },
+      "usageFormat": "{used} / {max}",
+      "empty": {
+        "title": "هنوز کوپنی وجود ندارد",
+        "description": "برای ایجاد اولین کوپن روی «افزودن کوپن» کلیک کنید"
+      }
+    },
+    "types": {
+      "percent": "درصدی",
+      "fixed": "ثابت"
+    },
+    "status": {
+      "active": "فعال",
+      "expired": "منقضی‌شده",
+      "scheduled": "زمان‌بندی‌شده"
+    },
+    "modal": {
+      "addTitle": "افزودن کوپن جدید",
+      "editTitle": "ویرایش کوپن",
+      "couponCode": "کد کوپن",
+      "codePlaceholder": "مثال: SUMMER20",
+      "discountType": "نوع تخفیف",
+      "percentageOption": "درصدی (%)",
+      "fixedOption": "مبلغ ثابت ($)",
+      "percentageLabel": "درصد (%)",
+      "amountLabel": "مبلغ ($)",
+      "percentagePlaceholder": "20",
+      "amountPlaceholder": "50",
+      "maxUsage": "حداکثر استفاده",
+      "maxUsagePlaceholder": "100",
+      "minOrder": "حداقل سفارش ($)",
+      "minOrderPlaceholder": "0",
+      "expiryDate": "تاریخ انقضا",
+      "status": "وضعیت",
+      "descriptionOptional": "توضیحات (اختیاری)",
+      "descriptionPlaceholder": "یادداشت کوتاه درباره این کوپن",
+      "cancel": "انصراف",
+      "createCoupon": "ایجاد کوپن",
+      "saveChanges": "ذخیره تغییرات",
+      "discountValue": "مقدار تخفیف",
+      "usageLimit": "محدودیت استفاده"
+    },
+    "deleteModal": {
+      "title": "حذف کوپن؟",
+      "description": "این عمل قابل بازگشت نیست. کوپن به‌طور دائمی حذف خواهد شد.",
+      "cancel": "انصراف",
+      "delete": "حذف"
+    }
+  },
+  "errors": {
+    "notFound": {
+      "metaTitle": "۴۰۴ - صفحه یافت نشد",
+      "metaDescription": "صفحه‌ای که به دنبال آن هستید وجود ندارد",
+      "heading": "خطا",
+      "imageAlt": "۴۰۴",
+      "message": "متأسفانه صفحه‌ای که به دنبال آن هستید پیدا نشد!",
+      "backButton": "بازگشت به صفحه اصلی",
+      "footer": "© {year} - TailAdmin"
+    }
+  },
+  "generalSetting": {
+    "baseInformation": {
+      "pageTitle": "اطلاعات پایه"
+    },
+    "siteInformation": {
+      "title": "اطلاعات سایت",
+      "siteName": "نام سایت",
+      "siteNamePlaceholder": "فروشگاه من",
+      "siteUrl": "آدرس سایت",
+      "siteUrlPlaceholder": "https://myshop.com",
+      "logo": "لوگو",
+      "uploadLogo": "آپلود لوگو",
+      "favicon": "فاویکون",
+      "uploadFavicon": "آپلود فاویکون",
+      "saveSiteInfo": "ذخیره اطلاعات سایت"
+    },
+    "contactInformation": {
+      "title": "اطلاعات تماس",
+      "email": "ایمیل",
+      "emailPlaceholder": "support@yourstore.com",
+      "phone": "تلفن",
+      "phonePlaceholder": "+1 234 567 890",
+      "address": "آدرس",
+      "addressPlaceholder": "آدرس کامل کسب‌وکار...",
+      "supportUrl": "آدرس پشتیبانی",
+      "supportUrlPlaceholder": "https://support.yoursite.com",
+      "saveContactInfo": "ذخیره اطلاعات تماس"
+    },
+    "socialMedia": {
+      "title": "شبکه‌های اجتماعی",
+      "facebook": "فیسبوک",
+      "facebookPlaceholder": "https://facebook.com/yourpage",
+      "instagram": "اینستاگرام",
+      "instagramPlaceholder": "https://instagram.com/yourpage",
+      "twitter": "توییتر",
+      "twitterPlaceholder": "https://twitter.com/yourpage",
+      "youtube": "یوتیوب",
+      "youtubePlaceholder": "https://youtube.com/yourchannel",
+      "saveContactInfo": "ذخیره اطلاعات تماس"
+    },
+    "navigation": {
+      "title": "تنظیمات ناوبری",
+      "addMenu": "افزودن منو",
+      "menuNamePlaceholder": "نام منو",
+      "pathPlaceholder": "/path",
+      "rootMenu": "منوی اصلی",
+      "columns": {
+        "menu": "منو",
+        "path": "مسیر",
+        "level": "سطح",
+        "actions": "عملیات"
+      },
+      "levels": {
+        "root": "اصلی",
+        "child": "فرعی"
+      },
+      "childPrefix": "↳",
+      "saveNavigation": "ذخیره ناوبری"
+    }
+  },
+  "home": {
+    "meta": {
+      "title": "داشبورد فروشگاه React.js | TailAdmin - قالب پنل مدیریت React.js",
+      "description": "صفحه داشبورد فروشگاه React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+    },
+    "kpi": {
+      "totalRevenue": "درآمد کل",
+      "totalOrders": "کل سفارش‌ها",
+      "totalCustomers": "کل مشتریان",
+      "totalProducts": "کل محصولات",
+      "pendingOrders": "سفارش‌های در انتظار",
+      "lowStockProducts": "محصولات با موجودی کم"
+    },
+    "chart": {
+      "title": "فروش و درآمد",
+      "subtitle": "عملکرد ماهانه فروش و درآمد",
+      "sales": "فروش",
+      "revenue": "درآمد",
+      "months": {
+        "jan": "ژان",
+        "feb": "فور",
+        "mar": "مار",
+        "apr": "آپر",
+        "may": "مه",
+        "jun": "ژوئ",
+        "jul": "ژول",
+        "aug": "اوت",
+        "sep": "سپ",
+        "oct": "اکت",
+        "nov": "نوا",
+        "dec": "دس"
+      }
+    },
+    "featuredProducts": {
+      "title": "محصولات ویژه",
+      "columns": {
+        "products": "محصولات",
+        "price": "قیمت",
+        "category": "دسته‌بندی"
+      }
+    },
+    "recentOrders": {
+      "title": "سفارش‌های اخیر",
+      "seeAll": "مشاهده همه",
+      "columns": {
+        "products": "محصولات",
+        "category": "دسته‌بندی",
+        "price": "قیمت",
+        "status": "وضعیت"
+      },
+      "status": {
+        "delivered": "تحویل‌شده",
+        "pending": "در انتظار",
+        "canceled": "لغو‌شده"
+      }
+    },
+    "lowStock": {
+      "title": "محصولات با موجودی کم",
+      "columns": {
+        "product": "محصول",
+        "stock": "موجودی"
+      },
+      "left": "{count} باقی‌مانده"
+    },
+    "variants": {
+      "one": "۱ نوع",
+      "many": "{count} نوع"
+    }
+  },
+  "navigation": {
+    "menu": "منو",
+    "others": "سایر",
+    "dashboard": "داشبورد",
+    "products": "محصولات",
+    "allProducts": "همه محصولات",
+    "productSettings": "تنظیمات محصول",
+    "addProduct": "افزودن محصول",
+    "orders": "سفارش‌ها",
+    "allOrders": "همه سفارش‌ها",
+    "users": "کاربران",
+    "allUsers": "همه کاربران",
+    "coupons": "کوپن‌ها",
+    "generalSetting": "تنظیمات عمومی",
+    "baseInformation": "اطلاعات پایه",
+    "navigation": "ناوبری",
+    "weblog": "وبلاگ",
+    "allPosts": "همه پست‌ها",
+    "addPost": "افزودن پست",
+    "postCategories": "دسته‌بندی پست‌ها",
+    "comments": "نظرات",
+    "contactComments": "پیام‌های تماس با ما",
+    "context": "Context",
+    "contextOverview": "نمای کلی",
+    "hero": "Hero",
+    "productSlides": "اسلایدهای محصول",
+    "proBanners": "Pro Bannerها",
+    "brands": "برندها",
+    "customerReviews": "نظرات مشتریان",
+    "faq": "FAQ",
+    "contextContactUs": "تماس با ما",
+    "themes": "تم‌ها",
+    "setStyle": "Set Style",
+    "seo": "سئو",
+    "new": "جدید",
+    "pro": "حرفه‌ای"
+  },
+  "orders": {
+    "pageTitle": "همه سفارش‌ها",
+    "addButton": "افزودن سفارش",
+    "kpi": {
+      "totalProducts": "کل محصولات",
+      "activeProducts": "محصولات فعال",
+      "draftProducts": "محصولات پیش‌نویس",
+      "outOfStock": "ناموجود"
+    },
+    "filters": {
+      "searchPlaceholder": "جستجوی شماره سفارش یا مشتری...",
+      "search": "جستجو",
+      "orderStatus": "وضعیت سفارش",
+      "paymentStatus": "وضعیت پرداخت",
+      "dateRange": "بازه زمانی",
+      "allStatus": "همه وضعیت‌ها",
+      "allPayments": "همه پرداخت‌ها",
+      "allTime": "همه زمان‌ها",
+      "today": "امروز",
+      "thisWeek": "این هفته",
+      "thisMonth": "این ماه",
+      "status": {
+        "pending": "در انتظار",
+        "processing": "در حال پردازش",
+        "shipped": "ارسال‌شده",
+        "delivered": "تحویل‌شده",
+        "cancelled": "لغو‌شده"
+      },
+      "payment": {
+        "paid": "پرداخت‌شده",
+        "unpaid": "پرداخت‌نشده",
+        "refunded": "بازپرداخت‌شده"
+      }
+    },
+    "table": {
+      "title": "سفارش‌ها",
+      "count": "{count} سفارش",
+      "columns": {
+        "orderId": "شناسه سفارش",
+        "customer": "مشتری",
+        "date": "تاریخ",
+        "total": "مجموع",
+        "orderStatus": "وضعیت سفارش",
+        "payment": "پرداخت",
+        "actions": "عملیات"
+      }
+    },
+    "detail": {
+      "summary": {
+        "title": "خلاصه سفارش",
+        "status": "وضعیت",
+        "payment": "پرداخت",
+        "date": "تاریخ",
+        "total": "مجموع"
+      },
+      "information": {
+        "title": "اطلاعات سفارش",
+        "orderId": "شناسه سفارش: {id}",
+        "date": "تاریخ: {date}",
+        "items": "اقلام: {count} محصول",
+        "source": "منبع: فروشگاه آنلاین"
+      },
+      "customer": {
+        "title": "اطلاعات مشتری"
+      },
+      "shipping": {
+        "title": "آدرس ارسال",
+        "street": "خیابان: {street}",
+        "postal": "کد پستی: {code}"
+      },
+      "items": {
+        "title": "اقلام سفارش",
+        "columns": {
+          "product": "محصول",
+          "qty": "تعداد",
+          "price": "قیمت",
+          "total": "مجموع"
+        }
+      },
+      "paymentInfo": {
+        "title": "اطلاعات پرداخت",
+        "creditCard": "کارت اعتباری",
+        "transaction": "تراکنش: {id}",
+        "paid": "پرداخت‌شده"
+      },
+      "timeline": {
+        "title": "زمان‌بندی سفارش",
+        "orderPlaced": "ثبت سفارش",
+        "processing": "در حال پردازش",
+        "shipped": "ارسال‌شده",
+        "delivered": "تحویل‌شده"
+      },
+      "actions": {
+        "title": "یادداشت‌ها و عملیات",
+        "notePlaceholder": "یادداشت داخلی اضافه کنید...",
+        "saveNote": "ذخیره یادداشت",
+        "changeStatus": "تغییر وضعیت",
+        "printInvoice": "چاپ فاکتور"
+      }
+    },
+    "invoice": {
+      "print": "چاپ",
+      "downloadPdf": "دانلود PDF",
+      "title": "فاکتور",
+      "companyName": "شرکت شما",
+      "billTo": "صورتحساب برای:",
+      "columns": {
+        "product": "محصول",
+        "qty": "تعداد",
+        "price": "قیمت",
+        "total": "مجموع"
+      },
+      "subtotal": "جمع جزء: {amount}",
+      "tax": "مالیات: {amount}",
+      "total": "مجموع: {amount}",
+      "footer": "از خرید شما سپاسگزاریم ❤️"
+    }
+  },
+  "pages": {
+    "titles": {
+      "dashboard": "داشبورد",
+      "allProducts": "همه محصولات",
+      "productSettings": "تنظیمات محصول",
+      "addProduct": "افزودن محصول",
+      "allOrders": "همه سفارش‌ها",
+      "orderDetail": "جزئیات سفارش",
+      "allUsers": "همه کاربران",
+      "userDetail": "جزئیات کاربر",
+      "couponList": "فهرست کوپن‌ها",
+      "baseInformation": "اطلاعات پایه",
+      "navigationSettings": "تنظیمات ناوبری",
+      "allPosts": "همه پست‌ها",
+      "addPost": "افزودن پست",
+      "postSettings": "تنظیمات پست",
+      "allPostsComments": "همه نظرات پست‌ها",
+      "allContactComments": "همه پیام‌های تماس با ما",
+      "seoSettings": "تنظیمات سئو",
+      "context": "Context",
+      "heroSettings": "تنظیمات Hero",
+      "productSlidesSettings": "اسلایدهای محصول",
+      "proBannersSettings": "Pro Bannerها",
+      "brandsSettings": "برندها",
+      "customerReviewsSettings": "نظرات مشتریان",
+      "faqSettings": "FAQ",
+      "contactUsSettings": "تماس با ما",
+      "themesSettings": "کاوش تم‌ها",
+      "setStyleSettings": "Set Style",
+      "notFound": "صفحه یافت نشد",
+      "signIn": "ورود",
+      "signUp": "ثبت‌نام"
+    },
+    "buttons": {
+      "addProduct": "افزودن محصول",
+      "addOrder": "افزودن سفارش",
+      "addPost": "افزودن پست"
+    },
+    "meta": {
+      "dashboard": {
+        "title": "داشبورد فروشگاه React.js | TailAdmin - قالب پنل مدیریت React.js",
+        "description": "صفحه داشبورد فروشگاه React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      },
+      "products": {
+        "title": "داشبورد فروشگاه React.js | TailAdmin - قالب پنل مدیریت React.js",
+        "description": "صفحه داشبورد فروشگاه React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      },
+      "productSettings": {
+        "title": "داشبورد فروشگاه React.js | TailAdmin - قالب پنل مدیریت React.js",
+        "description": "صفحه داشبورد فروشگاه React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      },
+      "addProduct": {
+        "title": "داشبورد فروشگاه React.js | TailAdmin - قالب پنل مدیریت React.js",
+        "description": "صفحه داشبورد فروشگاه React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      },
+      "orders": {
+        "title": "داشبورد فروشگاه React.js | TailAdmin - قالب پنل مدیریت React.js",
+        "description": "صفحه داشبورد فروشگاه React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      },
+      "orderDetail": {
+        "title": "داشبورد فروشگاه React.js | TailAdmin - قالب پنل مدیریت React.js",
+        "description": "صفحه داشبورد فروشگاه React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      },
+      "users": {
+        "title": "داشبورد فروشگاه React.js | TailAdmin - قالب پنل مدیریت React.js",
+        "description": "صفحه داشبورد فروشگاه React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      },
+      "userDetail": {
+        "title": "داشبورد فروشگاه React.js | TailAdmin - قالب پنل مدیریت React.js",
+        "description": "صفحه داشبورد فروشگاه React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      },
+      "coupons": {
+        "title": "داشبورد فروشگاه React.js | TailAdmin - قالب پنل مدیریت React.js",
+        "description": "صفحه داشبورد فروشگاه React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      },
+      "generalSetting": {
+        "title": "داشبورد فروشگاه React.js | TailAdmin - قالب پنل مدیریت React.js",
+        "description": "صفحه داشبورد فروشگاه React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      },
+      "navigationSettings": {
+        "title": "پنل مدیریت فروشگاه - تنظیمات ناوبری",
+        "description": "مدیریت منوی ناوبری سایت"
+      },
+      "posts": {
+        "title": "داشبورد فروشگاه React.js | TailAdmin - قالب پنل مدیریت React.js",
+        "description": "صفحه داشبورد فروشگاه React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      },
+      "addPost": {
+        "title": "داشبورد فروشگاه React.js | TailAdmin - قالب پنل مدیریت React.js",
+        "description": "صفحه داشبورد فروشگاه React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      },
+      "postSettings": {
+        "title": "داشبورد فروشگاه React.js | TailAdmin - قالب پنل مدیریت React.js",
+        "description": "صفحه داشبورد فروشگاه React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      },
+      "postComments": {
+        "title": "داشبورد فروشگاه React.js | TailAdmin - قالب پنل مدیریت React.js",
+        "description": "صفحه داشبورد فروشگاه React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      },
+      "contact": {
+        "title": "داشبورد فروشگاه React.js | TailAdmin - قالب پنل مدیریت React.js",
+        "description": "صفحه داشبورد فروشگاه React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      },
+      "seo": {
+        "title": "داشبورد فروشگاه React.js | TailAdmin - قالب پنل مدیریت React.js",
+        "description": "صفحه داشبورد فروشگاه React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      },
+      "context": {
+        "title": "Context | Commerce Platform",
+        "description": "مدیریت بخش‌های محتوای فروشگاه و تنظیمات Context"
+      },
+      "heroSettings": {
+        "title": "تنظیمات Hero | Commerce Platform",
+        "description": "تنظیم ویدئو Hero و دکمه‌های فراخوان صفحه اصلی"
+      },
+      "productSlidesSettings": {
+        "title": "اسلایدهای محصول | Commerce Platform",
+        "description": "تنظیم کاروسل‌های محصول صفحه اصلی، تب‌ها و آیتم‌های هر بخش"
+      },
+      "proBannersSettings": {
+        "title": "Pro Bannerها | Commerce Platform",
+        "description": "مدیریت بنرهای تبلیغاتی با تصویر دسکتاپ، موبایل و لینک"
+      },
+      "brandsSettings": {
+        "title": "برندهای همکار | Commerce Platform",
+        "description": "مدیریت برندهای همکار با عنوان، توضیحات و تصاویر"
+      },
+      "customerReviewsSettings": {
+        "title": "نظرات مشتریان | Commerce Platform",
+        "description": "مدیریت نظرات و بازخورد مشتریان فروشگاه"
+      },
+      "faqSettings": {
+        "title": "FAQ | Commerce Platform",
+        "description": "مدیریت تصاویر و سوال‌وجواب‌های FAQ"
+      },
+      "contactUsSettings": {
+        "title": "بخش تماس با ما | Commerce Platform",
+        "description": "تنظیم تصویر بخش تماس با ما"
+      },
+      "themesSettings": {
+        "title": "کاوش تم‌ها | Commerce Platform",
+        "description": "تم‌های موجود فروشگاه را ببینید و تم مورد نظر را برای فروشگاه خود بخرید"
+      },
+      "themePreview": {
+        "title": "پیش‌نمایش {name} | Commerce Platform",
+        "description": "پیش‌نمایش زنده تم فروشگاه {name}"
+      },
+      "setStyleSettings": {
+        "title": "Set Style | Commerce Platform",
+        "description": "اعمال تم خریداری‌شده و سفارشی‌سازی رنگ‌ها و فونت"
+      },
+      "notFound": {
+        "title": "صفحه ۴۰۴ React.js | TailAdmin - قالب پنل مدیریت React.js",
+        "description": "صفحه ۴۰۴ React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      },
+      "signIn": {
+        "title": "ورود React.js | TailAdmin - قالب پنل مدیریت Next.js",
+        "description": "صفحه ورود React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      },
+      "signUp": {
+        "title": "ثبت‌نام React.js | TailAdmin - قالب پنل مدیریت Next.js",
+        "description": "صفحه ثبت‌نام React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
+      }
+    },
+    "seo": {
+      "header": {
+        "title": "تنظیمات سئو",
+        "subtitle": "مدیریت تمام تنظیمات بهینه‌سازی موتور جستجو برای سایت شما",
+        "saveChanges": "ذخیره تغییرات",
+        "saved": "ذخیره شد!"
+      },
+      "general": {
+        "title": "متا تگ‌های عمومی",
+        "description": "متادیتای پایه سئو که در نتایج جستجو نمایش داده می‌شود",
+        "siteTitle": "عنوان سایت",
+        "siteTitlePlaceholder": "نام سایت شما",
+        "siteTitleHint": "زیر ۶۰ کاراکتر نگه دارید. این عنوان در تب مرورگر و نتایج جستجو نمایش داده می‌شود.",
+        "titleSeparator": "جداکننده عنوان",
+        "titleSeparatorPreview": "عنوان صفحه{separator}نام سایت",
+        "titleSeparatorHint": "کاراکتری که عنوان صفحه را از نام سایت در تب مرورگر جدا می‌کند.",
+        "metaDescription": "توضیحات متا",
+        "metaDescriptionPlaceholder": "توضیح جذابی از سایت خود بنویسید...",
+        "metaDescriptionHint": "طول ایده‌آل ۱۲۰–۱۶۰ کاراکتر است. به‌عنوان خلاصه در نتایج گوگل استفاده می‌شود.",
+        "metaKeywords": "کلمات کلیدی متا",
+        "metaKeywordsPlaceholder": "کلمه۱, کلمه۲, کلمه۳",
+        "metaKeywordsHint": "کلمات کلیدی با ویرگول جدا شوند. بیشتر موتورهای جستجوی مدرن این را نادیده می‌گیرند.",
+        "canonicalUrl": "آدرس کانonical",
+        "canonicalUrlPlaceholder": "https://example.com",
+        "canonicalUrlHint": "به موتورهای جستجو آدرس ترجیحی این صفحه را می‌گوید تا از محتوای تکراری جلوگیری شود.",
+        "siteLanguage": "زبان سایت",
+        "siteLanguageHint": "ویژگی lang را روی عنصر HTML تنظیم می‌کند و به موتورهای جستجو کمک می‌کند مخاطب مناسب را سرویس دهند.",
+        "languages": {
+          "en": "انگلیسی",
+          "fa": "فارسی (فارسی)",
+          "de": "آلمانی",
+          "fr": "فرانسوی",
+          "es": "اسپانیایی",
+          "ar": "عربی",
+          "zh": "چینی"
+        }
+      },
+      "indexing": {
+        "title": "ایندکس و خزش",
+        "description": "کنترل نحوه خزش ربات‌های موتور جستجو در سایت شما",
+        "allowIndexing": "اجازه ایندکس موتور جستجو",
+        "allowIndexingHint": "در صورت غیرفعال بودن، تگ noindex به همه صفحات اضافه می‌شود — سایت در نتایج جستجو فهرست نمی‌شود.",
+        "followLinks": "دنبال کردن لینک‌ها (انتقال اعتبار لینک)",
+        "followLinksHint": "follow/nofollow به لینک‌ها اضافه می‌شود. غیرفعال کردن به ربات‌ها می‌گوید اعتبار سئو را از لینک‌های خروجی عبور ندهند.",
+        "indexImages": "ایندکس تصاویر در Google Images",
+        "indexImagesHint": "کنترل می‌کند تصاویر شما در نتایج Google Image Search نمایش داده شوند یا نه.",
+        "noArchive": "بدون بایگانی (جلوگیری از نسخه کش‌شده)",
+        "noArchiveHint": "noarchive اضافه می‌شود — موتورهای جستجو نسخه کش‌شده صفحات را ذخیره نمی‌کنند.",
+        "noSnippet": "بدون Snippet (مخفی کردن توضیحات متا)",
+        "noSnippetHint": "nosnippet اضافه می‌شود — گوگل snippet متنی یا پیش‌نمایش ویدیو در نتایج جستجو نشان نمی‌دهد."
+      },
+      "openGraph": {
+        "title": "Open Graph (فیسبوک / لینکدین)",
+        "description": "کنترل ظاهر سایت هنگام اشتراک‌گذاری در شبکه‌های اجتماعی",
+        "ogTitle": "عنوان OG",
+        "ogTitlePlaceholder": "عنوانی که در کارت اشتراک‌گذاری نمایش داده می‌شود",
+        "ogTitleHint": "عنوان صفحه را هنگام اشتراک در فیسبوک، لینکدین، واتساپ و غیره جایگزین می‌کند.",
+        "ogType": "نوع OG",
+        "ogTypeHint": "نوع محتوا را توصیف می‌کند — «website» برای بیشتر صفحات مناسب است.",
+        "ogDescription": "توضیحات OG",
+        "ogDescriptionPlaceholder": "توضیحی که در کارت اشتراک‌گذاری نمایش داده می‌شود",
+        "ogDescriptionHint": "زیر عنوان در پیش‌نمایش اشتراک اجتماعی نمایش داده می‌شود. ۱۰۰–۲۰۰ کاراکتر هدف باشد.",
+        "ogImageUrl": "آدرس تصویر OG",
+        "ogImagePlaceholder": "https://example.com/og-image.jpg",
+        "ogImageHint": "اندازه پیشنهادی: ۱۲۰۰×۶۳۰ پیکسل. این تصویر در کارت‌های اشتراک اجتماعی نمایش داده می‌شود.",
+        "ogLocale": "Locale OG",
+        "ogLocaleHint": "به فیسبوک زبان و منطقه محتوای شما را می‌گوید.",
+        "types": {
+          "website": "website",
+          "article": "article",
+          "product": "product",
+          "profile": "profile",
+          "video": "video",
+          "music": "music"
+        }
+      },
+      "schema": {
+        "title": "داده ساختاریافته (Schema.org)",
+        "description": "کمک به موتورهای جستجو برای درک موجودیت کسب‌وکار شما",
+        "schemaType": "نوع Schema",
+        "schemaTypeHint": "نوعی که بهترین توصیف موجودیت شماست. «Organization» برای بیشتر کسب‌وکارها مناسب است.",
+        "name": "نام",
+        "namePlaceholder": "نام سازمان شما",
+        "nameHint": "نام رسمی سازمان یا برند شخصی شما.",
+        "websiteUrl": "آدرس وب‌سایت",
+        "websiteUrlPlaceholder": "https://example.com",
+        "websiteUrlHint": "آدرس کانonical وب‌سایت، در markup schema استفاده می‌شود.",
+        "logoUrl": "آدرس لوگو",
+        "logoUrlPlaceholder": "https://example.com/logo.png",
+        "logoUrlHint": "پیشنهادی: حداقل ۱۱۲×۱۱۲ پیکسل. در Google Knowledge Panel استفاده می‌شود.",
+        "sameAsLinks": "لینک‌های sameAs شبکه‌های اجتماعی",
+        "sameAsHint": "هر خط یک آدرس. لینک به پروفایل‌های رسمی — به گوگل کمک می‌کند آن‌ها را با برند شما مرتبط کند.",
+        "types": {
+          "Organization": "Organization",
+          "LocalBusiness": "LocalBusiness",
+          "Person": "Person",
+          "WebSite": "WebSite",
+          "Product": "Product",
+          "Article": "Article",
+          "BreadcrumbList": "BreadcrumbList"
+        }
+      },
+      "sitemap": {
+        "title": "XML Sitemap",
+        "description": "پیکربندی تولید خودکار sitemap",
+        "enable": "فعال‌سازی XML Sitemap",
+        "enableHint": "فایل sitemap.xml تولید می‌کند که به موتورهای جستجو کمک می‌کند همه صفحات را کشف کنند.",
+        "updateFrequency": "فرکانس به‌روزرسانی",
+        "updateFrequencyHint": "راهنمایی برای موتورهای جستجو درباره تناوب تغییر محتوا. «Weekly» برای بیشتر وبلاگ‌ها مناسب است.",
+        "defaultPriority": "اولویت پیش‌فرض",
+        "defaultPriorityHint": "مقداری از ۰.۰ تا ۱.۰ که اهمیت صفحه نسبت به سایر صفحات سایت را نشان می‌دهد.",
+        "includeImages": "شامل تصاویر در Sitemap",
+        "includeImagesHint": "آدرس تصاویر به sitemap اضافه می‌شود و به Google Images کمک می‌کند محتوای بصری را کشف کند.",
+        "frequencies": {
+          "always": "همیشه",
+          "hourly": "ساعتی",
+          "daily": "روزانه",
+          "weekly": "هفتگی",
+          "monthly": "ماهانه",
+          "yearly": "سالانه",
+          "never": "هرگز"
+        }
+      },
+      "robots": {
+        "title": "Robots.txt",
+        "description": "کنترل بخش‌هایی از سایت که موتورهای جستجو می‌توانند به آن دسترسی داشته باشند",
+        "contentLabel": "محتوای Robots.txt",
+        "contentHint": "از «Disallow: /path/» برای مسدود کردن پوشه‌های خاص استفاده کنید. همیشه آدرس sitemap را در پایین قرار دهید.",
+        "preview": "پیش‌نمایش",
+        "resetDefault": "بازنشانی به پیش‌فرض"
+      },
+      "analytics": {
+        "title": "آنالیتیکس و ردیابی",
+        "description": "اتصال سرویس‌های آنالیتیکس و ردیابی",
+        "gaId": "شناسه Google Analytics",
+        "gaIdPlaceholder": "G-XXXXXXXXXX or UA-XXXXXXXX-X",
+        "gaIdHint": "Measurement ID مربوط به GA4 (G-XXXXXX) یا Universal Analytics را اینجا بچسبانید.",
+        "gtmId": "شناسه Google Tag Manager",
+        "gtmIdPlaceholder": "GTM-XXXXXXX",
+        "gtmIdHint": "برای مدیریت همه تگ‌های بازاریابی و آنالیتیکس از یک جا استفاده می‌شود.",
+        "fbPixel": "شناسه Facebook Pixel",
+        "fbPixelPlaceholder": "1234567890123456",
+        "fbPixelHint": "تبدیل‌های تبلیغات فیسبوک را ردیابی و مخاطبان retargeting را فعال می‌کند.",
+        "hotjarId": "شناسه سایت Hotjar",
+        "hotjarIdPlaceholder": "1234567",
+        "hotjarIdHint": "heatmap و ضبط session را برای درک رفتار کاربر فعال می‌کند."
+      },
+      "performance": {
+        "title": "عملکرد و سئوی فنی",
+        "description": "بهینه‌سازی‌های سرعت و فنی که بر رتبه‌بندی تأثیر می‌گذارند",
+        "lazyLoad": "Lazy Load تصاویر",
+        "lazyLoadHint": "بارگذاری تصاویر خارج از صفحه را به تأخیر می‌اندازد و Core Web Vitals را بهبود می‌دهد.",
+        "preloadFonts": "Preload فونت‌های حیاتی",
+        "preloadFontsHint": "برای فونت‌ها <link rel='preload'> اضافه می‌کند و render-blocking را کاهش می‌دهد.",
+        "minifyHtml": "Minify خروجی HTML",
+        "minifyHtmlHint": "فضای خالی غیرضروری HTML را حذف می‌کند و اندازه صفحه را کمی کاهش می‌دهد.",
+        "hreflang": "فعال‌سازی تگ‌های hreflang",
+        "hreflangHint": "annotationهای hreflang اضافه می‌شود — برای سایت‌های چندزبانه ضروری است.",
+        "amp": "فعال‌سازی صفحات AMP",
+        "ampHint": "نسخه‌های Accelerated Mobile Pages محتوا برای بارگذاری سریع‌تر موبایل تولید می‌کند."
+      },
+      "security": {
+        "title": "امنیت و HTTPS",
+        "description": "تنظیمات امنیتی که بر سیگنال‌های اعتماد سئو تأثیر می‌گذارند",
+        "sslForce": "اجبار HTTPS (ریدایرکت SSL)",
+        "sslForceHint": "همه ترافیک HTTP به HTTPS ریدایرکت می‌شود. HTTPS یک سیگنال رتبه‌بندی تأییدشده گوگل است.",
+        "hsts": "HTTP Strict Transport Security (HSTS)",
+        "hstsHint": "به مرورگرها می‌گوید فقط از HTTPS متصل شوند — لایه امنیتی اضافه.",
+        "csp": "Content Security Policy (CSP)",
+        "cspHint": "منابع مورد اعتماد اسکریپت، استایل و رسانه را تعریف می‌کند. ریسک XSS را کاهش می‌دهد."
+      }
+    }
+  },
+  "posts": {
+    "allPosts": {
+      "pageTitle": "همه پست‌ها",
+      "addButton": "افزودن پست"
+    },
+    "addPost": {
+      "pageTitle": "افزودن پست"
+    },
+    "postSettings": {
+      "pageTitle": "تنظیمات پست"
+    },
+    "commentsPage": {
+      "pageTitle": "همه نظرات پست‌ها"
+    },
+    "kpi": {
+      "totalOrders": "کل سفارش‌ها",
+      "activeOrders": "سفارش‌های فعال",
+      "draftOrders": "سفارش‌های پیش‌نویس",
+      "outOfStock": "ناموجود"
+    },
+    "filters": {
+      "searchPlaceholder": "جستجوی پست‌ها...",
+      "search": "جستجو",
+      "category": "دسته‌بندی",
+      "author": "نویسنده",
+      "status": "وضعیت",
+      "allCategories": "همه دسته‌بندی‌ها",
+      "allAuthors": "همه نویسندگان",
+      "allStatus": "همه وضعیت‌ها",
+      "published": "منتشر‌شده",
+      "draft": "پیش‌نویس"
+    },
+    "table": {
+      "title": "پست‌های وبلاگ",
+      "count": "{count} پست",
+      "columns": {
+        "post": "پست",
+        "category": "دسته‌بندی",
+        "author": "نویسنده",
+        "views": "بازدید",
+        "comments": "نظرات",
+        "status": "وضعیت",
+        "actions": "عملیات"
+      },
+      "editPost": "ویرایش پست",
+      "deletePost": "حذف پست"
+    },
+    "categories": {
+      "title": "دسته‌بندی‌ها",
+      "addCategory": "افزودن دسته‌بندی",
+      "columns": {
+        "category": "دسته‌بندی",
+        "products": "محصولات",
+        "actions": "عملیات"
+      },
+      "modal": {
+        "title": "افزودن دسته‌بندی",
+        "placeholder": "نام دسته‌بندی",
+        "cancel": "انصراف",
+        "save": "ذخیره دسته‌بندی"
+      }
+    },
+    "commentFilters": {
+      "searchPlaceholder": "جستجوی نظرات...",
+      "search": "جستجو",
+      "post": "پست",
+      "status": "وضعیت",
+      "userType": "نوع کاربر",
+      "allPosts": "همه پست‌ها",
+      "allStatuses": "همه وضعیت‌ها",
+      "allUsers": "همه کاربران",
+      "users": "کاربران",
+      "admins": "مدیران",
+      "approved": "تأیید‌شده",
+      "pending": "در انتظار",
+      "rejected": "رد‌شده",
+      "spam": "هرزنامه"
+    },
+    "commentsTable": {
+      "title": "نظرات",
+      "count": "{count} نظر",
+      "columns": {
+        "user": "کاربر",
+        "post": "پست",
+        "comment": "نظر",
+        "date": "تاریخ",
+        "replies": "پاسخ‌ها",
+        "status": "وضعیت",
+        "actions": "عملیات"
+      },
+      "viewComment": "مشاهده نظر",
+      "editComment": "ویرایش نظر",
+      "deleteComment": "حذف نظر"
+    },
+    "commentModal": {
+      "title": "جزئیات نظر",
+      "close": "بستن",
+      "tabs": {
+        "replies": "پاسخ‌ها",
+        "history": "تاریخچه"
+      },
+      "noReplies": "هنوز پاسخی وجود ندارد",
+      "replyPlaceholder": "پاسخ بنویسید...",
+      "send": "ارسال",
+      "approve": "تأیید",
+      "reject": "رد",
+      "archive": "بایگانی",
+      "delete": "حذف",
+      "history": {
+        "statusApproved": "وضعیت به تأیید‌شده تغییر کرد",
+        "commentSubmitted": "نظر ارسال شد",
+        "by": "توسط {name} · {date}"
+      }
+    },
+    "form": {
+      "information": {
+        "title": "اطلاعات پست",
+        "productName": "نام محصول",
+        "productNamePlaceholder": "نام محصول را وارد کنید",
+        "slug": "نامک",
+        "slugPlaceholder": "nike-air-max-black",
+        "shortDescription": "توضیح کوتاه",
+        "shortDescriptionPlaceholder": "توضیح کوتاه محصول را بنویسید...",
+        "description": "توضیحات",
+        "descriptionPlaceholder": "توضیح کوتاه محصول را بنویسید..."
+      },
+      "settings": {
+        "title": "تنظیمات پست",
+        "category": "دسته‌بندی",
+        "selectCategory": "انتخاب دسته‌بندی",
+        "author": "نویسنده",
+        "selectAuthor": "انتخاب نویسنده",
+        "status": "وضعیت",
+        "selectStatus": "انتخاب وضعیت",
+        "publishDate": "تاریخ انتشار",
+        "readTime": "رید تایم",
+        "readTimePlaceholder": "زمان مطالعه را به دقیقه وارد کنید",
+        "draft": "پیش‌نویس",
+        "published": "منتشر‌شده"
+      },
+      "images": {
+        "title": "تصاویر پست",
+        "dropzone": "تصاویر را اینجا بکشید و رها کنید، یا برای آپلود کلیک کنید",
+        "mainBadge": "اصلی"
+      },
+      "seo": {
+        "title": "تنظیمات سئو",
+        "metaTitle": "عنوان متا",
+        "metaTitlePlaceholder": "عنوان متا را وارد کنید...",
+        "metaTitleHint": "پیشنهادی: ۵۰–۶۰ کاراکتر",
+        "metaDescription": "توضیحات متا",
+        "metaDescriptionPlaceholder": "توضیحات متا را وارد کنید...",
+        "metaDescriptionHint": "پیشنهادی: ۱۵۰–۱۶۰ کاراکتر",
+        "keywords": "کلمات کلیدی",
+        "keywordsPlaceholder": "seo, blog, ecommerce, tutorial",
+        "keywordsHint": "کلمات کلیدی را با ویرگول (,) جدا کنید",
+        "previewTitle": "چگونه یک فروشگاه آنلاین موفق بسازیم",
+        "previewUrl": "https://example.com/blog/ecommerce-store",
+        "previewDescription": "با راهبردها و ابزارهای عملی یاد بگیرید چگونه یک کسب‌وکار فروشگاهی آنلاین راه‌اندازی و رشد دهید."
+      },
+      "actions": {
+        "cancel": "انصراف",
+        "savePost": "ذخیره پست"
+      }
+    }
+  },
+  "products": {
+    "pageTitle": "همه محصولات",
+    "addButton": "افزودن محصول",
+    "productSettingsTitle": "تنظیمات محصول",
+    "addProductTitle": "افزودن محصول",
+    "kpi": "$L",
+    "filters": {
+      "searchPlaceholder": "جستجوی محصولات...",
+      "search": "جستجو",
+      "category": "دسته‌بندی",
+      "brand": "برند",
+      "status": "وضعیت",
+      "allCategories": "همه دسته‌بندی‌ها",
+      "allBrands": "همه برندها",
+      "allStatus": "همه وضعیت‌ها",
+      "active": "فعال"
+    },
+    "table": {
+      "title": "محصولات",
+      "count": "{count} محصول",
+      "columns": {
+        "product": "محصول",
+        "category": "دسته‌بندی",
+        "brand": "برند",
+        "price": "قیمت",
+        "stock": "موجودی",
+        "status": "وضعیت",
+        "actions": "عملیات"
+      },
+      "editProduct": "ویرایش محصول",
+      "deleteProduct": "حذف محصول",
+      "status": {
+        "active": "فعال",
+        "lowStock": "موجودی کم",
+        "outOfStock": "ناموجود"
+      }
+    },
+    "categories": {
+      "title": "دسته‌بندی‌ها",
+      "addCategory": "افزودن دسته‌بندی",
+      "columns": {
+        "image": "تصویر",
+        "category": "دسته‌بندی",
+        "products": "محصولات",
+        "actions": "عملیات"
+      },
+      "modal": {
+        "title": "افزودن دسته‌بندی",
+        "placeholder": "نام دسته‌بندی",
+        "cancel": "انصراف",
+        "save": "ذخیره دسته‌بندی"
+      }
+    },
+    "attributes": {
+      "title": "ویژگی‌ها",
+      "addAttribute": "افزودن ویژگی",
+      "columns": {
+        "name": "نام ویژگی",
+        "type": "نوع",
+        "actions": "عملیات"
+      },
+      "types": {
+        "select": "انتخابی",
+        "text": "متنی",
+        "number": "عددی",
+        "boolean": "بولی"
+      },
+      "modal": {
+        "title": "افزودن ویژگی",
+        "namePlaceholder": "نام ویژگی",
+        "typePlaceholder": "نوع ویژگی",
+        "cancel": "انصراف",
+        "save": "ذخیره ویژگی"
+      }
+    },
+    "attributeValues": {
+      "title": "مقادیر ویژگی",
+      "addValue": "افزودن مقدار",
+      "columns": {
+        "value": "مقدار",
+        "attribute": "ویژگی",
+        "actions": "عملیات"
+      },
+      "modal": {
+        "title": "افزودن مقدار ویژگی",
+        "selectAttribute": "انتخاب ویژگی",
+        "valuePlaceholder": "مقدار",
+        "cancel": "انصراف",
+        "save": "ذخیره مقدار"
+      }
+    },
+    "form": {
+      "information": {
+        "title": "اطلاعات محصول",
+        "productName": "نام محصول",
+        "productNamePlaceholder": "نام محصول را وارد کنید",
+        "slug": "نامک",
+        "slugPlaceholder": "nike-air-max-black",
+        "shortDescription": "توضیح کوتاه",
+        "shortDescriptionPlaceholder": "توضیح کوتاه محصول را بنویسید...",
+        "description": "توضیحات"
+      },
+      "organization": {
+        "title": "سازمان‌دهی محصول",
+        "category": "دسته‌بندی",
+        "selectCategory": "انتخاب دسته‌بندی",
+        "brand": "برند",
+        "selectBrand": "انتخاب برند",
+        "status": "وضعیت",
+        "selectStatus": "انتخاب وضعیت",
+        "featuredProduct": "محصول ویژه",
+        "selectOption": "انتخاب گزینه",
+        "yes": "بله",
+        "no": "خیر",
+        "statusOptions": {
+          "active": "فعال",
+          "draft": "پیش‌نویس",
+          "archived": "بایگانی‌شده"
+        }
+      },
+      "pricing": {
+        "title": "قیمت‌گذاری و موجودی",
+        "price": "قیمت",
+        "pricePlaceholder": "0.00",
+        "salePrice": "قیمت فروش",
+        "discount": "تخفیف (%)",
+        "discountPlaceholder": "0",
+        "sku": "شناسه SKU",
+        "skuPlaceholder": "PROD-001",
+        "stockQuantity": "تعداد موجودی",
+        "stockPlaceholder": "تعداد موجودی را وارد کنید",
+        "compareAtPrice": "قیمت قبل از تخفیف",
+        "cost": "هزینه"
+      },
+      "attributes": {
+        "title": "ویژگی‌های محصول",
+        "addAttribute": "افزودن ویژگی",
+        "attribute": "ویژگی",
+        "selectAttribute": "انتخاب ویژگی",
+        "value": "مقدار",
+        "selectValue": "انتخاب مقدار"
+      },
+      "images": {
+        "title": "تصاویر محصول",
+        "mainImage": "تصویر اصلی",
+        "mainImageDropzone": "برای آپلود تصویر اصلی کلیک کنید",
+        "dropzone": "تصاویر را اینجا بکشید و رها کنید، یا برای آپلود کلیک کنید",
+        "mainBadge": "اصلی"
+      },
+      "actions": {
+        "cancel": "انصراف",
+        "saveProduct": "ذخیره محصول"
+      }
+    }
+  },
+  "users": {
+    "pageTitle": "همه کاربران",
+    "filters": {
+      "searchPlaceholder": "جستجوی کاربران...",
+      "search": "جستجو"
+    },
+    "table": {
+      "title": "کاربران",
+      "count": "{count} کاربر",
+      "columns": {
+        "user": "کاربر",
+        "email": "ایمیل",
+        "phone": "تلفن",
+        "joinDate": "تاریخ عضویت",
+        "actions": "عملیات"
+      },
+      "editUser": "ویرایش کاربر",
+      "deleteUser": "حذف کاربر"
+    },
+    "detail": {
+      "information": {
+        "title": "اطلاعات کاربر",
+        "fullName": "نام کامل",
+        "userId": "شناسه کاربر",
+        "email": "ایمیل",
+        "phone": "تلفن",
+        "registrationDate": "تاریخ ثبت‌نام",
+        "lastOrder": "آخرین سفارش"
+      },
+      "addresses": {
+        "title": "آدرس‌ها",
+        "homeAddress": "آدرس منزل",
+        "workAddress": "آدرس محل کار",
+        "billingAddress": "آدرس صورتحساب",
+        "sameAsHome": "همانند آدرس منزل"
+      },
+      "orderHistory": {
+        "title": "تاریخچه سفارش‌ها",
+        "count": "{count} سفارش",
+        "columns": {
+          "orderId": "شناسه سفارش",
+          "date": "تاریخ",
+          "total": "مجموع",
+          "status": "وضعیت"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,160 @@
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { TrendingDown, TrendingUp, Inbox } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const statusVariants: Record<
+  string,
+  "default" | "secondary" | "destructive" | "success" | "warning" | "info"
+> = {
+  active: "success",
+  inactive: "secondary",
+  VIP: "info",
+  pending: "warning",
+  processing: "info",
+  shipped: "info",
+  delivered: "success",
+  cancelled: "destructive",
+  lowStock: "warning",
+  outOfStock: "destructive",
+  expired: "secondary",
+  scheduled: "info",
+  Draft: "secondary",
+  Published: "success",
+  Scheduled: "warning",
+  approved: "success",
+  rejected: "destructive",
+};
+
+export function StatusBadge({ status, label }: { status: string; label?: string }) {
+  const variant = statusVariants[status] ?? "default";
+  return (
+    <Badge variant={variant} className="capitalize">
+      {label ?? status}
+    </Badge>
+  );
+}
+
+export function StatCard({
+  title,
+  value,
+  trend,
+  isLoading,
+  className,
+}: {
+  title: string;
+  value: string;
+  trend?: number;
+  isLoading?: boolean;
+  className?: string;
+}) {
+  const isPositive = trend !== undefined && trend >= 0;
+
+  return (
+    <div
+      className={cn(
+        "group relative flex flex-col gap-2 overflow-hidden rounded-xl border border-border bg-card p-4 shadow-elevated-sm transition-shadow duration-200 hover:shadow-elevated-md motion-reduce:transition-none lg:p-5",
+        className,
+      )}
+    >
+      <div className="absolute inset-y-0 start-0 w-0.5 bg-primary/0 transition-colors duration-200 group-hover:bg-primary/40 motion-reduce:transition-none" />
+      <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+        {title}
+      </p>
+      {isLoading ? (
+        <Skeleton className="h-8 w-24" />
+      ) : (
+        <p className="text-2xl font-semibold tracking-tight tabular-nums">{value}</p>
+      )}
+      {trend !== undefined && !isLoading && (
+        <div
+          className={cn(
+            "flex items-center gap-1 text-xs font-medium",
+            isPositive ? "text-success" : "text-destructive",
+          )}
+        >
+          {isPositive ? (
+            <TrendingUp className="size-3.5" aria-hidden />
+          ) : (
+            <TrendingDown className="size-3.5" aria-hidden />
+          )}
+          <span className="tabular-nums">
+            {isPositive ? "+" : ""}
+            {trend}%
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function PageHeader({
+  title,
+  description,
+  action,
+  eyebrow,
+}: {
+  title: string;
+  description?: string;
+  action?: React.ReactNode;
+  eyebrow?: string;
+}) {
+  return (
+    <header className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+      <div className="flex flex-col gap-1">
+        {eyebrow && (
+          <p className="text-xs font-medium tracking-wider text-primary uppercase">{eyebrow}</p>
+        )}
+        <h1 className="text-2xl font-semibold tracking-tight lg:text-3xl">{title}</h1>
+        {description && <p className="max-w-2xl text-sm text-muted-foreground">{description}</p>}
+      </div>
+      {action && <div className="flex shrink-0 items-center gap-2">{action}</div>}
+    </header>
+  );
+}
+
+export function EmptyState({
+  title,
+  description,
+  action,
+  icon: Icon = Inbox,
+}: {
+  title: string;
+  description?: string;
+  action?: React.ReactNode;
+  icon?: React.ComponentType<{ className?: string }>;
+}) {
+  return (
+    <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-border bg-muted/30 px-6 py-16 text-center">
+      <div className="flex size-12 items-center justify-center rounded-full bg-muted">
+        <Icon className="size-5 text-muted-foreground" aria-hidden />
+      </div>
+      <div className="flex flex-col gap-1">
+        <p className="text-base font-medium">{title}</p>
+        {description && <p className="max-w-sm text-sm text-muted-foreground">{description}</p>}
+      </div>
+      {action}
+    </div>
+  );
+}
+
+export function ErrorState({
+  title,
+  description,
+  action,
+}: {
+  title: string;
+  description?: string;
+  action?: React.ReactNode;
+}) {
+  return (
+    <div
+      className="flex flex-col items-center justify-center gap-4 rounded-xl border border-destructive/20 bg-destructive/5 px-6 py-12 text-center"
+      role="alert"
+    >
+      <p className="text-base font-medium text-destructive">{title}</p>
+      {description && <p className="max-w-sm text-sm text-muted-foreground">{description}</p>}
+      {action}
+    </div>
+  );
+}

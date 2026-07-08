@@ -1,0 +1,530 @@
+import type {
+  Product,
+  Order,
+  Customer,
+  Coupon,
+  DashboardStats,
+  ChartDataPoint,
+  Category,
+  BlogPost,
+  BlogComment,
+  ContactMessage,
+  GeneralSettings,
+  SeoSettings,
+  User,
+} from "@/types";
+
+export const mockProducts: Product[] = [
+  {
+    id: "1",
+    name: 'MacBook Pro 13"',
+    description: "Powerful laptop for professionals",
+    sku: "MBP-13-001",
+    price: 2399,
+    compareAtPrice: 2599,
+    cost: 1800,
+    category: "Laptop",
+    tags: ["apple", "laptop"],
+    brand: "Apple",
+    status: "active",
+    stock: 6,
+    images: ["https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100"],
+    attributes: [{ key: "Color", values: ["Black", "Blue", "Red"] }],
+    variants: 2,
+  },
+  {
+    id: "2",
+    name: "Apple Watch Ultra",
+    description: "Premium smartwatch",
+    sku: "AWU-001",
+    price: 879,
+    category: "Watch",
+    tags: ["apple", "watch"],
+    brand: "Apple",
+    status: "active",
+    stock: 10,
+    images: ["https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=100"],
+    attributes: [{ key: "Size", values: ["Default"] }],
+    variants: 1,
+  },
+  {
+    id: "3",
+    name: "iPhone 15 Pro Max",
+    description: "Latest iPhone flagship",
+    sku: "IP15PM-001",
+    price: 1869,
+    category: "SmartPhone",
+    tags: ["apple", "phone"],
+    brand: "Apple",
+    status: "active",
+    stock: 25,
+    images: ["https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100"],
+    attributes: [{ key: "Color", values: ["Black", "White"] }],
+    variants: 2,
+  },
+  {
+    id: "4",
+    name: "iPad Pro 3rd Gen",
+    description: "Professional tablet",
+    sku: "IPAD-PRO-003",
+    price: 1699,
+    category: "Electronics",
+    tags: ["apple", "tablet"],
+    brand: "Apple",
+    status: "active",
+    stock: 15,
+    images: ["https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100"],
+    attributes: [],
+    variants: 2,
+  },
+  {
+    id: "5",
+    name: "AirPods Pro 2nd Gen",
+    description: "Premium wireless earbuds",
+    sku: "APP2-001",
+    price: 240,
+    category: "Accessories",
+    tags: ["apple", "audio"],
+    brand: "Apple",
+    status: "active",
+    stock: 50,
+    images: ["https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100"],
+    attributes: [],
+    variants: 1,
+  },
+];
+
+export const mockOrders: Order[] = [
+  {
+    id: "ORD-001",
+    customerId: "1",
+    customerName: "John Doe",
+    customerEmail: "john@example.com",
+    products: ['MacBook Pro 13"'],
+    date: "2026-01-15T10:00:00Z",
+    amount: 2399,
+    status: "delivered",
+    paymentMethod: "Credit Card",
+    subtotal: 2399,
+    shipping: 0,
+    tax: 192,
+    discount: 0,
+    items: [
+      {
+        productId: "1",
+        productName: 'MacBook Pro 13"',
+        variant: "2 Variants",
+        quantity: 1,
+        price: 2399,
+      },
+    ],
+    timeline: [
+      { status: "pending", date: "2026-01-15T10:00:00Z" },
+      { status: "processing", date: "2026-01-15T12:00:00Z" },
+      { status: "shipped", date: "2026-01-16T09:00:00Z" },
+      { status: "delivered", date: "2026-01-18T14:00:00Z" },
+    ],
+  },
+  {
+    id: "ORD-002",
+    customerId: "2",
+    customerName: "Jane Smith",
+    products: ["Apple Watch Ultra"],
+    date: "2026-01-20T14:30:00Z",
+    amount: 879,
+    status: "pending",
+    items: [
+      {
+        productId: "2",
+        productName: "Apple Watch Ultra",
+        variant: "1 Variant",
+        quantity: 1,
+        price: 879,
+      },
+    ],
+  },
+  {
+    id: "ORD-003",
+    customerId: "3",
+    customerName: "Bob Wilson",
+    products: ["iPhone 15 Pro Max"],
+    date: "2026-01-18T09:15:00Z",
+    amount: 1869,
+    status: "delivered",
+    items: [
+      {
+        productId: "3",
+        productName: "iPhone 15 Pro Max",
+        variant: "2 Variants",
+        quantity: 1,
+        price: 1869,
+      },
+    ],
+  },
+  {
+    id: "ORD-004",
+    customerId: "4",
+    customerName: "Alice Brown",
+    products: ["iPad Pro 3rd Gen"],
+    date: "2026-01-10T16:45:00Z",
+    amount: 1699,
+    status: "cancelled",
+    items: [
+      {
+        productId: "4",
+        productName: "iPad Pro 3rd Gen",
+        variant: "2 Variants",
+        quantity: 1,
+        price: 1699,
+      },
+    ],
+  },
+  {
+    id: "ORD-005",
+    customerId: "5",
+    customerName: "Charlie Davis",
+    products: ["AirPods Pro 2nd Gen"],
+    date: "2026-01-22T11:00:00Z",
+    amount: 240,
+    status: "delivered",
+    items: [
+      {
+        productId: "5",
+        productName: "AirPods Pro 2nd Gen",
+        variant: "1 Variant",
+        quantity: 1,
+        price: 240,
+      },
+    ],
+  },
+];
+
+export const mockCustomers: Customer[] = [
+  {
+    id: "1",
+    name: "John Doe",
+    email: "john@example.com",
+    phone: "+1 555-0101",
+    orders: 12,
+    status: "active",
+    address: "123 Main St",
+    city: "New York",
+    country: "USA",
+  },
+  {
+    id: "2",
+    name: "Jane Smith",
+    email: "jane@example.com",
+    phone: "+1 555-0102",
+    orders: 8,
+    status: "VIP",
+    address: "456 Oak Ave",
+    city: "Los Angeles",
+    country: "USA",
+  },
+  {
+    id: "3",
+    name: "Bob Wilson",
+    email: "bob@example.com",
+    phone: "+1 555-0103",
+    orders: 5,
+    status: "active",
+    city: "Chicago",
+    country: "USA",
+  },
+  {
+    id: "4",
+    name: "Alice Brown",
+    email: "alice@example.com",
+    phone: "+1 555-0104",
+    orders: 3,
+    status: "inactive",
+    city: "Houston",
+    country: "USA",
+  },
+];
+
+export const mockCoupons: Coupon[] = [
+  {
+    id: "1",
+    couponCode: "SAVE20",
+    discountType: "percent",
+    discountValue: 20,
+    expiryDate: "2026-12-31",
+    minOrder: 100,
+    usageLimit: 100,
+    usage: 45,
+    status: "active",
+  },
+  {
+    id: "2",
+    couponCode: "FLAT50",
+    discountType: "fixed",
+    discountValue: 50,
+    expiryDate: "2026-06-30",
+    minOrder: 200,
+    usageLimit: 50,
+    usage: 50,
+    status: "expired",
+  },
+];
+
+export const mockDashboardStats: DashboardStats = {
+  totalRevenue: 24780,
+  totalOrders: 1248,
+  totalCustomers: 3782,
+  totalProducts: 245,
+  pendingOrders: 32,
+  lowStockProducts: 14,
+  revenueTrend: 12.5,
+  ordersTrend: 8.2,
+  customersTrend: 11.0,
+  productsTrend: 5.4,
+  pendingTrend: 3.1,
+  lowStockTrend: 2.8,
+};
+
+export const mockChartData: ChartDataPoint[] = [
+  { month: "Jan", sales: 4000, revenue: 2400 },
+  { month: "Feb", sales: 3000, revenue: 1398 },
+  { month: "Mar", sales: 2000, revenue: 9800 },
+  { month: "Apr", sales: 2780, revenue: 3908 },
+  { month: "May", sales: 1890, revenue: 4800 },
+  { month: "Jun", sales: 2390, revenue: 3800 },
+  { month: "Jul", sales: 3490, revenue: 4300 },
+  { month: "Aug", sales: 4000, revenue: 2400 },
+  { month: "Sep", sales: 3000, revenue: 1398 },
+  { month: "Oct", sales: 2000, revenue: 9800 },
+  { month: "Nov", sales: 2780, revenue: 3908 },
+  { month: "Dec", sales: 3490, revenue: 4300 },
+];
+
+export const mockCategories: Category[] = [
+  { id: "1", name: "Laptop" },
+  { id: "2", name: "Watch" },
+  { id: "3", name: "SmartPhone" },
+  { id: "4", name: "Electronics" },
+  { id: "5", name: "Accessories" },
+  { id: "6", name: "Clothing" },
+  { id: "7", name: "Shoes" },
+];
+
+export const mockPosts: BlogPost[] = [
+  {
+    id: "1",
+    title: "Getting Started with E-commerce",
+    slug: "getting-started-ecommerce",
+    author: "Admin",
+    category: "Guides",
+    status: "Published",
+    publishedDate: "2026-01-10",
+    tags: ["ecommerce", "guide"],
+  },
+  {
+    id: "2",
+    title: "Product Photography Tips",
+    slug: "product-photography-tips",
+    author: "Admin",
+    category: "Tutorials",
+    status: "Draft",
+    publishedDate: "2026-01-15",
+    tags: ["photography"],
+  },
+];
+
+export const mockComments: BlogComment[] = [
+  {
+    id: "1",
+    postTitle: "Getting Started with E-commerce",
+    author: "Reader1",
+    content: "Great article!",
+    status: "approved",
+    read: true,
+    date: "2026-01-12",
+  },
+  {
+    id: "2",
+    postTitle: "Product Photography Tips",
+    author: "Reader2",
+    content: "Very helpful tips.",
+    status: "pending",
+    read: false,
+    date: "2026-01-16",
+  },
+];
+
+export const mockContactMessages: ContactMessage[] = [
+  {
+    id: "1",
+    name: "Sarah Connor",
+    email: "sarah@example.com",
+    subject: "Product inquiry",
+    message: "Do you have this in stock?",
+    date: "2026-01-20",
+    replies: 0,
+  },
+  {
+    id: "2",
+    name: "Mike Johnson",
+    email: "mike@example.com",
+    subject: "Shipping question",
+    message: "How long does shipping take?",
+    date: "2026-01-19",
+    replies: 1,
+  },
+];
+
+export const mockGeneralSettings: GeneralSettings = {
+  storeName: "Commerce Platform",
+  contactEmail: "support@example.com",
+  contactPhone: "+1 555-0000",
+  facebook: "https://facebook.com/yourpage",
+  twitter: "https://twitter.com/yourpage",
+  instagram: "https://instagram.com/yourpage",
+  youtube: "https://youtube.com/yourchannel",
+};
+
+export const mockSeoSettings: SeoSettings = {
+  siteTitle: "Commerce Platform",
+  metaDescription: "Your one-stop e-commerce shop",
+  metaKeywords: "shop, ecommerce, products",
+  canonicalUrl: "https://example.com",
+  ogTitle: "Commerce Platform",
+  ogDescription: "Shop the best products online",
+  ogImageUrl: "https://example.com/og-image.jpg",
+  googleAnalyticsId: "G-XXXXXXXXXX",
+  gtmId: "GTM-XXXXXXX",
+  facebookPixelId: "",
+  hreflangEn: "https://example.com/en",
+  hreflangFa: "https://example.com/fa",
+};
+
+export const mockUser: User = {
+  id: "1",
+  firstName: "Admin",
+  lastName: "User",
+  email: "admin@example.com",
+};
+
+export const mockPostCategories = ["News", "Guides", "Tutorials", "Announcements"];
+
+export const mockThemes = [
+  { id: "bold-dark", name: "Bold Dark", description: "Dark checkout theme with bold accents" },
+  { id: "minimal-light", name: "Minimal Light", description: "Clean minimal light theme" },
+  { id: "modern-blue", name: "Modern Blue", description: "Modern blue checkout theme" },
+];
+
+export const mockStoreStyle = {
+  primaryColor: "#465fff",
+  fontFamily: "Inter",
+  activeTheme: "modern-blue",
+};
+
+export const mockContextSections = {
+  hero: {
+    headline: "Welcome to Commerce Platform",
+    subtitle: "Discover premium products at unbeatable prices",
+    ctaText: "Shop Now",
+    ctaLink: "https://example.com/shop",
+    backgroundImage: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1200",
+    overlayOpacity: true,
+  },
+  brands: [
+    {
+      id: "1",
+      title: "Apple",
+      description: "Premium electronics and accessories",
+      logo: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200",
+    },
+    {
+      id: "2",
+      title: "Nike",
+      description: "Athletic footwear and apparel",
+      logo: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200",
+    },
+  ],
+  "pro-banners": [
+    {
+      id: "1",
+      link: "https://example.com/promo",
+      desktopImage: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800",
+      mobileImage: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400",
+    },
+  ],
+  "customer-reviews": [
+    {
+      id: "1",
+      name: "Alice Johnson",
+      job: "Store Manager",
+      date: "2026-01-10",
+      text: "Excellent service and fast delivery!",
+      status: "approved",
+    },
+    {
+      id: "2",
+      name: "Bob Smith",
+      job: "Customer",
+      date: "2026-01-15",
+      text: "Great product quality. Highly recommend.",
+      status: "pending",
+    },
+    {
+      id: "3",
+      name: "Sara Lee",
+      job: "Designer",
+      date: "2026-01-18",
+      text: "Beautiful storefront and smooth checkout.",
+      status: "approved",
+    },
+  ],
+  faq: [
+    {
+      id: "1",
+      question: "What is your return policy?",
+      answer: "We offer 30-day returns on all unused items in original packaging.",
+    },
+    {
+      id: "2",
+      question: "How long does shipping take?",
+      answer: "Standard shipping takes 3–5 business days. Express shipping is available.",
+    },
+    {
+      id: "3",
+      question: "Do you ship internationally?",
+      answer: "Yes, we ship to over 50 countries worldwide.",
+    },
+  ],
+  "contact-us": {
+    heading: "Get in Touch",
+    body: "Have questions? We'd love to hear from you.",
+    showNameField: true,
+    showEmailField: true,
+    showPhoneField: false,
+    showSubjectField: true,
+    showMessageField: true,
+  },
+  navigation: [
+    { id: "1", label: "Home", url: "/", order: 1 },
+    { id: "2", label: "Products", url: "/products", order: 2 },
+    { id: "3", label: "Sale", url: "/products?status=sale", order: 3 },
+    { id: "4", label: "Blog", url: "/weblog", order: 4 },
+    { id: "5", label: "Contact", url: "/contact", order: 5 },
+  ],
+  "product-slides": {
+    newest: {
+      title: "Newest Arrivals",
+      autoplayInterval: 4500,
+      productIds: ["3", "4", "5"],
+    },
+    bestsellers: {
+      title: "Best Sellers",
+      autoplayInterval: 5000,
+      productIds: ["1", "2", "3"],
+    },
+    discounted: {
+      title: "On Sale",
+      autoplayInterval: 4500,
+      productIds: ["5", "2"],
+    },
+  },
+};
