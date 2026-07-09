@@ -1,0 +1,17 @@
+node_modules
+.next
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+graphify-out
+.cursor
+documentation
+docs.json
+*.md
+tsconfig.tsbuildinfo
+npm-debug.log*
+Dockerfile
+docker-compose.yml
+.dockerignore
