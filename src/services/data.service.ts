@@ -454,7 +454,7 @@ export async function createCoupon(coupon: Partial<Coupon>): Promise<Coupon> {
     code: coupon.couponCode,
     discount_type: coupon.discountType === "fixed" ? "fixed_amount" : "percentage",
     discount_value: coupon.discountValue,
-    expires_at: coupon.expiryDate,
+    expires_at: coupon.expiryDate ? new Date(coupon.expiryDate).toISOString() : undefined,
     min_order_amount: coupon.minOrder,
     max_usage: coupon.usageLimit,
     is_active: true,

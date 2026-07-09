@@ -1,16 +1,16 @@
 # Graph Report - store-front  (2026-07-08)
 
 ## Corpus Check
-- 144 files · ~102,153 words
+- 150 files · ~109,400 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1070 nodes · 2228 edges · 78 communities (72 shown, 6 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 7 edges (avg confidence: 0.8)
+- 1166 nodes · 2624 edges · 78 communities (73 shown, 5 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3fd79926`
+- Built from commit: `b6c92fd8`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -60,6 +60,7 @@
 - [[_COMMUNITY_Community 44|Community 44]]
 - [[_COMMUNITY_Community 45|Community 45]]
 - [[_COMMUNITY_Community 46|Community 46]]
+- [[_COMMUNITY_Community 47|Community 47]]
 - [[_COMMUNITY_Community 48|Community 48]]
 - [[_COMMUNITY_Community 49|Community 49]]
 - [[_COMMUNITY_Community 50|Community 50]]
@@ -92,41 +93,41 @@
 - [[_COMMUNITY_Community 77|Community 77]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `cn()` - 113 edges
-2. `Button()` - 40 edges
+1. `cn()` - 116 edges
+2. `Button()` - 42 edges
 3. `delay()` - 39 edges
-4. `PageTransition()` - 33 edges
-5. `PageHeader()` - 29 edges
-6. `Input()` - 26 edges
-7. `Label()` - 22 edges
-8. `Card()` - 21 edges
-9. `CardContent()` - 21 edges
-10. `CardHeader()` - 20 edges
+4. `PageTransition()` - 35 edges
+5. `PageHeader()` - 31 edges
+6. `Input()` - 29 edges
+7. `delay()` - 27 edges
+8. `Label()` - 22 edges
+9. `Card()` - 21 edges
+10. `CardContent()` - 21 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `_generate_intelligent_overrides()` --calls--> `search()`  [INFERRED]
   .cursor/skills/ui-ux-pro-max/scripts/design_system.py → .cursor/skills/ui-ux-pro-max/scripts/core.py
-- `SignUpPage()` --calls--> `useAuth()`  [EXTRACTED]
-  src/app/[locale]/(auth)/signup/page.tsx → src/providers/auth-provider.tsx
 - `CreateProductPage()` --calls--> `cn()`  [INFERRED]
   src/app/[locale]/(dashboard)/products/create/page.tsx → src/lib/utils.ts
 - `UserDetailPage()` --calls--> `formatDate()`  [INFERRED]
   src/app/[locale]/(dashboard)/users/[id]/page.tsx → src/lib/utils.ts
-- `AvatarImage()` --calls--> `cn()`  [EXTRACTED]
-  src/components/ui/avatar.tsx → src/lib/utils.ts
+- `DropdownMenuCheckboxItem()` --calls--> `cn()`  [EXTRACTED]
+  src/components/ui/dropdown-menu.tsx → src/lib/utils.ts
+- `DropdownMenuRadioItem()` --calls--> `cn()`  [EXTRACTED]
+  src/components/ui/dropdown-menu.tsx → src/lib/utils.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (78 total, 6 thin omitted)
+## Communities (78 total, 5 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.09
-Nodes (41): ApiListResponse, CONTEXT_SECTION_ENDPOINTS, ContextData, createCategory(), createCoupon(), createOrder(), createPost(), createPostCategory() (+33 more)
+Cohesion: 0.08
+Nodes (45): ApiListResponse, CONTEXT_SECTION_ENDPOINTS, ContextData, createCategory(), createCoupon(), createOrder(), createPost(), createPostCategory() (+37 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.05
-Nodes (42): dependencies, axios, class-variance-authority, clsx, date-fns, framer-motion, @hookform/resolvers, lucide-react (+34 more)
+Nodes (44): dependencies, axios, class-variance-authority, clsx, date-fns, framer-motion, @hookform/resolvers, lucide-react (+36 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.15
@@ -137,44 +138,44 @@ Cohesion: 0.10
 Nodes (19): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+11 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.09
-Nodes (47): Brand, BrandsPage(), FormData, schema, sections, ProductForm, productSchema, CustomerReviewsPage() (+39 more)
+Cohesion: 0.08
+Nodes (53): BrandForm, BrandFormState, BrandsPage(), CouponForm, couponSchema, CustomerReviewsPage(), ReviewForm, FaqForm (+45 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.15
-Nodes (15): CreateProductPage(), cn(), FilterBar(), RichTextEditor(), RichTextEditorProps, AlertDialogOverlay(), CardAction(), CardFooter() (+7 more)
+Cohesion: 0.06
+Nodes (55): ContactSection, FaqItem, FaqItemPayload, HeroSettings, HomepageReview, HomepageReviewPayload, NavItem, PartnerBrand (+47 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.12
-Nodes (16): HeaderProps, Avatar(), AvatarFallback(), AvatarImage(), DropdownMenu(), DropdownMenuCheckboxItem(), DropdownMenuContent(), DropdownMenuItem() (+8 more)
+Cohesion: 0.14
+Nodes (13): HeaderProps, DropdownMenu(), DropdownMenuCheckboxItem(), DropdownMenuContent(), DropdownMenuItem(), DropdownMenuLabel(), DropdownMenuRadioItem(), DropdownMenuSeparator() (+5 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.13
 Nodes (14): CHART_PERIODS, CHECKOUT_THEMES, CONTEXT_SECTIONS, COUPON_STATUSES, CUSTOMER_STATUSES, DISCOUNT_TYPES, ORDER_STATUSES, POST_STATUSES (+6 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.08
-Nodes (44): CouponForm, couponSchema, Review, DashboardPage(), OrderDetailPage(), UserDetailPage(), InvoicePage(), formatCurrency() (+36 more)
+Cohesion: 0.32
+Nodes (6): useAuth(), SignInForm, SignInPage(), signInSchema, SignUpPage(), Checkbox()
 
 ### Community 9 - "Community 9"
-Cohesion: 0.11
-Nodes (26): AdminBrand, AdminCategory, AdminProductResponse, AdminProductStatus, CatalogAttribute, CatalogAttributeValue, CreateProductPayload, PaginatedData (+18 more)
+Cohesion: 0.08
+Nodes (40): AdminBrand, AdminCategory, AdminProductResponse, AdminProductStatus, CatalogAttribute, CatalogAttributeValue, CreateBrandPayload, CreateCatalogAttributePayload (+32 more)
 
 ### Community 10 - "Community 10"
-Cohesion: 0.18
-Nodes (8): Sheet(), SheetContent(), SheetDescription(), SheetFooter(), SheetHeader(), SheetOverlay(), SheetTitle(), sheetVariants
+Cohesion: 0.11
+Nodes (20): CreateProductPage(), cn(), FilterBar(), defaultActions, QuickAction, QuickActions(), RichTextEditor(), RichTextEditorProps (+12 more)
 
 ### Community 11 - "Community 11"
-Cohesion: 0.10
-Nodes (26): mockCategories, mockChartData, mockComments, mockContactMessages, mockCoupons, mockCustomers, mockDashboardStats, mockGeneralSettings (+18 more)
+Cohesion: 0.08
+Nodes (31): SalesChart(), mockCategories, mockChartData, mockComments, mockContactMessages, mockCoupons, mockCustomers, mockDashboardStats (+23 more)
 
 ### Community 12 - "Community 12"
 Cohesion: 0.15
 Nodes (12): mockContextSections, mockStoreStyle, ContextStore, getMockContextSection(), getMockStoreStyle(), setMockContextSection(), setMockStoreStyle(), storeStyle (+4 more)
 
 ### Community 13 - "Community 13"
-Cohesion: 0.25
-Nodes (10): getNavIcon(), navigationIcons, NavLink(), SidebarProps, RowAction, TableRowActions(), Tooltip(), TooltipContent() (+2 more)
+Cohesion: 0.18
+Nodes (14): clearTokens(), setTokens(), mockUser, CurrentUserResponse, delay(), mapCurrentUser(), resetPassword(), signIn() (+6 more)
 
 ### Community 14 - "Community 14"
 Cohesion: 0.40
@@ -189,16 +190,16 @@ Cohesion: 0.07
 Nodes (26): Auto-fit Grid, Calculating Fluid Values, Cluster Layout, Combining Viewport and Container Units, Complete Type Scale, Container Widths, Content-Based Widths, CSS Grid Fluid Layouts (+18 more)
 
 ### Community 17 - "Community 17"
-Cohesion: 0.22
-Nodes (4): API Endpoint Mapping Matrix, Auth Scheme, Integration Steps, Folder Structure
+Cohesion: 0.50
+Nodes (3): API Endpoint Mapping Matrix, Auth Scheme, Integration Steps
 
 ### Community 19 - "Community 19"
-Cohesion: 0.11
-Nodes (17): `AppLayout`, `AuthLayout`, `DataTable`, `FileDropzone`, `Header`, Layout Components, `PageHeader`, `PageTransition` (+9 more)
+Cohesion: 0.22
+Nodes (8): `AppLayout`, `AuthLayout`, `Header`, Layout Components, `Sidebar`, Theming, UI Component Documentation, UI Primitives (`src/components/ui/`)
 
 ### Community 20 - "Community 20"
-Cohesion: 0.28
-Nodes (5): navigationConfig, NavItem, publicRoutes, Breadcrumbs(), navFlat
+Cohesion: 0.22
+Nodes (9): `DataTable`, `FileDropzone`, `PageHeader`, `PageTransition`, `RichTextEditor`, `SalesChart`, Shared Components, `StatCard` (+1 more)
 
 ### Community 22 - "Community 22"
 Cohesion: 0.25
@@ -209,7 +210,7 @@ Cohesion: 0.25
 Nodes (8): Auth Routes, Checkout Previews, Context CMS, Dashboard Routes, Middleware, Routing Structure, Settings & Themes, Weblog
 
 ### Community 26 - "Community 26"
-Cohesion: 0.25
+Cohesion: 0.29
 Nodes (7): Brand Color, Component Guidelines, CSS Variables, Hydration, Implementation, Theme System, Usage
 
 ### Community 27 - "Community 27"
@@ -217,7 +218,7 @@ Cohesion: 0.29
 Nodes (6): Key Design Decisions, Layered Architecture, Overview, Project Architecture, Providers, Route Groups
 
 ### Community 28 - "Community 28"
-Cohesion: 0.29
+Cohesion: 0.25
 Nodes (7): Adding Translations, Internationalization, Message Files, Namespaces, RTL Support, Setup, Switching Language
 
 ### Community 29 - "Community 29"
@@ -237,16 +238,16 @@ Cohesion: 0.09
 Nodes (22): Browser Support, Combining Conditions, Container Queries Deep Dive, Container Query Syntax, Container Query Units, Container Types, Containment Basics, Dashboard Widget (+14 more)
 
 ### Community 33 - "Community 33"
-Cohesion: 0.40
-Nodes (4): Auth Storage (Client), Environment Variables, Example, OpenAPI Code Generation
+Cohesion: 0.20
+Nodes (5): Auth Storage (Client), Environment Variables, Example, OpenAPI Code Generation, Folder Structure
 
 ### Community 36 - "Community 36"
 Cohesion: 0.18
-Nodes (10): AppLayout(), Header(), Sidebar(), useAuth(), FormField(), LoadingSpinner(), SignInForm, SignInPage() (+2 more)
+Nodes (9): apiClient, ApiError, getAccessToken(), refreshQueue, TokenResponse, AuthContext, AuthContextValue, getStoredUser() (+1 more)
 
 ### Community 37 - "Community 37"
 Cohesion: 0.08
-Nodes (30): apiClient, ApiError, clearTokens(), getAccessToken(), refreshQueue, setTokens(), TokenResponse, AuthLayout() (+22 more)
+Nodes (51): FormData, schema, sections, ProductForm, productSchema, DashboardPage(), FormData, schema (+43 more)
 
 ### Community 38 - "Community 38"
 Cohesion: 0.29
@@ -281,8 +282,12 @@ Cohesion: 0.29
 Nodes (13): blend(), derive_row(), derive_ui_reasoning(), h2r(), is_dark(), lum(), on_color(), r2h() (+5 more)
 
 ### Community 46 - "Community 46"
-Cohesion: 0.22
-Nodes (9): Adding Custom Colors, Border Radius, Changing the Theme, Checking for Updates, Color Variables, Contents, Customization & Theming, Dark Mode (+1 more)
+Cohesion: 0.14
+Nodes (14): 1. Built-in variants, 2. Tailwind classes via `className`, 3. Add a new variant, 4. Wrapper components, Adding Custom Colors, Border Radius, Changing the Theme, Checking for Updates (+6 more)
+
+### Community 47 - "Community 47"
+Cohesion: 0.19
+Nodes (4): Icons, Icons in Button use data-icon attribute, No sizing classes on icons inside components, Pass icons as component objects, not string keys
 
 ### Community 48 - "Community 48"
 Cohesion: 0.15
@@ -337,8 +342,8 @@ Cohesion: 0.33
 Nodes (5): Best Practices, Common Issues, Detailed patterns and worked examples, Responsive Design, When to Use This Skill
 
 ### Community 61 - "Community 61"
-Cohesion: 0.20
-Nodes (9): SalesChart(), getChartData(), getDashboardStats(), getOrders(), getProducts(), StatCard(), ChartDataPoint, Order (+1 more)
+Cohesion: 0.25
+Nodes (10): getNavIcon(), navigationIcons, NavLink(), SidebarProps, RowAction, TableRowActions(), Tooltip(), TooltipContent() (+2 more)
 
 ### Community 62 - "Community 62"
 Cohesion: 0.33
@@ -357,8 +362,8 @@ Cohesion: 0.40
 Nodes (5): Example Workflow, Step 1: Analyze Requirements, Step 2: Generate Design System (REQUIRED), Step 3: Supplement with Detailed Searches (as needed), Step 4: Stack Guidelines
 
 ### Community 66 - "Community 66"
-Cohesion: 0.13
-Nodes (13): authRoutes, Locale, routing, inter, vazirmatn, AuthProvider(), QueryProvider(), ThemeProvider() (+5 more)
+Cohesion: 0.24
+Nodes (6): AuthLayout(), highlights, ResetForm, resetSchema, SignUpForm, signUpSchema
 
 ### Community 67 - "Community 67"
 Cohesion: 0.50
@@ -373,48 +378,52 @@ Cohesion: 0.11
 Nodes (18): Accessibility & Responsive, App shell, Audit — UX Problems Identified, Core shared components, Dashboard redesign, DataTable enhancements, Design Direction, Design tokens (`globals.css`) (+10 more)
 
 ### Community 71 - "Community 71"
-Cohesion: 0.50
-Nodes (3): defaultActions, QuickAction, QuickActions()
+Cohesion: 0.28
+Nodes (5): AppLayout(), Header(), Sidebar(), LoadingSpinner(), Sheet()
 
 ### Community 72 - "Community 72"
-Cohesion: 0.25
-Nodes (8): scripts, build, dev, format, generate:api, lint, postinstall, start
+Cohesion: 0.17
+Nodes (11): name, private, scripts, build, dev, format, generate:api, lint (+3 more)
 
 ### Community 73 - "Community 73"
-Cohesion: 0.40
-Nodes (4): Icons, Icons in Button use data-icon attribute, No sizing classes on icons inside components, Pass icons as component objects, not string keys
-
-### Community 74 - "Community 74"
-Cohesion: 0.40
-Nodes (5): 1. Built-in variants, 2. Tailwind classes via `className`, 3. Add a new variant, 4. Wrapper components, Customizing Components
-
-### Community 75 - "Community 75"
-Cohesion: 0.50
-Nodes (3): name, private, version
-
-### Community 76 - "Community 76"
 Cohesion: 0.33
 Nodes (6): _detect_page_type(), format_page_override_md(), _generate_intelligent_overrides(), Detect page type from context and search results., Format a page-specific override file with intelligent AI-generated content., Generate intelligent overrides based on page type using layered search.
 
+### Community 74 - "Community 74"
+Cohesion: 0.27
+Nodes (5): inter, vazirmatn, AuthProvider(), QueryProvider(), ThemeProvider()
+
+### Community 75 - "Community 75"
+Cohesion: 0.20
+Nodes (7): SheetContent(), SheetDescription(), SheetFooter(), SheetHeader(), SheetOverlay(), SheetTitle(), sheetVariants
+
+### Community 76 - "Community 76"
+Cohesion: 0.24
+Nodes (6): authRoutes, navigationConfig, NavItem, publicRoutes, Breadcrumbs(), navFlat
+
+### Community 77 - "Community 77"
+Cohesion: 0.29
+Nodes (7): Locale, routing, config, intlMiddleware, isProtectedRoute(), middleware(), protectedPrefixes
+
 ## Knowledge Gaps
-- **486 isolated node(s):** `__filename`, `__dirname`, `compat`, `eslintConfig`, `withNextIntl` (+481 more)
+- **496 isolated node(s):** `__filename`, `__dirname`, `compat`, `eslintConfig`, `withNextIntl` (+491 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `cn()` connect `Community 5` to `Community 4`, `Community 36`, `Community 6`, `Community 71`, `Community 8`, `Community 10`, `Community 13`, `Community 77`, `Community 20`, `Community 23`, `Community 61`?**
-  _High betweenness centrality (0.049) - this node is a cross-community bridge._
-- **Why does `Button()` connect `Community 8` to `Community 4`, `Community 5`, `Community 37`, `Community 6`, `Community 36`, `Community 13`?**
-  _High betweenness centrality (0.010) - this node is a cross-community bridge._
-- **Why does `shadcn/ui` connect `Community 40` to `Community 47`?**
-  _High betweenness centrality (0.004) - this node is a cross-community bridge._
+- **Why does `cn()` connect `Community 10` to `Community 4`, `Community 37`, `Community 6`, `Community 71`, `Community 8`, `Community 75`, `Community 76`, `Community 23`, `Community 61`?**
+  _High betweenness centrality (0.051) - this node is a cross-community bridge._
+- **Why does `Button()` connect `Community 4` to `Community 66`, `Community 37`, `Community 6`, `Community 8`, `Community 10`, `Community 61`?**
+  _High betweenness centrality (0.009) - this node is a cross-community bridge._
+- **Why does `Input()` connect `Community 4` to `Community 66`, `Community 37`, `Community 6`, `Community 8`, `Community 10`?**
+  _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **What connects `Generate full 16-token color row from 4 base colors.`, `Generate ui-reasoning row from products.csv row.`, `BM25 ranking algorithm for text search` to the rest of the system?**
-  _517 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _527 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.09191583610188261 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0841813135985199 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.047619047619047616 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.045454545454545456 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**
   _Cohesion score 0.1 - nodes in this community are weakly interconnected._

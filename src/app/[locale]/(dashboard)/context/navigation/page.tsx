@@ -1,18 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import { useContextSection } from "@/hooks/use-context-section";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { PageHeader } from "@/components/shared/page-elements";
 import { PageTransition } from "@/components/shared/page-transition";
+import { FormField } from "@/components/shared/form-field";
 import { DataTable } from "@/components/tables/data-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Dialog,
   DialogContent,
@@ -20,13 +19,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { updateContextSection } from "@/services/data.service";
+import { getNavigation, isTemporaryId, updateNavigation } from "@/services/storefront.service";
+import type { NavItem } from "@/types/api/storefront";
 
-interface MenuItem {
-  id: string;
+interface MenuForm {
+  id?: string;
   label: string;
   url: string;
-  order: number;
+  sort_order: number;
 }
 
 export default function NavigationPage() {
@@ -34,57 +34,85 @@ export default function NavigationPage() {
   const tp = useTranslations("pages");
   const tc = useTranslations("common");
   const queryClient = useQueryClient();
-  const { state: items, setState: setItems } = useContextSection<MenuItem[]>("navigation", []);
-  const [editing, setEditing] = useState<MenuItem | null>(null);
+
+  const [items, setItems] = useState<NavItem[]>([]);
+  const [form, setForm] = useState<MenuForm | null>(null);
   const [open, setOpen] = useState(false);
 
-  const mutation = useMutation({
-    mutationFn: () => updateContextSection("navigation", items),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["context", "navigation"] });
-      toast.success(tc("save"));
+  const { data, isLoading } = useQuery({
+    queryKey: ["navigation"],
+    queryFn: getNavigation,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setItems(data.map((item, idx) => ({ ...item, sort_order: item.sort_order ?? idx })));
+    }
+  }, [data]);
+
+  const saveMutation = useMutation({
+    mutationFn: () => updateNavigation(items),
+    onSuccess: (saved) => {
+      setItems(saved);
+      queryClient.invalidateQueries({ queryKey: ["navigation"] });
+      toast.success(t("saved"));
     },
+    onError: () => toast.error(t("saveFailed")),
   });
 
   const openAdd = () => {
-    setEditing({ id: String(Date.now()), label: "", url: "", order: items.length + 1 });
+    setForm({ label: "", url: "", sort_order: items.length + 1 });
     setOpen(true);
   };
 
-  const openEdit = (item: MenuItem) => {
-    setEditing({ ...item });
+  const openEdit = (item: NavItem) => {
+    setForm({
+      id: item.id,
+      label: item.label,
+      url: item.url,
+      sort_order: item.sort_order ?? 0,
+    });
     setOpen(true);
   };
 
   const saveItem = () => {
-    if (!editing) return;
+    if (!form) return;
+    const entry: NavItem = {
+      id: form.id ?? String(Date.now()),
+      label: form.label.trim(),
+      url: form.url.trim(),
+      sort_order: form.sort_order,
+      is_active: true,
+    };
+    if (!entry.label || !entry.url) return;
+
     setItems((prev) => {
-      const exists = prev.find((i) => i.id === editing.id);
-      if (exists) return prev.map((i) => (i.id === editing.id ? editing : i));
-      return [...prev, editing].sort((a, b) => a.order - b.order);
+      const exists = prev.find((i) => i.id === entry.id);
+      if (exists) return prev.map((i) => (i.id === entry.id ? entry : i)).sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
+      return [...prev, entry].sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
     });
     setOpen(false);
-    setEditing(null);
+    setForm(null);
   };
 
   const deleteItem = (id: string) => {
     setItems((prev) => prev.filter((i) => i.id !== id));
   };
 
-  const columns: ColumnDef<MenuItem>[] = [
+  const columns: ColumnDef<NavItem>[] = [
     { accessorKey: "label", header: t("label") },
     { accessorKey: "url", header: t("href") },
-    { accessorKey: "order", header: "Order" },
+    { accessorKey: "sort_order", header: t("order") },
     {
       id: "actions",
       header: tc("actions"),
       cell: ({ row }) => (
         <div className="flex gap-1">
           <Button variant="ghost" size="sm" onClick={() => openEdit(row.original)}>
-            <Pencil className="h-4 w-4" />
+            <Pencil className="size-4" />
           </Button>
-          <Button variant="ghost" size="sm" onClick={() => deleteItem(row.original.id)}>
-            <Trash2 className="h-4 w-4 text-destructive" />
+          <Button variant="ghost" size="sm" onClick={() => deleteItem(row.original.id!)}>
+            <Trash2 className="size-4 text-destructive" />
           </Button>
         </div>
       ),
@@ -97,52 +125,60 @@ export default function NavigationPage() {
         title={tp("titles.navigationSettings")}
         description={t("description")}
         action={
-          <Button onClick={openAdd}>
-            <Plus className="me-2 h-4 w-4" />
+          <Button onClick={openAdd} className="shadow-elevated-sm">
+            <Plus className="me-2 size-4" />
             {t("addMenuItem")}
           </Button>
         }
       />
 
-      <DataTable columns={columns} data={items} searchKey="label" searchPlaceholder={t("labelPlaceholder")} />
+      <DataTable
+        columns={columns}
+        data={items}
+        isLoading={isLoading}
+        searchKey="label"
+        searchPlaceholder={t("labelPlaceholder")}
+      />
 
       <div className="mt-4">
-        <Button onClick={() => mutation.mutate()} disabled={mutation.isPending}>
-          {t("save")}
+        <Button onClick={() => saveMutation.mutate()} disabled={saveMutation.isPending}>
+          {saveMutation.isPending ? tc("loading") : t("save")}
         </Button>
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{editing?.label ? tc("edit") : t("addMenuItem")}</DialogTitle>
+            <DialogTitle>
+              {form?.id && !isTemporaryId(form.id) ? tc("edit") : t("addMenuItem")}
+            </DialogTitle>
           </DialogHeader>
-          {editing && (
+          {form && (
             <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <Label>{t("label")}</Label>
+              <FormField label={t("label")} htmlFor="nav-label" required>
                 <Input
-                  value={editing.label}
-                  onChange={(e) => setEditing({ ...editing, label: e.target.value })}
+                  id="nav-label"
+                  value={form.label}
+                  onChange={(e) => setForm({ ...form, label: e.target.value })}
                   placeholder={t("labelPlaceholder")}
                 />
-              </div>
-              <div className="flex flex-col gap-2">
-                <Label>{t("href")}</Label>
+              </FormField>
+              <FormField label={t("href")} htmlFor="nav-url" required>
                 <Input
-                  value={editing.url}
-                  onChange={(e) => setEditing({ ...editing, url: e.target.value })}
+                  id="nav-url"
+                  value={form.url}
+                  onChange={(e) => setForm({ ...form, url: e.target.value })}
                   placeholder={t("hrefPlaceholder")}
                 />
-              </div>
-              <div className="flex flex-col gap-2">
-                <Label>Order</Label>
+              </FormField>
+              <FormField label={t("order")} htmlFor="nav-order">
                 <Input
+                  id="nav-order"
                   type="number"
-                  value={editing.order}
-                  onChange={(e) => setEditing({ ...editing, order: Number(e.target.value) })}
+                  value={form.sort_order}
+                  onChange={(e) => setForm({ ...form, sort_order: Number(e.target.value) })}
                 />
-              </div>
+              </FormField>
             </div>
           )}
           <DialogFooter>

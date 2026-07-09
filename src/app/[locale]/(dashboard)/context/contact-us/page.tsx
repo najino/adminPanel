@@ -11,22 +11,12 @@ import { PageHeader } from "@/components/shared/page-elements";
 import { PageTransition } from "@/components/shared/page-transition";
 import { FileDropzone } from "@/components/shared/file-dropzone";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getContextSection, updateContextSection, uploadFile } from "@/services/data.service";
+import { uploadFile } from "@/services/data.service";
+import { getContactSection, updateContactSection } from "@/services/storefront.service";
 
 const schema = z.object({
-  heading: z.string(),
-  body: z.string(),
-  showNameField: z.boolean(),
-  showEmailField: z.boolean(),
-  showPhoneField: z.boolean(),
-  showSubjectField: z.boolean(),
-  showMessageField: z.boolean(),
-  imageUrl: z.string().optional(),
+  image_url: z.string().optional(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -37,54 +27,37 @@ export default function ContactUsPage() {
   const tc = useTranslations("common");
   const queryClient = useQueryClient();
 
-  const { data } = useQuery({
-    queryKey: ["context", "contact-us"],
-    queryFn: () => getContextSection("contact-us"),
+  const { data, isLoading } = useQuery({
+    queryKey: ["contact-section"],
+    queryFn: getContactSection,
   });
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      heading: "",
-      body: "",
-      showNameField: true,
-      showEmailField: true,
-      showPhoneField: false,
-      showSubjectField: true,
-      showMessageField: true,
-      imageUrl: "",
-    },
+    defaultValues: { image_url: "" },
   });
 
   useEffect(() => {
-    const sectionData = (data?.data ?? {}) as Partial<FormData>;
-    if (Object.keys(sectionData).length > 0) {
-      form.reset({ ...form.getValues(), ...sectionData });
+    if (data) {
+      form.reset({ image_url: data.image_url ?? "" });
     }
   }, [data, form]);
 
   const mutation = useMutation({
-    mutationFn: (payload: FormData) => updateContextSection("contact-us", payload),
+    mutationFn: updateContactSection,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["context", "contact-us"] });
-      toast.success(tc("save"));
+      queryClient.invalidateQueries({ queryKey: ["contact-section"] });
+      toast.success(t("saved"));
     },
+    onError: () => toast.error(t("saveFailed")),
   });
 
   const handleImageUpload = async (files: File[]) => {
     const file = files[0];
     if (!file) return;
     const { url } = await uploadFile(file);
-    form.setValue("imageUrl", url);
+    form.setValue("image_url", url);
   };
-
-  const fieldToggles: { key: keyof FormData; label: string }[] = [
-    { key: "showNameField", label: "Name" },
-    { key: "showEmailField", label: "Email" },
-    { key: "showPhoneField", label: "Phone" },
-    { key: "showSubjectField", label: "Subject" },
-    { key: "showMessageField", label: "Message" },
-  ];
 
   return (
     <PageTransition>
@@ -95,38 +68,32 @@ export default function ContactUsPage() {
             <CardTitle>{t("title")}</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-6">
-            <div className="flex flex-col gap-2">
-              <Label>Section Heading</Label>
-              <Input {...form.register("heading")} placeholder={t("title")} />
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label>Body</Label>
-              <Textarea {...form.register("body")} placeholder={t("description")} rows={4} />
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label>Section Image</Label>
-              {form.watch("imageUrl") ? (
-                <img src={form.watch("imageUrl")} alt="" className="h-24 w-full rounded-lg object-cover" />
-              ) : null}
-              <FileDropzone onDrop={handleImageUpload} accept={{ "image/*": [] }} label="Upload section image" />
-            </div>
-
-            <div className="flex flex-col gap-3">
-              <p className="font-medium">Form Field Configuration</p>
-              {fieldToggles.map(({ key, label }) => (
-                <div key={key} className="flex items-center justify-between rounded-lg border border-border p-3">
-                  <span>{label}</span>
-                  <Switch
-                    checked={form.watch(key) as boolean}
-                    onCheckedChange={(v) => form.setValue(key, v)}
+            {isLoading ? (
+              <p className="text-sm text-muted-foreground">{tc("loading")}</p>
+            ) : (
+              <>
+                <div className="flex flex-col gap-2">
+                  <span className="text-sm font-medium">{t("image")}</span>
+                  {form.watch("image_url") ? (
+                    <img
+                      src={form.watch("image_url")}
+                      alt=""
+                      className="h-48 w-full rounded-lg object-cover"
+                    />
+                  ) : null}
+                  <FileDropzone
+                    onDrop={handleImageUpload}
+                    accept={{ "image/*": [] }}
+                    label={t("uploadImage")}
                   />
+                  <p className="text-xs text-muted-foreground">{t("imageHint")}</p>
                 </div>
-              ))}
-            </div>
 
-            <Button type="submit" disabled={mutation.isPending}>
-              {t("save")}
-            </Button>
+                <Button type="submit" disabled={mutation.isPending}>
+                  {mutation.isPending ? tc("loading") : t("save")}
+                </Button>
+              </>
+            )}
           </CardContent>
         </Card>
       </form>

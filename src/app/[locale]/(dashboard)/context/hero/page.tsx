@@ -9,21 +9,24 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { PageHeader } from "@/components/shared/page-elements";
 import { PageTransition } from "@/components/shared/page-transition";
+import { FormField } from "@/components/shared/form-field";
 import { FileDropzone } from "@/components/shared/file-dropzone";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getContextSection, updateContextSection, uploadFile } from "@/services/data.service";
+import { uploadFile } from "@/services/data.service";
+import { getHero, updateHero } from "@/services/storefront.service";
 
 const schema = z.object({
-  headline: z.string().min(1),
+  title: z.string().min(1),
   subtitle: z.string(),
-  ctaText: z.string(),
-  ctaLink: z.string(),
-  backgroundImage: z.string().optional(),
-  overlayOpacity: z.boolean(),
+  cta_primary_text: z.string(),
+  cta_primary_url: z.string(),
+  cta_secondary_text: z.string(),
+  cta_secondary_url: z.string(),
+  video_url: z.string().optional(),
+  is_active: z.boolean(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -34,43 +37,54 @@ export default function HeroSettingsPage() {
   const tc = useTranslations("common");
   const queryClient = useQueryClient();
 
-  const { data } = useQuery({
-    queryKey: ["context", "hero"],
-    queryFn: () => getContextSection("hero"),
+  const { data, isLoading } = useQuery({
+    queryKey: ["hero"],
+    queryFn: getHero,
   });
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
-      headline: "",
+      title: "",
       subtitle: "",
-      ctaText: "",
-      ctaLink: "",
-      backgroundImage: "",
-      overlayOpacity: true,
+      cta_primary_text: "",
+      cta_primary_url: "",
+      cta_secondary_text: "",
+      cta_secondary_url: "",
+      video_url: "",
+      is_active: true,
     },
   });
 
   useEffect(() => {
-    const sectionData = (data?.data ?? {}) as Partial<FormData>;
-    if (Object.keys(sectionData).length > 0) {
-      form.reset({ ...form.getValues(), ...sectionData });
+    if (data) {
+      form.reset({
+        title: data.title ?? "",
+        subtitle: data.subtitle ?? "",
+        cta_primary_text: data.cta_primary_text ?? "",
+        cta_primary_url: data.cta_primary_url ?? "",
+        cta_secondary_text: data.cta_secondary_text ?? "",
+        cta_secondary_url: data.cta_secondary_url ?? "",
+        video_url: data.video_url ?? "",
+        is_active: data.is_active ?? true,
+      });
     }
   }, [data, form]);
 
   const mutation = useMutation({
-    mutationFn: (payload: FormData) => updateContextSection("hero", payload),
+    mutationFn: updateHero,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["context", "hero"] });
-      toast.success(tc("save"));
+      queryClient.invalidateQueries({ queryKey: ["hero"] });
+      toast.success(t("saved"));
     },
+    onError: () => toast.error(t("saveFailed")),
   });
 
-  const handleImageUpload = async (files: File[]) => {
+  const handleVideoUpload = async (files: File[]) => {
     const file = files[0];
     if (!file) return;
     const { url } = await uploadFile(file);
-    form.setValue("backgroundImage", url);
+    form.setValue("video_url", url);
   };
 
   return (
@@ -82,51 +96,63 @@ export default function HeroSettingsPage() {
             <CardTitle>{t("title")}</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-6">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="flex flex-col gap-2">
-                <Label>{t("buttonName")}</Label>
-                <Input {...form.register("headline")} placeholder={t("buttonNamePlaceholder")} />
-              </div>
-              <div className="flex flex-col gap-2">
-                <Label>{t("button2")}</Label>
-                <Input {...form.register("subtitle")} placeholder={t("buttonNamePlaceholder")} />
-              </div>
-              <div className="flex flex-col gap-2">
-                <Label>{t("buttonName")}</Label>
-                <Input {...form.register("ctaText")} placeholder={t("buttonNamePlaceholder")} />
-              </div>
-              <div className="flex flex-col gap-2">
-                <Label>{t("buttonLink")}</Label>
-                <Input {...form.register("ctaLink")} placeholder={t("buttonLinkPlaceholder")} />
-              </div>
-            </div>
+            {isLoading ? (
+              <p className="text-sm text-muted-foreground">{tc("loading")}</p>
+            ) : (
+              <>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <FormField label={t("headline")} htmlFor="hero-title" required>
+                    <Input id="hero-title" {...form.register("title")} placeholder={t("buttonNamePlaceholder")} />
+                  </FormField>
+                  <FormField label={t("subtitle")} htmlFor="hero-subtitle">
+                    <Input id="hero-subtitle" {...form.register("subtitle")} placeholder={t("buttonNamePlaceholder")} />
+                  </FormField>
+                  <FormField label={t("button1")} htmlFor="cta-primary-text">
+                    <Input id="cta-primary-text" {...form.register("cta_primary_text")} placeholder={t("buttonNamePlaceholder")} />
+                  </FormField>
+                  <FormField label={t("buttonLink")} htmlFor="cta-primary-url">
+                    <Input id="cta-primary-url" {...form.register("cta_primary_url")} placeholder={t("buttonLinkPlaceholder")} />
+                  </FormField>
+                  <FormField label={t("button2")} htmlFor="cta-secondary-text">
+                    <Input id="cta-secondary-text" {...form.register("cta_secondary_text")} placeholder={t("buttonNamePlaceholder")} />
+                  </FormField>
+                  <FormField label={t("button2Link")} htmlFor="cta-secondary-url">
+                    <Input id="cta-secondary-url" {...form.register("cta_secondary_url")} placeholder={t("buttonLinkPlaceholder")} />
+                  </FormField>
+                </div>
 
-            <div className="flex flex-col gap-2">
-              <Label>{t("uploadVideo")}</Label>
-              {form.watch("backgroundImage") && (
-                <img
-                  src={form.watch("backgroundImage")}
-                  alt=""
-                  className="mb-2 h-32 w-full rounded-lg object-cover"
-                />
-              )}
-              <FileDropzone onDrop={handleImageUpload} accept={{ "image/*": [] }} label={t("uploadVideo")} />
-            </div>
+                <div className="flex flex-col gap-2">
+                  <span className="text-sm font-medium">{t("uploadVideo")}</span>
+                  {form.watch("video_url") ? (
+                    <video
+                      src={form.watch("video_url")}
+                      className="mb-2 h-32 w-full rounded-lg object-cover"
+                      controls
+                    />
+                  ) : null}
+                  <FileDropzone
+                    onDrop={handleVideoUpload}
+                    accept={{ "video/*": [] }}
+                    label={t("uploadVideo")}
+                  />
+                </div>
 
-            <div className="flex items-center justify-between rounded-lg border border-border p-4">
-              <div>
-                <p className="font-medium">{t("removeVideo")}</p>
-                <p className="text-sm text-muted-foreground">{t("videoHint")}</p>
-              </div>
-              <Switch
-                checked={form.watch("overlayOpacity")}
-                onCheckedChange={(v) => form.setValue("overlayOpacity", v)}
-              />
-            </div>
+                <div className="flex items-center justify-between rounded-lg border border-border p-4">
+                  <div>
+                    <p className="font-medium">{t("activeLabel")}</p>
+                    <p className="text-sm text-muted-foreground">{t("videoHint")}</p>
+                  </div>
+                  <Switch
+                    checked={form.watch("is_active")}
+                    onCheckedChange={(v) => form.setValue("is_active", v)}
+                  />
+                </div>
 
-            <Button type="submit" disabled={mutation.isPending}>
-              {t("save")}
-            </Button>
+                <Button type="submit" disabled={mutation.isPending}>
+                  {mutation.isPending ? tc("loading") : t("save")}
+                </Button>
+              </>
+            )}
           </CardContent>
         </Card>
       </form>

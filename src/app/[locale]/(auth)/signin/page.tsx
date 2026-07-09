@@ -52,7 +52,7 @@ export default function SignInPage() {
       router.push("/");
     },
     onError: () => {
-      toast.error("Invalid credentials");
+      toast.error(t("signIn.error"));
     },
   });
 
@@ -60,24 +60,11 @@ export default function SignInPage() {
     <AuthLayout title={t("signIn.title")} subtitle={t("signIn.subtitle")}>
       <PageTransition>
         <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="flex flex-col gap-5">
-          <div className="grid grid-cols-2 gap-3">
-            <Button type="button" variant="outline" className="h-10 w-full">
-              {t("signIn.withGoogle")}
-            </Button>
-            <Button type="button" variant="outline" className="h-10 w-full">
-              {t("signIn.withX")}
-            </Button>
-          </div>
-
-          <div className="relative flex items-center justify-center py-1">
-            <div className="absolute inset-x-0 border-t border-border" aria-hidden />
-            <span className="relative bg-card px-3 text-xs text-muted-foreground">{t("or")}</span>
-          </div>
-
           <FormField label={t("email")} htmlFor="email" error={errors.email?.message} required>
             <Input
               id="email"
               type="email"
+              autoComplete="email"
               placeholder={t("placeholder.email")}
               className="h-10"
               {...register("email")}
@@ -93,6 +80,7 @@ export default function SignInPage() {
             <Input
               id="password"
               type="password"
+              autoComplete="current-password"
               placeholder={t("placeholder.password")}
               className="h-10"
               {...register("password")}
@@ -119,15 +107,8 @@ export default function SignInPage() {
           </div>
 
           <Button type="submit" className="h-10 w-full" disabled={mutation.isPending}>
-            {mutation.isPending ? "..." : t("signIn.submit")}
+            {mutation.isPending ? t("signIn.submitting") : t("signIn.submit")}
           </Button>
-
-          <p className="text-center text-sm text-muted-foreground">
-            {t("noAccount")}{" "}
-            <Link href="/signup" className="font-medium text-primary hover:underline">
-              {t("signIn.signUpLink")}
-            </Link>
-          </p>
         </form>
       </PageTransition>
     </AuthLayout>

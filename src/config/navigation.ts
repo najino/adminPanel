@@ -10,6 +10,8 @@ export const navigationConfig: NavItem[] = [
     nameKey: "products",
     children: [
       { nameKey: "allProducts", href: "/products" },
+      { nameKey: "productAttributes", href: "/products/attributes" },
+      { nameKey: "productBrands", href: "/products/brands" },
       { nameKey: "productSettings", href: "/products/settings" },
       { nameKey: "addProduct", href: "/products/create" },
     ],

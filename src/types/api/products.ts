@@ -22,6 +22,20 @@ export interface AdminBrand {
   is_active?: boolean;
 }
 
+export interface CreateBrandPayload {
+  name: string;
+  slug?: string;
+  description?: string;
+  is_active?: boolean;
+}
+
+export interface UpdateBrandPayload {
+  name?: string;
+  slug?: string;
+  description?: string;
+  is_active?: boolean;
+}
+
 export interface AdminCategory {
   id: string;
   name: string;
@@ -43,6 +57,33 @@ export interface CatalogAttributeValue {
   id: string;
   attribute_id: string;
   value: string;
+  is_active?: boolean;
+  sort_order?: number;
+}
+
+export interface CreateCatalogAttributePayload {
+  name: string;
+  slug?: string;
+  is_active?: boolean;
+  sort_order?: number;
+}
+
+export interface UpdateCatalogAttributePayload {
+  name?: string;
+  slug?: string;
+  is_active?: boolean;
+  sort_order?: number;
+}
+
+export interface CreateCatalogAttributeValuePayload {
+  attribute_id: string;
+  value: string;
+  is_active?: boolean;
+  sort_order?: number;
+}
+
+export interface UpdateCatalogAttributeValuePayload {
+  value?: string;
   is_active?: boolean;
   sort_order?: number;
 }

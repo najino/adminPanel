@@ -12,6 +12,15 @@ export function formatCurrency(amount: number, locale = "en-US") {
   }).format(amount);
 }
 
+export function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 export function formatDate(date: string | Date, locale = "en-US") {
   return new Intl.DateTimeFormat(locale, {
     year: "numeric",

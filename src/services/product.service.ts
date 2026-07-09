@@ -7,10 +7,17 @@ import type {
   AdminProductResponse,
   CatalogAttribute,
   CatalogAttributeValue,
+  CreateBrandPayload,
+  CreateCatalogAttributePayload,
+  CreateCatalogAttributeValuePayload,
   CreateProductPayload,
   PaginatedData,
+  UpdateBrandPayload,
+  UpdateCatalogAttributePayload,
+  UpdateCatalogAttributeValuePayload,
   UploadResponse,
 } from "@/types/api/products";
+import { slugify } from "@/lib/utils";
 
 const USE_MOCK = IS_MOCK_MODE;
 const ADMIN = "/admin";
@@ -88,9 +95,53 @@ export async function getAdminBrands(): Promise<AdminBrand[]> {
     return mockBrands.filter((b) => b.is_active !== false);
   }
   const { data } = await apiClient.get<PaginatedData<AdminBrand>>(`${ADMIN}/brands`, {
-    params: { per_page: 100, is_active: true },
+    params: { per_page: 100 },
   });
   return data.data;
+}
+
+export async function createAdminBrand(payload: CreateBrandPayload): Promise<AdminBrand> {
+  if (USE_MOCK) {
+    await delay();
+    const brand: AdminBrand = {
+      id: `brand-${Date.now()}`,
+      name: payload.name,
+      slug: payload.slug ?? slugify(payload.name),
+      description: payload.description,
+      is_active: payload.is_active ?? true,
+    };
+    mockBrands.push(brand);
+    return brand;
+  }
+  const { data } = await apiClient.post<AdminBrand>(`${ADMIN}/brands`, {
+    name: payload.name,
+    slug: payload.slug || slugify(payload.name),
+    description: payload.description,
+    is_active: payload.is_active ?? true,
+  });
+  return data;
+}
+
+export async function updateAdminBrand(id: string, payload: UpdateBrandPayload): Promise<AdminBrand> {
+  if (USE_MOCK) {
+    await delay();
+    const idx = mockBrands.findIndex((b) => b.id === id);
+    if (idx === -1) throw new Error("Brand not found");
+    mockBrands[idx] = { ...mockBrands[idx], ...payload };
+    return mockBrands[idx];
+  }
+  const { data } = await apiClient.put<AdminBrand>(`${ADMIN}/brands/${id}`, payload);
+  return data;
+}
+
+export async function deleteAdminBrand(id: string): Promise<void> {
+  if (USE_MOCK) {
+    await delay();
+    const idx = mockBrands.findIndex((b) => b.id === id);
+    if (idx !== -1) mockBrands.splice(idx, 1);
+    return;
+  }
+  await apiClient.delete(`${ADMIN}/brands/${id}`);
 }
 
 export async function getAdminCategories(tree = false): Promise<AdminCategory[]> {
@@ -134,6 +185,105 @@ export async function getCatalogAttributeValues(
     { params: { attribute_id: attributeId, per_page: 100 } },
   );
   return data.data;
+}
+
+export async function createCatalogAttribute(
+  payload: CreateCatalogAttributePayload,
+): Promise<CatalogAttribute> {
+  if (USE_MOCK) {
+    await delay();
+    const attr: CatalogAttribute = {
+      id: `attr-${Date.now()}`,
+      name: payload.name,
+      slug: payload.slug,
+      is_active: payload.is_active ?? true,
+      sort_order: payload.sort_order ?? mockCatalogAttributes.length,
+    };
+    mockCatalogAttributes.push(attr);
+    return attr;
+  }
+  const { data } = await apiClient.post<CatalogAttribute>(`${ADMIN}/product-attributes`, payload);
+  return data;
+}
+
+export async function updateCatalogAttribute(
+  id: string,
+  payload: UpdateCatalogAttributePayload,
+): Promise<CatalogAttribute> {
+  if (USE_MOCK) {
+    await delay();
+    const idx = mockCatalogAttributes.findIndex((a) => a.id === id);
+    if (idx === -1) throw new Error("Attribute not found");
+    mockCatalogAttributes[idx] = { ...mockCatalogAttributes[idx], ...payload };
+    return mockCatalogAttributes[idx];
+  }
+  const { data } = await apiClient.put<CatalogAttribute>(`${ADMIN}/product-attributes/${id}`, payload);
+  return data;
+}
+
+export async function deleteCatalogAttribute(id: string): Promise<void> {
+  if (USE_MOCK) {
+    await delay();
+    const idx = mockCatalogAttributes.findIndex((a) => a.id === id);
+    if (idx !== -1) mockCatalogAttributes.splice(idx, 1);
+    for (let i = mockCatalogAttributeValues.length - 1; i >= 0; i -= 1) {
+      if (mockCatalogAttributeValues[i].attribute_id === id) {
+        mockCatalogAttributeValues.splice(i, 1);
+      }
+    }
+    return;
+  }
+  await apiClient.delete(`${ADMIN}/product-attributes/${id}`);
+}
+
+export async function createCatalogAttributeValue(
+  payload: CreateCatalogAttributeValuePayload,
+): Promise<CatalogAttributeValue> {
+  if (USE_MOCK) {
+    await delay(150);
+    const value: CatalogAttributeValue = {
+      id: `val-${Date.now()}`,
+      attribute_id: payload.attribute_id,
+      value: payload.value,
+      is_active: payload.is_active ?? true,
+      sort_order: payload.sort_order ?? 0,
+    };
+    mockCatalogAttributeValues.push(value);
+    return value;
+  }
+  const { data } = await apiClient.post<CatalogAttributeValue>(
+    `${ADMIN}/product-attribute-values`,
+    payload,
+  );
+  return data;
+}
+
+export async function updateCatalogAttributeValue(
+  id: string,
+  payload: UpdateCatalogAttributeValuePayload,
+): Promise<CatalogAttributeValue> {
+  if (USE_MOCK) {
+    await delay(150);
+    const idx = mockCatalogAttributeValues.findIndex((v) => v.id === id);
+    if (idx === -1) throw new Error("Value not found");
+    mockCatalogAttributeValues[idx] = { ...mockCatalogAttributeValues[idx], ...payload };
+    return mockCatalogAttributeValues[idx];
+  }
+  const { data } = await apiClient.put<CatalogAttributeValue>(
+    `${ADMIN}/product-attribute-values/${id}`,
+    payload,
+  );
+  return data;
+}
+
+export async function deleteCatalogAttributeValue(id: string): Promise<void> {
+  if (USE_MOCK) {
+    await delay(150);
+    const idx = mockCatalogAttributeValues.findIndex((v) => v.id === id);
+    if (idx !== -1) mockCatalogAttributeValues.splice(idx, 1);
+    return;
+  }
+  await apiClient.delete(`${ADMIN}/product-attribute-values/${id}`);
 }
 
 export async function uploadProductImage(file: File): Promise<UploadResponse> {

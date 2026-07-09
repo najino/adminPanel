@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -41,7 +41,10 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { getCoupons, createCoupon, deleteCoupon } from "@/services/data.service";
+import { JalaliDatePicker } from "@/components/shared/jalali-date-picker";
+import { formatJalaliDate } from "@/lib/date";
 import { formatDate } from "@/lib/utils";
+import { useLocale } from "next-intl";
 import type { Coupon } from "@/types";
 
 const couponSchema = z.object({
@@ -58,6 +61,7 @@ type CouponForm = z.infer<typeof couponSchema>;
 export default function CouponsPage() {
   const t = useTranslations("coupons");
   const tCommon = useTranslations("common");
+  const locale = useLocale();
   const queryClient = useQueryClient();
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -71,6 +75,7 @@ export default function CouponsPage() {
   const {
     register,
     handleSubmit,
+    control,
     setValue,
     watch,
     reset,
@@ -131,7 +136,10 @@ export default function CouponsPage() {
     {
       accessorKey: "expiryDate",
       header: t("table.columns.expires"),
-      cell: ({ row }) => formatDate(row.original.expiryDate),
+      cell: ({ row }) =>
+        locale === "fa"
+          ? formatJalaliDate(row.original.expiryDate)
+          : formatDate(row.original.expiryDate),
     },
     {
       accessorKey: "status",
@@ -210,8 +218,23 @@ export default function CouponsPage() {
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label>{t("modal.expiryDate")}</Label>
-                  <Input type="date" {...register("expiryDate")} />
+                  <Label htmlFor="coupon-expiry">{t("modal.expiryDate")}</Label>
+                  <Controller
+                    name="expiryDate"
+                    control={control}
+                    render={({ field }) => (
+                      <JalaliDatePicker
+                        id="coupon-expiry"
+                        value={field.value}
+                        onChange={field.onChange}
+                        placeholder={t("modal.expiryDatePlaceholder")}
+                        aria-label={t("modal.expiryDate")}
+                      />
+                    )}
+                  />
+                  {errors.expiryDate && (
+                    <p className="text-sm text-destructive">{errors.expiryDate.message}</p>
+                  )}
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="flex flex-col gap-2">
