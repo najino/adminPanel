@@ -2,7 +2,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { QueryProvider, ThemeProvider, AuthProvider } from "@/providers";
+import { QueryProvider, ThemeProvider, AuthProvider, ZodI18nProvider } from "@/providers";
 import { Toaster } from "sonner";
 import { Vazirmatn, Inter } from "next/font/google";
 import "../globals.css";
@@ -45,14 +45,16 @@ export default async function LocaleLayout({
     <html lang={locale} dir={dir} suppressHydrationWarning className={fontClass}>
       <body className="min-h-screen bg-background font-sans antialiased">
         <NextIntlClientProvider messages={messages}>
-          <ThemeProvider>
-            <QueryProvider>
-              <AuthProvider>
-                {children}
-                <Toaster richColors position="top-center" toastOptions={{ className: "font-sans" }} />
-              </AuthProvider>
-            </QueryProvider>
-          </ThemeProvider>
+          <ZodI18nProvider>
+            <ThemeProvider>
+              <QueryProvider>
+                <AuthProvider>
+                  {children}
+                  <Toaster richColors position="top-center" toastOptions={{ className: "font-sans" }} />
+                </AuthProvider>
+              </QueryProvider>
+            </ThemeProvider>
+          </ZodI18nProvider>
         </NextIntlClientProvider>
       </body>
     </html>

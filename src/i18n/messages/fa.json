@@ -140,7 +140,23 @@
     "saveFailed": "ذخیره انجام نشد. دوباره تلاش کنید.",
     "theme": "تم",
     "notifications": "اعلان‌ها",
-    "signOut": "خروج"
+    "signOut": "خروج",
+    "validation": {
+      "required": "این فیلد الزامی است",
+      "invalidType": "مقدار نامعتبر است",
+      "invalidEmail": "ایمیل معتبر وارد کنید",
+      "invalidUrl": "آدرس معتبر وارد کنید",
+      "invalidString": "فرمت وارد شده نامعتبر است",
+      "tooSmallString": "حداقل {min} کاراکتر وارد کنید",
+      "tooBigString": "حداکثر {max} کاراکتر مجاز است",
+      "tooSmallNumber": "مقدار باید حداقل {min} باشد",
+      "tooBigNumber": "مقدار باید حداکثر {max} باشد",
+      "tooSmallArray": "حداقل {min} مورد انتخاب کنید",
+      "tooBigArray": "حداکثر {max} مورد انتخاب کنید",
+      "invalidEnum": "یک گزینه معتبر انتخاب کنید",
+      "invalidDate": "تاریخ معتبر وارد کنید",
+      "default": "مقدار نامعتبر است"
+    }
   },
   "contact": {
     "pageTitle": "همه پیام‌های تماس با ما",

@@ -140,7 +140,23 @@
     "saveFailed": "Could not save changes. Please try again.",
     "theme": "Theme",
     "notifications": "Notifications",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "validation": {
+      "required": "This field is required",
+      "invalidType": "Invalid value",
+      "invalidEmail": "Please enter a valid email address",
+      "invalidUrl": "Please enter a valid URL",
+      "invalidString": "Invalid format",
+      "tooSmallString": "Must be at least {min} characters",
+      "tooBigString": "Must be at most {max} characters",
+      "tooSmallNumber": "Must be at least {min}",
+      "tooBigNumber": "Must be at most {max}",
+      "tooSmallArray": "Select at least {min} item(s)",
+      "tooBigArray": "Select at most {max} item(s)",
+      "invalidEnum": "Please select a valid option",
+      "invalidDate": "Please enter a valid date",
+      "default": "Invalid value"
+    }
   },
   "contact": {
     "pageTitle": "All Contact us Comments",
