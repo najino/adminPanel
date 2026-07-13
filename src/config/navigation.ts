@@ -26,6 +26,7 @@ export const navigationGroups: NavGroup[] = [
           { nameKey: "allProducts", href: "/products" },
           { nameKey: "productAttributes", href: "/products/attributes" },
           { nameKey: "productBrands", href: "/products/brands" },
+          { nameKey: "comments", href: "/products/comments" },
           { nameKey: "productSettings", href: "/products/settings" },
           { nameKey: "addProduct", href: "/products/create" },
         ],

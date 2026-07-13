@@ -16,6 +16,8 @@ import type {
   UpdateCatalogAttributePayload,
   UpdateCatalogAttributeValuePayload,
   UploadResponse,
+  AdminProductReview,
+  ProductReviewStatus,
 } from "@/types/api/products";
 import { slugify } from "@/lib/utils";
 
@@ -24,6 +26,59 @@ const ADMIN = "/admin";
 
 function delay(ms = 300) {
   return new Promise((r) => setTimeout(r, ms));
+}
+
+export const mockProductReviews: AdminProductReview[] = [
+  {
+    id: "rev-1",
+    productId: "1",
+    productName: "Wireless Headphones",
+    authorName: "Ali Rezaei",
+    title: "Great sound",
+    content: "Excellent quality for the price.",
+    rating: 5,
+    status: "approved",
+    date: "2026-01-10",
+  },
+  {
+    id: "rev-2",
+    productId: "2",
+    productName: "Running Shoes",
+    authorName: "Sara Mohammadi",
+    title: "Comfortable",
+    content: "Very comfortable for daily runs.",
+    rating: 4,
+    status: "pending",
+    date: "2026-01-18",
+  },
+  {
+    id: "rev-3",
+    productId: "3",
+    productName: "Leather Bag",
+    authorName: "Reza Karimi",
+    content: "Material feels cheap.",
+    rating: 2,
+    status: "rejected",
+    date: "2026-01-20",
+  },
+];
+
+function mapProductReview(item: Record<string, unknown>): AdminProductReview {
+  const statusRaw = String(item.status ?? "").toLowerCase();
+  const status: ProductReviewStatus =
+    statusRaw === "approved" ? "approved" : statusRaw === "rejected" ? "rejected" : "pending";
+
+  return {
+    id: String(item.id ?? ""),
+    productId: String(item.product_id ?? ""),
+    productName: String(item.product_name ?? ""),
+    authorName: String(item.author_name ?? ""),
+    title: item.title ? String(item.title) : undefined,
+    content: String(item.content ?? ""),
+    rating: Number(item.rating ?? 0),
+    status,
+    date: String(item.created_at ?? ""),
+  };
 }
 
 export const mockBrands: AdminBrand[] = [
@@ -367,4 +422,60 @@ export async function createAdminProduct(
   }
   const { data } = await apiClient.post<AdminProductResponse>(`${ADMIN}/products`, payload);
   return data;
+}
+
+export async function getProductReviews(params?: {
+  search?: string;
+  status?: ProductReviewStatus;
+}): Promise<AdminProductReview[]> {
+  if (USE_MOCK) {
+    await delay();
+    let result = [...mockProductReviews];
+    if (params?.status) result = result.filter((r) => r.status === params.status);
+    if (params?.search) {
+      const q = params.search.toLowerCase();
+      result = result.filter(
+        (r) =>
+          r.authorName.toLowerCase().includes(q) ||
+          r.productName.toLowerCase().includes(q) ||
+          r.content.toLowerCase().includes(q),
+      );
+    }
+    return result;
+  }
+
+  const query: Record<string, unknown> = { per_page: 100 };
+  if (params?.status) query.status = params.status;
+  if (params?.search) query.q = params.search;
+  const { data } = await apiClient.get<PaginatedData<Record<string, unknown>>>(`${ADMIN}/reviews`, {
+    params: query,
+  });
+  return (data.data ?? []).map(mapProductReview);
+}
+
+export async function updateProductReviewStatus(
+  id: string,
+  status: ProductReviewStatus,
+): Promise<AdminProductReview> {
+  if (USE_MOCK) {
+    await delay();
+    const review = mockProductReviews.find((r) => r.id === id);
+    if (!review) throw new Error("Review not found");
+    review.status = status;
+    return { ...review };
+  }
+  const { data } = await apiClient.patch<Record<string, unknown>>(`${ADMIN}/reviews/${id}/status`, {
+    status,
+  });
+  return mapProductReview(data);
+}
+
+export async function deleteProductReview(id: string): Promise<void> {
+  if (USE_MOCK) {
+    await delay();
+    const idx = mockProductReviews.findIndex((r) => r.id === id);
+    if (idx >= 0) mockProductReviews.splice(idx, 1);
+    return;
+  }
+  await apiClient.delete(`${ADMIN}/reviews/${id}`);
 }

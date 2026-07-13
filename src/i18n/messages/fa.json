@@ -872,6 +872,7 @@
       "productBrands": "برندهای محصول",
       "productSettings": "تنظیمات محصول",
       "addProduct": "افزودن محصول",
+      "allProductComments": "همه نظرات محصولات",
       "allOrders": "همه سفارش‌ها",
       "orderDetail": "جزئیات سفارش",
       "allUsers": "همه کاربران",
@@ -1376,7 +1377,26 @@
     "addButton": "افزودن محصول",
     "productSettingsTitle": "تنظیمات محصول",
     "addProductTitle": "افزودن محصول",
-    "kpi": "$L",
+    "reviews": {
+      "searchPlaceholder": "جستجوی نظرات...",
+      "columns": {
+        "user": "کاربر",
+        "product": "محصول",
+        "comment": "نظر",
+        "rating": "امتیاز",
+        "date": "تاریخ",
+        "status": "وضعیت"
+      },
+      "approve": "تأیید",
+      "reject": "رد",
+      "delete": "حذف"
+    },
+    "kpi": {
+      "totalOrders": "کل سفارش‌ها",
+      "activeOrders": "سفارش‌های فعال",
+      "draftOrders": "سفارش‌های پیش‌نویس",
+      "outOfStock": "ناموجود"
+    },
     "filters": {
       "searchPlaceholder": "جستجوی محصولات...",
       "search": "جستجو",

@@ -162,3 +162,17 @@ export interface UploadResponse {
   content_type?: string;
   size?: number;
 }
+
+export type ProductReviewStatus = "pending" | "approved" | "rejected";
+
+export interface AdminProductReview {
+  id: string;
+  productId: string;
+  productName: string;
+  authorName: string;
+  title?: string;
+  content: string;
+  rating: number;
+  status: ProductReviewStatus;
+  date: string;
+}
