@@ -278,9 +278,9 @@ export default function CreateProductPage() {
             >
               <Input
                 id="price"
-                type="number"
-                step="0.01"
-                min={0}
+                type="text"
+                inputMode="decimal"
+                autoComplete="off"
                 placeholder={t("form.pricing.pricePlaceholder")}
                 className="h-10 tabular-nums"
                 {...register("price")}
@@ -294,9 +294,9 @@ export default function CreateProductPage() {
             >
               <Input
                 id="sale_price"
-                type="number"
-                step="0.01"
-                min={0}
+                type="text"
+                inputMode="decimal"
+                autoComplete="off"
                 className="h-10 tabular-nums"
                 {...register("sale_price", {
                   setValueAs: (v) => (v === "" || v === null ? undefined : parseFloat(v)),
@@ -311,8 +311,9 @@ export default function CreateProductPage() {
             >
               <Input
                 id="quantity"
-                type="number"
-                min={0}
+                type="text"
+                inputMode="numeric"
+                autoComplete="off"
                 placeholder={t("form.pricing.stockPlaceholder")}
                 className="h-10 tabular-nums"
                 {...register("quantity")}
@@ -327,8 +328,9 @@ export default function CreateProductPage() {
             >
               <Input
                 id="low_stock_threshold"
-                type="number"
-                min={0}
+                type="text"
+                inputMode="numeric"
+                autoComplete="off"
                 className="h-10 tabular-nums"
                 {...register("low_stock_threshold")}
               />
