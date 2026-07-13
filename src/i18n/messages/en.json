@@ -723,7 +723,7 @@
     "allProducts": "All Products",
     "productAttributes": "Attributes",
     "productBrands": "Brands",
-    "productSettings": "Product Settings",
+    "productSettings": "Product Categories",
     "addProduct": "Add Product",
     "orders": "Orders",
     "allOrders": "All Orders",
@@ -882,7 +882,7 @@
       "allProducts": "All Products",
       "productAttributes": "Product Attributes",
       "productBrands": "Product Brands",
-      "productSettings": "Product Settings",
+      "productSettings": "Product Categories",
       "addProduct": "Add Product",
       "allProductComments": "All Product Comments",
       "editProduct": "Edit Product",
@@ -928,7 +928,7 @@
         "description": "Manage products, inventory, pricing, collections, and product visibility across your storefront."
       },
       "productSettings": {
-        "title": "Product Settings | Commerce Platform",
+        "title": "Product Categories | Commerce Platform",
         "description": "Configure product options, variants, inventory tracking, and publishing preferences."
       },
       "addProduct": {
@@ -1383,7 +1383,7 @@
   "products": {
     "pageTitle": "All Products",
     "addButton": "Add Product",
-    "productSettingsTitle": "Product Settings",
+    "productSettingsTitle": "Product Categories",
     "addProductTitle": "Add Product",
     "editProductTitle": "Edit Product",
     "reviews": {
@@ -1630,7 +1630,7 @@
         "value": "Value",
         "selectValue": "Select Value",
         "noValues": "No values defined for this attribute in catalog settings.",
-        "emptyCatalog": "No catalog attributes found. Create attributes in Product Settings first.",
+        "emptyCatalog": "No catalog attributes found. Create attributes under Product Attributes first.",
         "valuesRequired": "Select at least one value for each added attribute."
       },
       "images": {

@@ -42,7 +42,7 @@ export const navigationIcons: Record<string, LucideIcon> = {
   allProducts: Package2,
   productAttributes: Shapes,
   productBrands: Store,
-  productSettings: Settings2,
+  productSettings: Tags,
   addProduct: CirclePlus,
   orders: CreditCard,
   allOrders: ReceiptText,

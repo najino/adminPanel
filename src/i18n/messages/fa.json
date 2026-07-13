@@ -725,7 +725,7 @@
     "allProducts": "همه محصولات",
     "productAttributes": "ویژگی‌ها",
     "productBrands": "برندها",
-    "productSettings": "تنظیمات محصول",
+    "productSettings": " دسته بندی  محصولات",
     "addProduct": "افزودن محصول",
     "orders": "سفارش‌ها",
     "allOrders": "همه سفارش‌ها",
@@ -884,7 +884,7 @@
       "allProducts": "همه محصولات",
       "productAttributes": "ویژگی‌های محصول",
       "productBrands": "برندهای محصول",
-      "productSettings": "تنظیمات محصول",
+      "productSettings": "دسته‌بندی محصول",
       "addProduct": "افزودن محصول",
       "allProductComments": "همه نظرات محصولات",
       "editProduct": "ویرایش محصول",
@@ -1390,7 +1390,7 @@
   "products": {
     "pageTitle": "همه محصولات",
     "addButton": "افزودن محصول",
-    "productSettingsTitle": "تنظیمات محصول",
+    "productSettingsTitle": "دسته‌بندی محصول",
     "addProductTitle": "افزودن محصول",
     "editProductTitle": "ویرایش محصول",
     "reviews": {
@@ -1637,7 +1637,7 @@
         "value": "مقدار",
         "selectValue": "انتخاب مقدار",
         "noValues": "مقداری برای این ویژگی در تنظیمات کاتالوگ تعریف نشده است.",
-        "emptyCatalog": "ویژگی کاتالوگی یافت نشد. ابتدا در تنظیمات محصول ویژگی ایجاد کنید.",
+        "emptyCatalog": "ویژگی کاتالوگی یافت نشد. ابتدا در ویژگی‌های محصول ویژگی ایجاد کنید.",
         "valuesRequired": "برای هر ویژگی اضافه‌شده حداقل یک مقدار انتخاب کنید."
       },
       "images": {
