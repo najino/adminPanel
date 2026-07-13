@@ -5,12 +5,17 @@ import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
   Bell,
+  FileText,
   Globe,
+  LogOut,
   Menu,
   Moon,
+  PackagePlus,
+  Plus,
   Search,
+  ShoppingCart,
   Sun,
-  LogOut,
+  Ticket,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,132 +38,146 @@ interface HeaderProps {
 
 export function Header({ onToggleSidebar }: HeaderProps) {
   const t = useTranslations("common");
+  const tNav = useTranslations("navigation");
   const { theme, setTheme } = useTheme();
   const locale = useLocale();
   const router = useRouter();
   const { user, signOut } = useAuth();
+  const nextLocale = locale === "fa" ? "en" : "fa";
+  const initials =
+    `${user?.firstName?.[0] ?? ""}${user?.lastName?.[0] ?? ""}`.toUpperCase() || "U";
 
-  const switchLocale = (newLocale: string) => {
-    document.cookie = `NEXT_LOCALE=${newLocale};path=/;max-age=31536000`;
-    router.refresh();
+  const switchLocale = () => {
+    const segments = window.location.pathname.split("/");
+    if (segments[1] === "fa" || segments[1] === "en") {
+      segments[1] = nextLocale;
+      router.push(segments.join("/") || `/${nextLocale}`);
+    } else {
+      router.push(`/${nextLocale}`);
+    }
   };
 
-  const initials = user
-    ? `${user.firstName[0]}${user.lastName[0]}`.toUpperCase()
-    : "AD";
-
   return (
-    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-3 border-b border-border/80 glass-panel px-4 lg:px-6">
+    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-3 border-b border-border/60 glass-panel px-4 lg:px-6">
       <Button
+        type="button"
         variant="ghost"
-        size="icon-sm"
+        size="icon"
+        className="rounded-xl"
         onClick={onToggleSidebar}
         aria-label={t("toggleSidebar")}
-        className="text-muted-foreground"
       >
         <Menu className="size-[18px]" />
       </Button>
 
-      <Separator orientation="vertical" className="hidden h-5 sm:block" />
-
-      <div className="relative hidden max-w-sm flex-1 md:block">
+      <div className="relative hidden min-w-0 flex-1 md:block md:max-w-md">
         <Search
           className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
           aria-hidden
         />
         <Input
           placeholder={t("searchPlaceholder")}
-          className="h-9 bg-muted/50 ps-9 shadow-none"
+          className="h-9 rounded-xl border-border/70 bg-background/60 ps-9 shadow-none"
           aria-label={t("search")}
         />
-        <kbd className="pointer-events-none absolute end-2.5 top-1/2 hidden -translate-y-1/2 rounded border border-border bg-background px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground lg:inline-block">
-          ⌘K
-        </kbd>
       </div>
 
-      <div className="ms-auto flex items-center gap-1">
+      <div className="ms-auto flex items-center gap-1.5">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon-sm" aria-label={t("language")}>
-              <Globe className="size-[18px]" />
+            <Button type="button" size="sm" className="hidden gap-1.5 rounded-xl sm:inline-flex">
+              <Plus className="size-4" aria-hidden />
+              {t("quickCreate")}
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-44">
-            <DropdownMenuLabel>{t("language")}</DropdownMenuLabel>
+          <DropdownMenuContent align="end" className="w-52 rounded-xl">
+            <DropdownMenuLabel>{t("quickCreate")}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => switchLocale("en")}
-              className={cn(locale === "en" && "bg-accent")}
-            >
-              English (EN)
+            <DropdownMenuItem onClick={() => router.push("/products/create")} className="gap-2">
+              <PackagePlus className="size-4" />
+              {tNav("addProduct")}
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => switchLocale("fa")}
-              className={cn(locale === "fa" && "bg-accent")}
-            >
-              Persian (FA)
+            <DropdownMenuItem onClick={() => router.push("/orders")} className="gap-2">
+              <ShoppingCart className="size-4" />
+              {tNav("allOrders")}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push("/coupons")} className="gap-2">
+              <Ticket className="size-4" />
+              {tNav("coupons")}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push("/weblog/create")} className="gap-2">
+              <FileText className="size-4" />
+              {tNav("addPost")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
 
         <Button
+          type="button"
           variant="ghost"
-          size="icon-sm"
+          size="icon"
+          className="rounded-xl"
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           aria-label={t("theme")}
-          className="relative"
         >
-          <Sun className="size-[18px] rotate-0 scale-100 transition-transform dark:-rotate-90 dark:scale-0 motion-reduce:transition-none" />
-          <Moon className="absolute size-[18px] rotate-90 scale-0 transition-transform dark:rotate-0 dark:scale-100 motion-reduce:transition-none" />
+          {theme === "dark" ? <Sun className="size-[18px]" /> : <Moon className="size-[18px]" />}
         </Button>
 
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="rounded-xl"
+          onClick={switchLocale}
+          aria-label={t("language")}
+        >
+          <Globe className="size-[18px]" />
+        </Button>
+
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="relative rounded-xl"
+          aria-label={t("notifications")}
+        >
+          <Bell className="size-[18px]" />
+          <span className="absolute end-1.5 top-1.5 size-2 rounded-full bg-destructive ring-2 ring-background" />
+        </Button>
+
+        <Separator orientation="vertical" className="mx-1 hidden h-6 sm:block" />
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon-sm" aria-label={t("notifications")}>
-              <Bell className="size-[18px]" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-80">
-            <DropdownMenuLabel>{t("notification.title")}</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <div className="px-2 py-6 text-center text-sm text-muted-foreground">
-              {t("noData")}
-            </div>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>{t("notification.viewAll")}</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        <Separator orientation="vertical" className="mx-1 hidden h-5 sm:block" />
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-9 gap-2 px-2">
+            <Button
+              type="button"
+              variant="ghost"
+              className={cn("h-9 gap-2 rounded-xl px-2")}
+              aria-label={t("user.profile")}
+            >
               <Avatar className="size-7">
-                <AvatarFallback className="bg-primary/10 text-xs font-medium text-primary">
-                  {initials}
-                </AvatarFallback>
+                <AvatarFallback className="text-xs">{initials}</AvatarFallback>
               </Avatar>
-              <span className="hidden max-w-[120px] truncate text-sm font-medium sm:inline">
-                {user?.firstName}
+              <span className="hidden max-w-[120px] truncate text-sm font-medium lg:inline">
+                {user?.firstName ?? t("user.profile")}
               </span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel className="flex flex-col gap-1 font-normal">
-              <span className="font-medium">
-                {user?.firstName} {user?.lastName}
-              </span>
-              <span className="text-xs text-muted-foreground">{user?.email}</span>
+          <DropdownMenuContent align="end" className="w-48 rounded-xl">
+            <DropdownMenuLabel className="font-normal">
+              <div className="flex flex-col gap-0.5">
+                <span className="text-sm font-medium">
+                  {user?.firstName} {user?.lastName}
+                </span>
+                <span className="text-xs text-muted-foreground">{user?.email}</span>
+              </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={async () => {
-                await signOut();
-                router.push("/signin");
-              }}
+              className="gap-2 text-destructive focus:text-destructive"
+              onClick={() => signOut()}
             >
-              <LogOut className="me-2 size-4" />
+              <LogOut className="size-4" />
               {t("signOut")}
             </DropdownMenuItem>
           </DropdownMenuContent>

@@ -92,7 +92,8 @@
     },
     "user": {
       "signOut": "Sign out",
-      "userAlt": "User"
+      "userAlt": "User",
+      "profile": "Profile"
     },
     "status": {
       "active": "Active",
@@ -156,7 +157,9 @@
       "invalidEnum": "Please select a valid option",
       "invalidDate": "Please enter a valid date",
       "default": "Invalid value"
-    }
+    },
+    "darkMode": "Dark mode",
+    "quickCreate": "Quick create"
   },
   "contact": {
     "pageTitle": "All Contact us Comments",
@@ -649,12 +652,16 @@
         "products": "Products",
         "category": "Category",
         "price": "Price",
-        "status": "Status"
+        "status": "Status",
+        "customer": "Customer"
       },
       "status": {
         "delivered": "Delivered",
         "pending": "Pending",
-        "canceled": "Canceled"
+        "canceled": "Canceled",
+        "processing": "Processing",
+        "shipped": "Shipped",
+        "cancelled": "Cancelled"
       }
     },
     "lowStock": {
@@ -663,11 +670,34 @@
         "product": "Product",
         "stock": "Stock"
       },
-      "left": "{count} left"
+      "left": "{count} left",
+      "empty": "All products have healthy stock"
     },
     "variants": {
       "one": "1 Variant",
       "many": "{count} Variants"
+    },
+    "welcome": "Welcome back",
+    "welcomeSubtitle": "Here is your store overview for today",
+    "quickActions": {
+      "title": "Quick actions",
+      "addProduct": "Create a new listing",
+      "orders": "Review open orders",
+      "coupons": "Manage discounts",
+      "post": "Publish content",
+      "users": "Manage customers",
+      "settings": "Store preferences"
+    },
+    "activity": {
+      "title": "Recent activity",
+      "newOrder": "New order #{id}",
+      "paymentReceived": "Payment received",
+      "newUser": "New customer registered",
+      "newUserDesc": "Joined from the storefront",
+      "refund": "Refund processed",
+      "refundDesc": "Returned to customer wallet",
+      "justNow": "Just now",
+      "hoursAgo": "{count}h ago"
     }
   },
   "navigation": {
@@ -707,7 +737,11 @@
     "setStyle": "Set Style",
     "seo": "SEO",
     "new": "new",
-    "pro": "pro"
+    "pro": "pro",
+    "sectionCommerce": "Commerce",
+    "sectionMarketing": "Marketing",
+    "sectionContent": "Content",
+    "sectionSystem": "System"
   },
   "orders": {
     "pageTitle": "All Orders",

@@ -122,7 +122,7 @@ export function DataTable<TData, TValue>({
       <div
         className={cn(
           "overflow-hidden",
-          !embedded && "rounded-xl border border-border bg-card shadow-elevated-sm",
+          !embedded && "rounded-2xl border border-border bg-card shadow-elevated-sm",
         )}
       >
         <div className="overflow-x-auto">
@@ -152,7 +152,7 @@ export function DataTable<TData, TValue>({
                 table.getRowModel().rows.map((row) => (
                   <tr
                     key={row.id}
-                    className="border-b border-border/60 transition-colors last:border-0 hover:bg-muted/30 motion-reduce:transition-none"
+                    className="border-b border-border/50 transition-colors last:border-0 hover:bg-muted/40 rounded-xl motion-reduce:transition-none"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <td key={cell.id} className="px-4 py-3.5">

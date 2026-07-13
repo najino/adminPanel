@@ -92,7 +92,8 @@
     },
     "user": {
       "signOut": "خروج",
-      "userAlt": "کاربر"
+      "userAlt": "کاربر",
+      "profile": "پروفایل"
     },
     "status": {
       "active": "فعال",
@@ -156,7 +157,9 @@
       "invalidEnum": "یک گزینه معتبر انتخاب کنید",
       "invalidDate": "تاریخ معتبر وارد کنید",
       "default": "مقدار نامعتبر است"
-    }
+    },
+    "darkMode": "حالت تاریک",
+    "quickCreate": "ایجاد سریع"
   },
   "contact": {
     "pageTitle": "همه پیام‌های تماس با ما",
@@ -651,12 +654,16 @@
         "products": "محصولات",
         "category": "دسته‌بندی",
         "price": "قیمت",
-        "status": "وضعیت"
+        "status": "وضعیت",
+        "customer": "مشتری"
       },
       "status": {
         "delivered": "تحویل‌شده",
         "pending": "در انتظار",
-        "canceled": "لغو‌شده"
+        "canceled": "لغو‌شده",
+        "processing": "در حال پردازش",
+        "shipped": "ارسال‌شده",
+        "cancelled": "لغو‌شده"
       }
     },
     "lowStock": {
@@ -665,11 +672,34 @@
         "product": "محصول",
         "stock": "موجودی"
       },
-      "left": "{count} باقی‌مانده"
+      "left": "{count} باقی‌مانده",
+      "empty": "همه محصولات موجودی کافی دارند"
     },
     "variants": {
       "one": "۱ نوع",
       "many": "{count} نوع"
+    },
+    "welcome": "خوش آمدید",
+    "welcomeSubtitle": "نمای کلی فروشگاه شما برای امروز",
+    "quickActions": {
+      "title": "اقدامات سریع",
+      "addProduct": "افزودن محصول جدید",
+      "orders": "مدیریت سفارش‌ها",
+      "coupons": "کدهای تخفیف",
+      "post": "انتشار مطلب",
+      "users": "مشتریان",
+      "settings": "تنظیمات فروشگاه"
+    },
+    "activity": {
+      "title": "فعالیت‌های اخیر",
+      "newOrder": "سفارش جدید #{id}",
+      "paymentReceived": "پرداخت دریافت شد",
+      "newUser": "مشتری جدید ثبت‌نام کرد",
+      "newUserDesc": "از طریق فروشگاه",
+      "refund": "بازپرداخت انجام شد",
+      "refundDesc": "به کیف پول مشتری",
+      "justNow": "همین الان",
+      "hoursAgo": "{count} ساعت پیش"
     }
   },
   "navigation": {
@@ -709,7 +739,11 @@
     "setStyle": "Set Style",
     "seo": "سئو",
     "new": "جدید",
-    "pro": "حرفه‌ای"
+    "pro": "حرفه‌ای",
+    "sectionCommerce": "فروش و تجارت",
+    "sectionMarketing": "بازاریابی",
+    "sectionContent": "محتوا",
+    "sectionSystem": "سیستم"
   },
   "orders": {
     "pageTitle": "همه سفارش‌ها",
