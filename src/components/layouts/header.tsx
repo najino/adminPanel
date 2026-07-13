@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -39,13 +40,20 @@ interface HeaderProps {
 export function Header({ onToggleSidebar }: HeaderProps) {
   const t = useTranslations("common");
   const tNav = useTranslations("navigation");
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const locale = useLocale();
   const router = useRouter();
   const { user, signOut } = useAuth();
   const nextLocale = locale === "fa" ? "en" : "fa";
   const initials =
     `${user?.firstName?.[0] ?? ""}${user?.lastName?.[0] ?? ""}`.toUpperCase() || "U";
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = mounted && resolvedTheme === "dark";
 
   const switchLocale = () => {
     const segments = window.location.pathname.split("/");
@@ -117,10 +125,10 @@ export function Header({ onToggleSidebar }: HeaderProps) {
           variant="ghost"
           size="icon"
           className="rounded-xl"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          onClick={() => setTheme(isDark ? "light" : "dark")}
           aria-label={t("theme")}
         >
-          {theme === "dark" ? <Sun className="size-[18px]" /> : <Moon className="size-[18px]" />}
+          {isDark ? <Sun className="size-[18px]" /> : <Moon className="size-[18px]" />}
         </Button>
 
         <Button

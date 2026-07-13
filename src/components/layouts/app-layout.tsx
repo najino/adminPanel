@@ -61,7 +61,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             }
           }}
         />
-        <main className="flex-1 overflow-y-auto surface-muted p-4 lg:p-6">
+        <main className="scrollbar-premium flex-1 overflow-y-auto surface-muted p-4 lg:p-6">
           <div className={cn("mx-auto w-full max-w-[1440px]")}>{children}</div>
         </main>
       </div>

@@ -4,11 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
-import { ChevronDown, ChevronRight, Moon, Store, Sun } from "lucide-react";
+import { ChevronDown, Moon, Store, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { navigationGroups, type NavItem } from "@/config/navigation";
 import { getNavIcon } from "@/config/navigation-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Tooltip,
   TooltipContent,
@@ -21,6 +21,44 @@ import { Label } from "@/components/ui/label";
 interface SidebarProps {
   collapsed: boolean;
   onNavigate?: () => void;
+}
+
+function NavIcon({
+  nameKey,
+  active,
+  nested,
+}: {
+  nameKey: string;
+  active?: boolean;
+  nested?: boolean;
+}) {
+  const Icon = getNavIcon(nameKey);
+
+  if (nested) {
+    return (
+      <Icon
+        className={cn(
+          "size-3.5 shrink-0 transition-colors",
+          active ? "text-primary" : "text-muted-foreground/70",
+        )}
+        strokeWidth={1.5}
+        aria-hidden
+      />
+    );
+  }
+
+  return (
+    <span
+      className={cn(
+        "flex size-7 shrink-0 items-center justify-center rounded-lg transition-colors duration-150",
+        active
+          ? "bg-primary/15 text-primary"
+          : "bg-muted/70 text-muted-foreground group-hover:bg-muted group-hover:text-foreground",
+      )}
+    >
+      <Icon className="size-3.5" strokeWidth={1.5} aria-hidden />
+    </span>
+  );
 }
 
 function NavLink({
@@ -39,81 +77,109 @@ function NavLink({
   const t = useTranslations("navigation");
   const pathname = usePathname();
   const [open, setOpen] = useState(true);
-  const Icon = getNavIcon(item.nameKey);
   const label = t(item.nameKey);
+  const nested = depth > 0;
 
   if (item.children) {
+    if (collapsed) {
+      return (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              type="button"
+              className="group flex w-full items-center justify-center rounded-xl px-2 py-2 text-sidebar-foreground transition-colors hover:bg-sidebar-accent"
+              aria-label={label}
+            >
+              <NavIcon nameKey={item.nameKey} />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent side={tipSide} className="flex flex-col gap-1 p-2">
+            {item.children.map((child) => (
+              <Link
+                key={child.nameKey}
+                href={child.href!}
+                onClick={onNavigate}
+                className="rounded-lg px-2 py-1.5 text-sm hover:bg-accent"
+              >
+                {t(child.nameKey)}
+              </Link>
+            ))}
+          </TooltipContent>
+        </Tooltip>
+      );
+    }
+
     return (
       <div className="flex flex-col gap-0.5">
         <button
           type="button"
           onClick={() => setOpen(!open)}
           aria-expanded={open}
+          className="group flex w-full items-center gap-2.5 rounded-xl px-2 py-1.5 text-[13px] font-medium text-muted-foreground transition-colors duration-150 hover:bg-black/[0.04] hover:text-foreground dark:hover:bg-white/[0.06] motion-reduce:transition-none"
+        >
+          <NavIcon nameKey={item.nameKey} />
+          <span className="flex-1 text-start tracking-wide">{label}</span>
+          <ChevronDown
+            className={cn(
+              "size-3.5 shrink-0 opacity-40 transition-transform duration-200",
+              !open && "-rotate-90",
+            )}
+            strokeWidth={1.5}
+            aria-hidden
+          />
+        </button>
+        <div
           className={cn(
-            "flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-sidebar-foreground transition-colors duration-150 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground motion-reduce:transition-none",
-            collapsed && "justify-center px-2",
+            "grid transition-[grid-template-rows,opacity] duration-300 ease-out",
+            open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
           )}
         >
-          <Icon className="size-[18px] shrink-0 opacity-70" aria-hidden />
-          {!collapsed && (
-            <>
-              <span className="flex-1 text-start">{label}</span>
-              {open ? (
-                <ChevronDown className="size-4 opacity-50" aria-hidden />
-              ) : (
-                <ChevronRight className="size-4 opacity-50" aria-hidden />
-              )}
-            </>
-          )}
-        </button>
-        {open && !collapsed && (
-          <div className="ms-4 flex flex-col gap-0.5 border-s border-sidebar-border ps-3">
-            {item.children.map((child) => (
-              <NavLink
-                key={child.nameKey}
-                item={child}
-                collapsed={collapsed}
-                onNavigate={onNavigate}
-                depth={depth + 1}
-                tipSide={tipSide}
-              />
-            ))}
+          <div className="min-h-0 overflow-hidden">
+            <div className="relative ms-5 mt-0.5 flex flex-col gap-0.5 border-s border-border/60 ps-3">
+              {item.children.map((child) => (
+                <NavLink
+                  key={child.nameKey}
+                  item={child}
+                  collapsed={collapsed}
+                  onNavigate={onNavigate}
+                  depth={depth + 1}
+                  tipSide={tipSide}
+                />
+              ))}
+            </div>
           </div>
-        )}
+        </div>
       </div>
     );
   }
 
-  const isActive =
-    item.href === "/" ? pathname === "/" || pathname.endsWith("/") : pathname.includes(item.href!);
+  const pathWithoutLocale = pathname.replace(/^\/(fa|en)/, "") || "/";
+  const active =
+    item.href === "/"
+      ? pathWithoutLocale === "/"
+      : pathWithoutLocale === item.href || pathWithoutLocale.startsWith(`${item.href}/`);
 
   const linkContent = (
     <Link
       href={item.href!}
       onClick={onNavigate}
+      aria-current={active ? "page" : undefined}
       className={cn(
-        "relative flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-colors duration-150 motion-reduce:transition-none",
-        isActive
-          ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm"
-          : "text-sidebar-foreground hover:bg-sidebar-accent/70 hover:text-sidebar-accent-foreground",
-        collapsed && "justify-center px-2",
-        depth > 0 && "py-1.5 text-[13px]",
+        "group relative flex items-center gap-2.5 rounded-xl px-2 py-1.5 text-[13px] font-medium tracking-wide transition-all duration-150 motion-reduce:transition-none",
+        active
+          ? "bg-primary/10 text-foreground"
+          : "text-muted-foreground hover:bg-black/[0.04] hover:text-foreground dark:hover:bg-white/[0.06]",
+        collapsed && "justify-center px-2 py-2",
+        nested && "py-1.5",
       )}
     >
-      {isActive && (
+      {active && !collapsed && (
         <span
-          className="absolute inset-y-1.5 start-0 w-0.5 rounded-full bg-sidebar-primary"
+          className="absolute inset-y-1.5 start-0 w-[3px] rounded-full bg-primary"
           aria-hidden
         />
       )}
-      <Icon
-        className={cn(
-          "size-[18px] shrink-0",
-          depth > 0 && "size-4",
-          isActive ? "text-sidebar-primary" : "opacity-60",
-        )}
-        aria-hidden
-      />
+      <NavIcon nameKey={item.nameKey} active={active} nested={nested} />
       {!collapsed && <span className="truncate">{label}</span>}
     </Link>
   );
@@ -135,20 +201,26 @@ export function Sidebar({ collapsed, onNavigate }: SidebarProps) {
   const tCommon = useTranslations("common");
   const locale = useLocale();
   const tipSide = locale === "fa" ? "left" : "right";
-  const { theme, setTheme } = useTheme();
-  const isDark = theme === "dark";
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = mounted && resolvedTheme === "dark";
 
   return (
     <TooltipProvider delayDuration={0}>
       <aside
         className={cn(
-          "flex h-full flex-col rounded-2xl border border-sidebar-border/80 bg-sidebar text-sidebar-foreground shadow-elevated-md transition-[width] duration-300 motion-reduce:transition-none",
+          "flex h-full flex-col overflow-hidden rounded-2xl border border-sidebar-border/80 bg-sidebar text-sidebar-foreground shadow-elevated-md transition-[width] duration-300 motion-reduce:transition-none",
           collapsed ? "w-[76px]" : "w-[260px]",
         )}
       >
         <div
           className={cn(
-            "flex h-14 shrink-0 items-center border-b border-sidebar-border/70 px-4",
+            "flex h-14 shrink-0 items-center border-b border-sidebar-border/60 px-3",
             collapsed && "justify-center px-2",
           )}
         >
@@ -160,17 +232,20 @@ export function Sidebar({ collapsed, onNavigate }: SidebarProps) {
             )}
           >
             <div className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-elevated-sm">
-              <Store className="size-4" aria-hidden />
+              <Store className="size-3.5" strokeWidth={1.75} aria-hidden />
             </div>
             {!collapsed && <span className="truncate text-[15px]">Najino</span>}
           </Link>
         </div>
 
-        <nav className="flex flex-1 flex-col gap-4 overflow-y-auto p-3" aria-label="Main">
+        <nav
+          className="scrollbar-premium flex flex-1 flex-col gap-4 overflow-y-auto overscroll-contain p-2.5"
+          aria-label="Main"
+        >
           {navigationGroups.map((group, gi) => (
             <div key={group.labelKey ?? `g-${gi}`} className="flex flex-col gap-0.5">
               {group.labelKey && !collapsed && (
-                <p className="mb-1 px-3 text-[11px] font-semibold tracking-wider text-muted-foreground uppercase">
+                <p className="mb-1.5 px-2.5 text-[10px] font-semibold tracking-[0.08em] text-muted-foreground/60 uppercase">
                   {t(group.labelKey)}
                 </p>
               )}
@@ -189,7 +264,7 @@ export function Sidebar({ collapsed, onNavigate }: SidebarProps) {
 
         <div
           className={cn(
-            "mt-auto border-t border-sidebar-border/70 p-3",
+            "shrink-0 border-t border-sidebar-border/60 p-2.5",
             collapsed && "flex justify-center",
           )}
         >
@@ -198,22 +273,26 @@ export function Sidebar({ collapsed, onNavigate }: SidebarProps) {
               <TooltipTrigger asChild>
                 <button
                   type="button"
-                  className="flex size-9 items-center justify-center rounded-xl text-sidebar-foreground hover:bg-sidebar-accent"
+                  className="flex size-9 items-center justify-center rounded-xl text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-foreground"
                   onClick={() => setTheme(isDark ? "light" : "dark")}
                   aria-label={tCommon("darkMode")}
                 >
-                  {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
+                  {isDark ? (
+                    <Sun className="size-4" strokeWidth={1.5} />
+                  ) : (
+                    <Moon className="size-4" strokeWidth={1.5} />
+                  )}
                 </button>
               </TooltipTrigger>
               <TooltipContent side={tipSide}>{tCommon("darkMode")}</TooltipContent>
             </Tooltip>
           ) : (
-            <div className="flex items-center justify-between gap-3 rounded-xl bg-sidebar-accent/40 px-3 py-2.5">
+            <div className="flex items-center justify-between gap-3 rounded-xl bg-muted/50 px-3 py-2.5">
               <div className="flex items-center gap-2">
                 {isDark ? (
-                  <Moon className="size-4 text-muted-foreground" aria-hidden />
+                  <Moon className="size-3.5 text-muted-foreground" strokeWidth={1.5} aria-hidden />
                 ) : (
-                  <Sun className="size-4 text-muted-foreground" aria-hidden />
+                  <Sun className="size-3.5 text-muted-foreground" strokeWidth={1.5} aria-hidden />
                 )}
                 <Label htmlFor="sidebar-dark-mode" className="text-xs font-medium">
                   {tCommon("darkMode")}
@@ -222,6 +301,7 @@ export function Sidebar({ collapsed, onNavigate }: SidebarProps) {
               <Switch
                 id="sidebar-dark-mode"
                 checked={isDark}
+                disabled={!mounted}
                 onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
                 aria-label={tCommon("darkMode")}
               />
