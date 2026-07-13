@@ -25,7 +25,7 @@ export function AuthLayout({
             <div className="flex size-9 items-center justify-center rounded-lg bg-primary-foreground/15 backdrop-blur-sm">
               <Store className="size-5" aria-hidden />
             </div>
-            Commerce Platform
+            پنل ادمین فروشگاهی
           </Link>
         </div>
 
@@ -44,7 +44,7 @@ export function AuthLayout({
         </div>
 
         <p className="relative z-10 text-xs text-primary-foreground/60">
-          © {new Date().getFullYear()} Commerce Platform
+          © {new Date().getFullYear()} پنل ادمین فروشگاهی
         </p>
       </div>
 
@@ -54,7 +54,7 @@ export function AuthLayout({
             <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <Store className="size-4" aria-hidden />
             </div>
-            Commerce Platform
+            پنل ادمین فروشگاهی
           </Link>
         </div>
 

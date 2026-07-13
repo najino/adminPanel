@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Commerce Platform",
-  description: "E-commerce admin dashboard",
+  title: "پنل ادمین فروشگاهی",
+  description: "داشبورد مدیریت فروشگاه آنلاین",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

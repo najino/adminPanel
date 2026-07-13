@@ -66,8 +66,9 @@
     "left": "{count} left",
     "variants": "{count} Variant(s)",
     "logoAlt": "Logo",
+    "appName": "Store Admin Panel",
     "meta": {
-      "dashboardTitle": "Shop Admin Panel",
+      "dashboardTitle": "Store Admin Panel",
       "dashboardDescription": "E-commerce admin dashboard"
     },
     "chartTab": {

@@ -234,7 +234,11 @@ export function Sidebar({ collapsed, onNavigate }: SidebarProps) {
             <div className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-elevated-sm">
               <Store className="size-3.5" strokeWidth={1.75} aria-hidden />
             </div>
-            {!collapsed && <span className="truncate text-[15px]">Najino</span>}
+            {!collapsed && (
+              <span className="truncate text-[13px] font-bold leading-tight">
+                {tCommon("appName")}
+              </span>
+            )}
           </Link>
         </div>
 

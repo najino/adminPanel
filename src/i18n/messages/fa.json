@@ -66,8 +66,9 @@
     "left": "{count} باقی‌مانده",
     "variants": "{count} نوع",
     "logoAlt": "لوگو",
+    "appName": "پنل ادمین فروشگاهی",
     "meta": {
-      "dashboardTitle": "پنل مدیریت فروشگاه",
+      "dashboardTitle": "پنل ادمین فروشگاهی",
       "dashboardDescription": "داشبورد مدیریت فروشگاه آنلاین"
     },
     "chartTab": {
