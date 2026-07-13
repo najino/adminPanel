@@ -24,11 +24,11 @@ export const navigationGroups: NavGroup[] = [
         nameKey: "products",
         children: [
           { nameKey: "allProducts", href: "/products" },
+          { nameKey: "addProduct", href: "/products/create" },
+          { nameKey: "productSettings", href: "/products/settings" },
           { nameKey: "productAttributes", href: "/products/attributes" },
           { nameKey: "productBrands", href: "/products/brands" },
           { nameKey: "comments", href: "/products/comments" },
-          { nameKey: "productSettings", href: "/products/settings" },
-          { nameKey: "addProduct", href: "/products/create" },
         ],
       },
       {
