@@ -47,6 +47,7 @@ export default function SetStylePage() {
       queryClient.invalidateQueries({ queryKey: ["store-style"] });
       toast.success(tc("save"));
     },
+    onError: () => toast.error(tc("saveFailed")),
   });
 
   return (

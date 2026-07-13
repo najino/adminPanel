@@ -42,6 +42,7 @@ export default function CreateOrderPage() {
       toast.success(tCommon("save"));
       router.push(`/orders/${order.id}`);
     },
+    onError: () => toast.error(tCommon("saveFailed")),
   });
 
   return (

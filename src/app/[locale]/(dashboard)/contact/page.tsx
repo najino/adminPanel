@@ -54,6 +54,7 @@ export default function ContactPage() {
       setSelected(null);
       toast.success(tc("delete"));
     },
+    onError: () => toast.error(tc("saveFailed")),
   });
 
   const columns: ColumnDef<ContactMessage>[] = [

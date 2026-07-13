@@ -52,6 +52,7 @@ export default function WeblogSettingsPage() {
       setNewCategory("");
       toast.success(tc("save"));
     },
+    onError: () => toast.error(tc("saveFailed")),
   });
 
   const deleteMutation = useMutation({
@@ -61,6 +62,7 @@ export default function WeblogSettingsPage() {
       setDeleteTarget(null);
       toast.success(tc("delete"));
     },
+    onError: () => toast.error(tc("saveFailed")),
   });
 
   const columns: ColumnDef<{ name: string }>[] = [

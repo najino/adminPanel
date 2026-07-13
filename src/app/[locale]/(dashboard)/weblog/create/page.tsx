@@ -77,6 +77,7 @@ export default function CreatePostPage() {
       toast.success(tc("save"));
       router.push("/weblog");
     },
+    onError: () => toast.error(tc("saveFailed")),
   });
 
   const handleImageUpload = async (files: File[]) => {

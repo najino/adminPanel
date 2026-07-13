@@ -175,6 +175,7 @@ export default function ProductAttributesPage() {
       updateCatalogAttribute(id, { is_active }),
     onSuccess: () => {
       invalidateAll();
+      toast.success(t("attributeUpdated"));
     },
     onError: () => toast.error(t("saveFailed")),
   });

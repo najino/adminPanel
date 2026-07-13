@@ -76,6 +76,7 @@ export default function SeoSettingsPage() {
       queryClient.invalidateQueries({ queryKey: ["seo-settings"] });
       toast.success(t("header.saved"));
     },
+    onError: () => toast.error(tc("saveFailed")),
   });
 
   const handleFileUpload = async (field: "jsonLdFile" | "sitemapFile" | "robotsFile", files: File[]) => {

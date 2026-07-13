@@ -60,6 +60,7 @@ export default function GeneralSettingPage() {
       queryClient.invalidateQueries({ queryKey: ["general-settings"] });
       toast.success(tc("save"));
     },
+    onError: () => toast.error(tc("saveFailed")),
   });
 
   const handleUpload = async (field: "logo" | "favicon", files: File[]) => {

@@ -25,7 +25,7 @@ If you still see a bus error, run manually:
 ```bash
 npm install @next/swc-wasm-nodejs@15.5.20
 rm -rf node_modules/@next/swc-linux-x64-gnu node_modules/@next/swc-linux-x64-musl
-LD_PRELOAD= NEXT_DISABLE_SWC_BINARY=1 npm run dev
+npm run dev
 ```
 
 First startup may take ~30s while WASM SWC downloads.

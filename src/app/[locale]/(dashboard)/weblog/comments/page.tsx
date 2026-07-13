@@ -43,6 +43,7 @@ export default function WeblogCommentsPage() {
       queryClient.invalidateQueries({ queryKey: ["comments"] });
       toast.success(tc("save"));
     },
+    onError: () => toast.error(tc("saveFailed")),
   });
 
   const deleteMutation = useMutation({
@@ -52,6 +53,7 @@ export default function WeblogCommentsPage() {
       setDeleteTarget(null);
       toast.success(tc("delete"));
     },
+    onError: () => toast.error(tc("saveFailed")),
   });
 
   const columns: ColumnDef<BlogComment>[] = [

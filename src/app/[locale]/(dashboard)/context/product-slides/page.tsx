@@ -13,6 +13,16 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
   getProductSlides,
   slidesToTabs,
   syncProductSlides,
@@ -38,6 +48,9 @@ export default function ProductSlidesPage() {
     bestsellers: "",
     discounted: "",
   });
+  const [deleteTarget, setDeleteTarget] = useState<{ tab: SlideTab; product_id: string } | null>(
+    null,
+  );
 
   const { data: serverSlides = [], isLoading } = useQuery({
     queryKey: ["product-slides"],
@@ -89,6 +102,7 @@ export default function ProductSlidesPage() {
         items: prev[tab].items.filter((i) => i.product_id !== product_id),
       },
     }));
+    setDeleteTarget(null);
   };
 
   const tabLabels: Record<SlideTab, string> = {
@@ -162,7 +176,7 @@ export default function ProductSlidesPage() {
                               type="button"
                               variant="ghost"
                               size="sm"
-                              onClick={() => removeProduct(tab, item.product_id)}
+                              onClick={() => setDeleteTarget({ tab, product_id: item.product_id })}
                             >
                               <Trash2 className="size-4 text-destructive" />
                             </Button>
@@ -183,6 +197,25 @@ export default function ProductSlidesPage() {
           {saveMutation.isPending ? tc("loading") : t("save")}
         </Button>
       </div>
+
+      <AlertDialog open={!!deleteTarget} onOpenChange={() => setDeleteTarget(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{tc("delete")}</AlertDialogTitle>
+            <AlertDialogDescription>{tc("confirmDelete")}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{tc("cancel")}</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() =>
+                deleteTarget && removeProduct(deleteTarget.tab, deleteTarget.product_id)
+              }
+            >
+              {tc("delete")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </PageTransition>
   );
 }

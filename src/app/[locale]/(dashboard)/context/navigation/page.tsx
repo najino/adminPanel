@@ -19,6 +19,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { getNavigation, isTemporaryId, updateNavigation } from "@/services/storefront.service";
 import type { NavItem } from "@/types/api/storefront";
 
@@ -38,6 +48,7 @@ export default function NavigationPage() {
   const [items, setItems] = useState<NavItem[]>([]);
   const [form, setForm] = useState<MenuForm | null>(null);
   const [open, setOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const { data, isLoading } = useQuery({
     queryKey: ["navigation"],
@@ -97,6 +108,7 @@ export default function NavigationPage() {
 
   const deleteItem = (id: string) => {
     setItems((prev) => prev.filter((i) => i.id !== id));
+    setDeleteId(null);
   };
 
   const columns: ColumnDef<NavItem>[] = [
@@ -111,7 +123,7 @@ export default function NavigationPage() {
           <Button variant="ghost" size="sm" onClick={() => openEdit(row.original)}>
             <Pencil className="size-4" />
           </Button>
-          <Button variant="ghost" size="sm" onClick={() => deleteItem(row.original.id!)}>
+          <Button variant="ghost" size="sm" onClick={() => setDeleteId(row.original.id!)}>
             <Trash2 className="size-4 text-destructive" />
           </Button>
         </div>
@@ -189,6 +201,21 @@ export default function NavigationPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{tc("delete")}</AlertDialogTitle>
+            <AlertDialogDescription>{tc("confirmDelete")}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{tc("cancel")}</AlertDialogCancel>
+            <AlertDialogAction onClick={() => deleteId && deleteItem(deleteId)}>
+              {tc("delete")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </PageTransition>
   );
 }
