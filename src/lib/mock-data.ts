@@ -12,6 +12,7 @@ import type {
   GeneralSettings,
   SeoSettings,
   User,
+  AdminNotification,
 } from "@/types";
 
 export const mockProducts: Product[] = [
@@ -537,3 +538,52 @@ export const mockContextSections = {
     },
   },
 };
+
+export const mockNotifications: AdminNotification[] = [
+  {
+    id: "n1",
+    type: "order",
+    titleKey: "items.newOrder",
+    titleParams: { id: "ORD-1024" },
+    descriptionKey: "items.newOrderDesc",
+    href: "/orders",
+    read: false,
+    createdAt: new Date(Date.now() - 5 * 60_000).toISOString(),
+  },
+  {
+    id: "n2",
+    type: "review",
+    titleKey: "items.newReview",
+    descriptionKey: "items.newReviewDesc",
+    href: "/products/comments",
+    read: false,
+    createdAt: new Date(Date.now() - 18 * 60_000).toISOString(),
+  },
+  {
+    id: "n3",
+    type: "stock",
+    titleKey: "items.lowStock",
+    descriptionKey: "items.lowStockDesc",
+    href: "/products",
+    read: false,
+    createdAt: new Date(Date.now() - 45 * 60_000).toISOString(),
+  },
+  {
+    id: "n4",
+    type: "comment",
+    titleKey: "items.newComment",
+    descriptionKey: "items.newCommentDesc",
+    href: "/weblog/comments",
+    read: true,
+    createdAt: new Date(Date.now() - 2 * 60 * 60_000).toISOString(),
+  },
+  {
+    id: "n5",
+    type: "contact",
+    titleKey: "items.newContact",
+    descriptionKey: "items.newContactDesc",
+    href: "/contact",
+    read: true,
+    createdAt: new Date(Date.now() - 5 * 60 * 60_000).toISOString(),
+  },
+];

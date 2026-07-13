@@ -21,6 +21,7 @@ import {
   mockSeoSettings,
   mockThemes,
   mockPostCategories,
+  mockNotifications,
 } from "@/lib/mock-data";
 import type {
   Product,
@@ -35,6 +36,7 @@ import type {
   ContactMessage,
   GeneralSettings,
   SeoSettings,
+  AdminNotification,
 } from "@/types";
 
 const USE_MOCK = IS_MOCK_MODE;
@@ -1000,4 +1002,62 @@ export async function uploadFile(file: File): Promise<{ url: string }> {
     headers: { "Content-Type": "multipart/form-data" },
   });
   return data;
+}
+
+export async function getNotifications(): Promise<AdminNotification[]> {
+  if (USE_MOCK) {
+    await delay(150);
+    return [...mockNotifications].sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
+  }
+  try {
+    const { data } = await apiClient.get<ApiListResponse<Record<string, unknown>>>(
+      `${ADMIN}/notifications`,
+      { params: { per_page: 20 } },
+    );
+    return (data.data ?? []).map((item) => ({
+      id: String(item.id ?? ""),
+      type: (String(item.type ?? "order") as AdminNotification["type"]),
+      titleKey: String(item.title_key ?? item.title ?? "items.generic"),
+      descriptionKey: item.description_key ? String(item.description_key) : undefined,
+      titleParams: (item.title_params as Record<string, string | number> | undefined) ?? undefined,
+      href: String(item.href ?? "/"),
+      read: Boolean(item.read ?? item.is_read ?? false),
+      createdAt: String(item.created_at ?? new Date().toISOString()),
+    }));
+  } catch {
+    return [...mockNotifications].sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
+  }
+}
+
+export async function markNotificationRead(id: string): Promise<void> {
+  if (USE_MOCK) {
+    await delay(80);
+    const item = mockNotifications.find((n) => n.id === id);
+    if (item) item.read = true;
+    return;
+  }
+  try {
+    await apiClient.patch(`${ADMIN}/notifications/${id}/read`);
+  } catch {
+    /* no-op when endpoint is unavailable */
+  }
+}
+
+export async function markAllNotificationsRead(): Promise<void> {
+  if (USE_MOCK) {
+    await delay(80);
+    mockNotifications.forEach((n) => {
+      n.read = true;
+    });
+    return;
+  }
+  try {
+    await apiClient.post(`${ADMIN}/notifications/read-all`);
+  } catch {
+    /* no-op when endpoint is unavailable */
+  }
 }

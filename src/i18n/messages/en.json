@@ -82,14 +82,28 @@
       "cta": "Purchase Plan"
     },
     "notification": {
-      "title": "Notification",
-      "viewAll": "View All Notifications",
-      "requestPermission": "requests permission to change",
-      "project": "Project",
-      "timeAgo5": "5 min ago",
-      "timeAgo8": "8 min ago",
-      "timeAgo15": "15 min ago",
-      "timeAgo1h": "1 hr ago"
+      "title": "Notifications",
+      "viewAll": "View all notifications",
+      "markAllRead": "Mark all read",
+      "empty": "No notifications yet",
+      "time": {
+        "minutes": "{count} min ago",
+        "hours": "{count}h ago",
+        "days": "{count}d ago"
+      },
+      "items": {
+        "generic": "New notification",
+        "newOrder": "New order #{id}",
+        "newOrderDesc": "A new order was placed and is ready for review.",
+        "newReview": "New product review",
+        "newReviewDesc": "A product review is waiting for approval.",
+        "lowStock": "Low stock alert",
+        "lowStockDesc": "Some products have reached the low stock threshold.",
+        "newComment": "New blog comment",
+        "newCommentDesc": "A post comment needs moderation.",
+        "newContact": "Contact message",
+        "newContactDesc": "A new message arrived from the contact form."
+      }
     },
     "user": {
       "signOut": "Sign out",

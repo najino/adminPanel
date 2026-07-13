@@ -84,12 +84,26 @@
     "notification": {
       "title": "اعلان‌ها",
       "viewAll": "مشاهده همه اعلان‌ها",
-      "requestPermission": "درخواست مجوز تغییر",
-      "project": "پروژه",
-      "timeAgo5": "۵ دقیقه پیش",
-      "timeAgo8": "۸ دقیقه پیش",
-      "timeAgo15": "۱۵ دقیقه پیش",
-      "timeAgo1h": "۱ ساعت پیش"
+      "markAllRead": "خواندن همه",
+      "empty": "اعلانی وجود ندارد",
+      "time": {
+        "minutes": "{count} دقیقه پیش",
+        "hours": "{count} ساعت پیش",
+        "days": "{count} روز پیش"
+      },
+      "items": {
+        "generic": "اعلان جدید",
+        "newOrder": "سفارش جدید #{id}",
+        "newOrderDesc": "یک سفارش جدید ثبت شد و آماده بررسی است.",
+        "newReview": "نظر جدید روی محصول",
+        "newReviewDesc": "یک نظر محصول در انتظار تأیید است.",
+        "lowStock": "هشدار موجودی کم",
+        "lowStockDesc": "برخی محصولات به آستانه موجودی کم رسیده‌اند.",
+        "newComment": "نظر جدید در وبلاگ",
+        "newCommentDesc": "یک نظر پست برای بررسی دریافت شد.",
+        "newContact": "پیام تماس با ما",
+        "newContactDesc": "یک پیام جدید از فرم تماس دریافت شد."
+      }
     },
     "user": {
       "signOut": "خروج",

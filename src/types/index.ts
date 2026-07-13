@@ -194,3 +194,22 @@ export interface AuthResponse {
   refreshToken?: string;
   user: User;
 }
+
+export type AdminNotificationType =
+  | "order"
+  | "review"
+  | "comment"
+  | "stock"
+  | "contact"
+  | "user";
+
+export interface AdminNotification {
+  id: string;
+  type: AdminNotificationType;
+  titleKey: string;
+  descriptionKey?: string;
+  titleParams?: Record<string, string | number>;
+  href: string;
+  read: boolean;
+  createdAt: string;
+}

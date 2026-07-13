@@ -5,7 +5,6 @@ import { useTheme } from "next-themes";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
-  Bell,
   FileText,
   Globe,
   LogOut,
@@ -30,6 +29,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import { NotificationsDropdown } from "@/components/layouts/notifications-dropdown";
 import { useAuth } from "@/providers/auth-provider";
 import { cn } from "@/lib/utils";
 
@@ -142,16 +142,7 @@ export function Header({ onToggleSidebar }: HeaderProps) {
           <Globe className="size-[18px]" />
         </Button>
 
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          className="relative rounded-xl"
-          aria-label={t("notifications")}
-        >
-          <Bell className="size-[18px]" />
-          <span className="absolute end-1.5 top-1.5 size-2 rounded-full bg-destructive ring-2 ring-background" />
-        </Button>
+        <NotificationsDropdown />
 
         <Separator orientation="vertical" className="mx-1 hidden h-6 sm:block" />
 
