@@ -19,6 +19,7 @@ export interface AdminBrand {
   name: string;
   slug?: string;
   description?: string;
+  logo_url?: string;
   is_active?: boolean;
 }
 
@@ -26,6 +27,7 @@ export interface CreateBrandPayload {
   name: string;
   slug?: string;
   description?: string;
+  logo_url?: string;
   is_active?: boolean;
 }
 
@@ -33,6 +35,7 @@ export interface UpdateBrandPayload {
   name?: string;
   slug?: string;
   description?: string;
+  logo_url?: string;
   is_active?: boolean;
 }
 

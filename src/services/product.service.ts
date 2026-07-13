@@ -27,10 +27,10 @@ function delay(ms = 300) {
 }
 
 export const mockBrands: AdminBrand[] = [
-  { id: "brand-1", name: "Apple", slug: "apple", is_active: true },
-  { id: "brand-2", name: "Samsung", slug: "samsung", is_active: true },
-  { id: "brand-3", name: "Nike", slug: "nike", is_active: true },
-  { id: "brand-4", name: "Adidas", slug: "adidas", is_active: true },
+  { id: "brand-1", name: "Apple", slug: "apple", logo_url: "", is_active: true },
+  { id: "brand-2", name: "Samsung", slug: "samsung", logo_url: "", is_active: true },
+  { id: "brand-3", name: "Nike", slug: "nike", logo_url: "", is_active: true },
+  { id: "brand-4", name: "Adidas", slug: "adidas", logo_url: "", is_active: true },
 ];
 
 export const mockCatalogAttributes: CatalogAttribute[] = [
@@ -108,6 +108,7 @@ export async function createAdminBrand(payload: CreateBrandPayload): Promise<Adm
       name: payload.name,
       slug: payload.slug ?? slugify(payload.name),
       description: payload.description,
+      logo_url: payload.logo_url,
       is_active: payload.is_active ?? true,
     };
     mockBrands.push(brand);
@@ -117,6 +118,7 @@ export async function createAdminBrand(payload: CreateBrandPayload): Promise<Adm
     name: payload.name,
     slug: payload.slug || slugify(payload.name),
     description: payload.description,
+    logo_url: payload.logo_url,
     is_active: payload.is_active ?? true,
   });
   return data;

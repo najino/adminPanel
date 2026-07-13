@@ -11,7 +11,7 @@ export function FormField({
   children,
 }: {
   label: string;
-  htmlFor: string;
+  htmlFor?: string;
   error?: string;
   helper?: string;
   required?: boolean;

@@ -1503,7 +1503,8 @@
         "slug": "Slug",
         "description": "Description",
         "status": "Status",
-        "actions": "Actions"
+        "actions": "Actions",
+        "logo": "Image"
       },
       "form": {
         "name": "Brand name",
@@ -1512,6 +1513,10 @@
         "slugHelper": "URL-friendly identifier. Auto-generated from name.",
         "description": "Description",
         "descriptionPlaceholder": "Optional short description",
+        "logo": "Brand image",
+        "logoHint": "PNG, JPG or WebP — square recommended, min 200×200",
+        "uploadLogo": "Upload image or drop here",
+        "removeLogo": "Remove image",
         "active": "Active"
       }
     },

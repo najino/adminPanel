@@ -1505,7 +1505,8 @@
         "slug": "نامک",
         "description": "توضیحات",
         "status": "وضعیت",
-        "actions": "عملیات"
+        "actions": "عملیات",
+        "logo": "تصویر"
       },
       "form": {
         "name": "نام برند",
@@ -1514,6 +1515,10 @@
         "slugHelper": "شناسه URL-friendly. از نام به‌صورت خودکار ساخته می‌شود.",
         "description": "توضیحات",
         "descriptionPlaceholder": "توضیح کوتاه اختیاری",
+        "logo": "تصویر برند",
+        "logoHint": "PNG، JPG یا WebP — پیشنهادی مربع، حداقل ۲۰۰×۲۰۰",
+        "uploadLogo": "آپلود تصویر یا اینجا رها کنید",
+        "removeLogo": "حذف تصویر",
         "active": "فعال"
       }
     },

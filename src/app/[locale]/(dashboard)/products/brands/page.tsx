@@ -4,11 +4,12 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { ColumnDef } from "@tanstack/react-table";
-import { Pencil, Plus, Trash2 } from "lucide-react";
+import { ImageIcon, Pencil, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { PageTransition } from "@/components/shared/page-transition";
 import { PageHeader, StatusBadge } from "@/components/shared/page-elements";
 import { FormField } from "@/components/shared/form-field";
+import { FileDropzone } from "@/components/shared/file-dropzone";
 import { DataTable } from "@/components/tables/data-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,6 +38,7 @@ import {
   getAdminBrands,
   updateAdminBrand,
 } from "@/services/product.service";
+import { uploadFile } from "@/services/data.service";
 import { slugify } from "@/lib/utils";
 import type { AdminBrand } from "@/types/api/products";
 
@@ -44,6 +46,7 @@ interface BrandFormState {
   name: string;
   slug: string;
   description: string;
+  logo_url: string;
   is_active: boolean;
 }
 
@@ -51,6 +54,7 @@ const emptyForm = (): BrandFormState => ({
   name: "",
   slug: "",
   description: "",
+  logo_url: "",
   is_active: true,
 });
 
@@ -63,6 +67,7 @@ export default function ProductBrandsPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [slugTouched, setSlugTouched] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [form, setForm] = useState<BrandFormState>(emptyForm);
 
   const { data: brands = [], isLoading } = useQuery({
@@ -107,6 +112,7 @@ export default function ProductBrandsPage() {
     setDialogOpen(false);
     setEditingId(null);
     setSlugTouched(false);
+    setUploading(false);
     setForm(emptyForm());
   };
 
@@ -124,6 +130,7 @@ export default function ProductBrandsPage() {
       name: brand.name,
       slug: brand.slug ?? "",
       description: brand.description ?? "",
+      logo_url: brand.logo_url ?? "",
       is_active: brand.is_active !== false,
     });
     setDialogOpen(true);
@@ -137,6 +144,20 @@ export default function ProductBrandsPage() {
     }));
   };
 
+  const handleLogoUpload = async (files: File[]) => {
+    const file = files[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const { url } = await uploadFile(file);
+      setForm((prev) => ({ ...prev, logo_url: url }));
+    } catch {
+      toast.error(t("saveFailed"));
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const handleSubmit = () => {
     const name = form.name.trim();
     if (!name) return;
@@ -145,6 +166,7 @@ export default function ProductBrandsPage() {
       name,
       slug: form.slug.trim() || slugify(name),
       description: form.description.trim() || undefined,
+      logo_url: form.logo_url.trim() || undefined,
       is_active: form.is_active,
     };
 
@@ -156,6 +178,22 @@ export default function ProductBrandsPage() {
   };
 
   const columns: ColumnDef<AdminBrand>[] = [
+    {
+      id: "logo",
+      header: t("columns.logo"),
+      cell: ({ row }) =>
+        row.original.logo_url ? (
+          <img
+            src={row.original.logo_url}
+            alt=""
+            className="size-10 rounded-xl object-contain ring-1 ring-border bg-muted/40"
+          />
+        ) : (
+          <div className="flex size-10 items-center justify-center rounded-xl bg-muted/50 text-muted-foreground">
+            <ImageIcon className="size-4" aria-hidden />
+          </div>
+        ),
+    },
     {
       accessorKey: "name",
       header: t("columns.name"),
@@ -203,7 +241,7 @@ export default function ProductBrandsPage() {
     },
   ];
 
-  const isPending = createMutation.isPending || updateMutation.isPending;
+  const isPending = createMutation.isPending || updateMutation.isPending || uploading;
 
   return (
     <PageTransition>
@@ -233,6 +271,45 @@ export default function ProductBrandsPage() {
             <DialogTitle>{editingId ? t("editBrand") : t("addBrand")}</DialogTitle>
           </DialogHeader>
           <div className="flex flex-col gap-4">
+            <FormField label={t("form.logo")} helper={t("form.logoHint")}>
+              {form.logo_url ? (
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-center rounded-2xl border border-border/70 bg-muted/30 p-4">
+                    <img
+                      src={form.logo_url}
+                      alt=""
+                      className="max-h-28 max-w-full rounded-xl object-contain"
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <FileDropzone
+                      onDrop={handleLogoUpload}
+                      accept={{ "image/*": [".png", ".jpg", ".jpeg", ".webp"] }}
+                      label={t("form.uploadLogo")}
+                      className="flex-1 p-4"
+                      disabled={uploading}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="shrink-0"
+                      onClick={() => setForm((prev) => ({ ...prev, logo_url: "" }))}
+                    >
+                      {t("form.removeLogo")}
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <FileDropzone
+                  onDrop={handleLogoUpload}
+                  accept={{ "image/*": [".png", ".jpg", ".jpeg", ".webp"] }}
+                  label={uploading ? tCommon("loading") : t("form.uploadLogo")}
+                  className="rounded-2xl p-6"
+                  disabled={uploading}
+                />
+              )}
+            </FormField>
+
             <FormField label={t("form.name")} htmlFor="brand-name" required>
               <Input
                 id="brand-name"
