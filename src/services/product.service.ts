@@ -11,6 +11,7 @@ import type {
   CreateCatalogAttributePayload,
   CreateCatalogAttributeValuePayload,
   CreateProductPayload,
+  UpdateProductPayload,
   PaginatedData,
   UpdateBrandPayload,
   UpdateCatalogAttributePayload,
@@ -421,6 +422,133 @@ export async function createAdminProduct(
     return response;
   }
   const { data } = await apiClient.post<AdminProductResponse>(`${ADMIN}/products`, payload);
+  return data;
+}
+
+function mockProductToAdmin(product: (typeof mockProducts)[number]): AdminProductResponse {
+  const category = mockCategories.find((c) => c.name === product.category);
+  const status: AdminProductStatus =
+    product.status === "active" || product.status === "lowStock" || product.status === "outOfStock"
+      ? "active"
+      : "draft";
+
+  return {
+    id: product.id,
+    name: product.name,
+    slug: slugify(product.name),
+    description: product.description,
+    short_description: undefined,
+    price: product.price,
+    sale_price: product.compareAtPrice,
+    brand: product.brand,
+    category_id: category?.id,
+    status,
+    is_featured: false,
+    attributes: product.attributes?.map((a, i) => ({
+      id: `attr-${product.id}-${i}`,
+      name: a.key,
+      values: a.values,
+    })),
+    images: product.images?.map((url, i) => ({
+      id: `img-${product.id}-${i}`,
+      url,
+      sort_order: i,
+    })),
+    inventory: {
+      quantity: product.stock,
+      low_stock_threshold: 5,
+      is_low_stock: product.stock <= 5,
+      is_out_of_stock: product.stock === 0,
+    },
+    skus: [
+      {
+        id: `sku-${product.id}`,
+        code: product.sku,
+        attributes: Object.fromEntries(
+          (product.attributes ?? []).map((a) => [a.key, a.values[0] ?? ""]),
+        ),
+      },
+    ],
+  };
+}
+
+export async function getAdminProduct(id: string): Promise<AdminProductResponse> {
+  if (USE_MOCK) {
+    await delay();
+    const product = mockProducts.find((p) => p.id === id);
+    if (!product) throw new Error("Product not found");
+    return mockProductToAdmin(product);
+  }
+  const { data } = await apiClient.get<AdminProductResponse>(`${ADMIN}/products/${id}`);
+  return data;
+}
+
+export async function updateAdminProduct(
+  id: string,
+  payload: UpdateProductPayload,
+): Promise<AdminProductResponse> {
+  if (USE_MOCK) {
+    await delay(400);
+    const idx = mockProducts.findIndex((p) => p.id === id);
+    if (idx < 0) throw new Error("Product not found");
+
+    const current = mockProducts[idx];
+    const categoryName =
+      payload.category_id !== undefined
+        ? (mockCategories.find((c) => c.id === payload.category_id)?.name ?? current.category)
+        : current.category;
+
+    const quantity = payload.inventory?.quantity ?? current.stock;
+    const skus =
+      payload.attributes !== undefined
+        ? cartesianSkus(payload.attributes, id)
+        : [{ id: `sku-${id}`, code: current.sku, attributes: {} }];
+
+    mockProducts[idx] = {
+      ...current,
+      name: payload.name ?? current.name,
+      description: payload.description ?? current.description,
+      price: payload.price ?? current.price,
+      compareAtPrice:
+        payload.sale_price !== undefined ? payload.sale_price : current.compareAtPrice,
+      brand: payload.brand ?? current.brand,
+      category: categoryName,
+      status:
+        payload.status === "active"
+          ? quantity <= 5
+            ? "lowStock"
+            : "active"
+          : payload.status === "archived"
+            ? "outOfStock"
+            : payload.status === "draft"
+              ? "inactive"
+              : current.status,
+      stock: quantity,
+      images: payload.images?.map((i) => i.url) ?? current.images,
+      attributes:
+        payload.attributes?.map((a) => ({ key: a.name, values: a.values })) ?? current.attributes,
+      variants: skus.length,
+      sku: skus[0]?.code ?? current.sku,
+    };
+
+    return mockProductToAdmin(mockProducts[idx]);
+  }
+
+  const { inventory, ...productPayload } = payload;
+  const { data } = await apiClient.put<AdminProductResponse>(
+    `${ADMIN}/products/${id}`,
+    productPayload,
+  );
+
+  if (inventory) {
+    await apiClient.patch(`${ADMIN}/products/${id}/inventory`, {
+      quantity: inventory.quantity ?? 0,
+      low_stock_threshold: inventory.low_stock_threshold,
+      adjustment_reason: "admin_panel_update",
+    });
+    return getAdminProduct(id);
+  }
+
   return data;
 }
 

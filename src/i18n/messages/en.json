@@ -885,6 +885,7 @@
       "productSettings": "Product Settings",
       "addProduct": "Add Product",
       "allProductComments": "All Product Comments",
+      "editProduct": "Edit Product",
       "allOrders": "All Orders",
       "orderDetail": "Order Detail",
       "allUsers": "All Users",
@@ -1384,6 +1385,7 @@
     "addButton": "Add Product",
     "productSettingsTitle": "Product Settings",
     "addProductTitle": "Add Product",
+    "editProductTitle": "Edit Product",
     "reviews": {
       "searchPlaceholder": "Search comments...",
       "columns": {
@@ -1643,7 +1645,10 @@
       "actions": {
         "cancel": "Cancel",
         "saveProduct": "Save Product",
-        "saveFailed": "Failed to create product"
+        "updateProduct": "Save Changes",
+        "saveFailed": "Failed to create product",
+        "updateFailed": "Failed to update product",
+        "notFound": "Product not found"
       }
     }
   },

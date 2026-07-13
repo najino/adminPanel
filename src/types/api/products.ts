@@ -123,6 +123,12 @@ export interface CreateProductPayload {
   inventory?: ProductInventoryPayload;
 }
 
+export type UpdateProductPayload = Partial<
+  Omit<CreateProductPayload, "inventory">
+> & {
+  inventory?: ProductInventoryPayload;
+};
+
 export interface SkuResponse {
   id: string;
   code: string;

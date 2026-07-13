@@ -887,6 +887,7 @@
       "productSettings": "تنظیمات محصول",
       "addProduct": "افزودن محصول",
       "allProductComments": "همه نظرات محصولات",
+      "editProduct": "ویرایش محصول",
       "allOrders": "همه سفارش‌ها",
       "orderDetail": "جزئیات سفارش",
       "allUsers": "همه کاربران",
@@ -1391,6 +1392,7 @@
     "addButton": "افزودن محصول",
     "productSettingsTitle": "تنظیمات محصول",
     "addProductTitle": "افزودن محصول",
+    "editProductTitle": "ویرایش محصول",
     "reviews": {
       "searchPlaceholder": "جستجوی نظرات...",
       "columns": {
@@ -1650,7 +1652,10 @@
       "actions": {
         "cancel": "انصراف",
         "saveProduct": "ذخیره محصول",
-        "saveFailed": "ایجاد محصول ناموفق بود"
+        "updateProduct": "ذخیره تغییرات",
+        "saveFailed": "ایجاد محصول ناموفق بود",
+        "updateFailed": "به‌روزرسانی محصول ناموفق بود",
+        "notFound": "محصول یافت نشد"
       }
     }
   },
