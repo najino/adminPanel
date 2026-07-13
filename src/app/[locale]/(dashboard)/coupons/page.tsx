@@ -42,9 +42,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { getCoupons, createCoupon, deleteCoupon } from "@/services/data.service";
 import { JalaliDatePicker } from "@/components/shared/jalali-date-picker";
-import { formatJalaliDate } from "@/lib/date";
 import { formatDate } from "@/lib/utils";
-import { useLocale } from "next-intl";
 import type { Coupon } from "@/types";
 
 const couponSchema = z.object({
@@ -61,7 +59,6 @@ type CouponForm = z.infer<typeof couponSchema>;
 export default function CouponsPage() {
   const t = useTranslations("coupons");
   const tCommon = useTranslations("common");
-  const locale = useLocale();
   const queryClient = useQueryClient();
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -136,10 +133,7 @@ export default function CouponsPage() {
     {
       accessorKey: "expiryDate",
       header: t("table.columns.expires"),
-      cell: ({ row }) =>
-        locale === "fa"
-          ? formatJalaliDate(row.original.expiryDate)
-          : formatDate(row.original.expiryDate),
+      cell: ({ row }) => formatDate(row.original.expiryDate),
     },
     {
       accessorKey: "status",

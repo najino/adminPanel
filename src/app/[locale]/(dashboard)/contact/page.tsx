@@ -30,6 +30,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { deleteContactMessage, getContactMessages } from "@/services/data.service";
+import { formatDate } from "@/lib/utils";
 import type { ContactMessage } from "@/types";
 
 export default function ContactPage() {
@@ -61,7 +62,13 @@ export default function ContactPage() {
     { accessorKey: "name", header: t("table.columns.name") },
     { accessorKey: "email", header: t("table.columns.email") },
     { accessorKey: "subject", header: t("table.columns.subject") },
-    { accessorKey: "date", header: t("table.columns.date") },
+    {
+      accessorKey: "date",
+      header: t("table.columns.date"),
+      cell: ({ row }) => (
+        <span className="tabular-nums text-muted-foreground">{formatDate(row.original.date)}</span>
+      ),
+    },
     {
       id: "actions",
       header: t("table.columns.actions"),
@@ -105,7 +112,7 @@ export default function ContactPage() {
                 <p><strong>{t("modal.fields.name")}:</strong> {selected.name}</p>
                 <p><strong>{t("modal.fields.email")}:</strong> {selected.email}</p>
                 <p><strong>{t("modal.fields.subject")}:</strong> {selected.subject}</p>
-                <p><strong>{t("modal.fields.date")}:</strong> {selected.date}</p>
+                <p><strong>{t("modal.fields.date")}:</strong> {formatDate(selected.date)}</p>
                 <p><strong>{t("modal.fields.message")}:</strong> {selected.message}</p>
               </div>
 

@@ -10,6 +10,7 @@ import { PageTransition } from "@/components/shared/page-transition";
 import { DataTable } from "@/components/tables/data-table";
 import { Button } from "@/components/ui/button";
 import { getPosts } from "@/services/data.service";
+import { formatDate } from "@/lib/utils";
 import type { BlogPost } from "@/types";
 
 export default function WeblogPage() {
@@ -31,7 +32,15 @@ export default function WeblogPage() {
       header: t("table.columns.status"),
       cell: ({ row }) => <StatusBadge status={row.original.status} label={ts(row.original.status.toLowerCase())} />,
     },
-    { accessorKey: "publishedDate", header: "Published date" },
+    {
+      accessorKey: "publishedDate",
+      header: t("commentsTable.columns.date"),
+      cell: ({ row }) => (
+        <span className="tabular-nums text-muted-foreground">
+          {formatDate(row.original.publishedDate)}
+        </span>
+      ),
+    },
   ];
 
   return (

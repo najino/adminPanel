@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { PageHeader } from "@/components/shared/page-elements";
 import { PageTransition } from "@/components/shared/page-transition";
 import { FileDropzone } from "@/components/shared/file-dropzone";
+import { JalaliDatePicker } from "@/components/shared/jalali-date-picker";
 import { RichTextEditor } from "@/components/shared/rich-text-editor";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -59,7 +60,7 @@ export default function CreatePostPage() {
       category: "",
       tags: "",
       content: "",
-      publishedDate: new Date().toISOString().split("T")[0],
+      publishedDate: new Date().toISOString(),
       seoTitle: "",
       seoDescription: "",
     },
@@ -131,7 +132,17 @@ export default function CreatePostPage() {
             </div>
             <div className="flex flex-col gap-2 sm:col-span-2">
               <Label>{t("form.settings.publishDate")}</Label>
-              <Input type="date" {...form.register("publishedDate")} />
+              <Controller
+                control={form.control}
+                name="publishedDate"
+                render={({ field }) => (
+                  <JalaliDatePicker
+                    value={field.value}
+                    onChange={field.onChange}
+                    placeholder={t("form.settings.publishDate")}
+                  />
+                )}
+              />
             </div>
           </CardContent>
         </Card>

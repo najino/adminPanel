@@ -30,6 +30,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { deleteComment, getComments, replyToComment, updateComment } from "@/services/data.service";
+import { formatDate } from "@/lib/utils";
 import type { BlogComment } from "@/types";
 
 export default function WeblogCommentsPage() {
@@ -110,7 +111,13 @@ export default function WeblogCommentsPage() {
         </span>
       ),
     },
-    { accessorKey: "date", header: t("commentsTable.columns.date") },
+    {
+      accessorKey: "date",
+      header: t("commentsTable.columns.date"),
+      cell: ({ row }) => (
+        <span className="tabular-nums text-muted-foreground">{formatDate(row.original.date)}</span>
+      ),
+    },
     {
       accessorKey: "status",
       header: t("commentsTable.columns.status"),
@@ -211,7 +218,7 @@ export default function WeblogCommentsPage() {
                       >
                         <div className="mb-1 flex items-center justify-between gap-2 text-xs text-muted-foreground">
                           <span>{reply.author}</span>
-                          <span>{reply.date}</span>
+                          <span>{formatDate(reply.date)}</span>
                         </div>
                         <p>{reply.content}</p>
                       </li>

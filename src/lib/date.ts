@@ -19,12 +19,18 @@ export function isoToDateObject(iso: string): DateObject | undefined {
   });
 }
 
-export function formatJalaliDate(iso: string | Date): string {
+/** Jalali display (default: ۲۵ دی ۱۴۰۴). */
+export function formatJalaliDate(iso: string | Date, pattern = "DD MMMM YYYY"): string {
   const parsed = typeof iso === "string" ? new Date(iso) : iso;
   if (Number.isNaN(parsed.getTime())) return "";
   return new DateObject({
     date: parsed,
     calendar: persian,
     locale: persian_fa,
-  }).format("YYYY/MM/DD");
+  }).format(pattern);
+}
+
+/** Compact Jalali for dense tables: ۱۴۰۴/۱۰/۲۵ */
+export function formatJalaliCompact(iso: string | Date): string {
+  return formatJalaliDate(iso, "YYYY/MM/DD");
 }

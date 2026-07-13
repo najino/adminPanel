@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { ColumnDef } from "@tanstack/react-table";
 import {
   AlertTriangle,
@@ -28,15 +28,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { getDashboardStats, getChartData, getProducts, getOrders } from "@/services/data.service";
-import { formatCurrency } from "@/lib/utils";
-import { formatJalaliDate } from "@/lib/date";
+import { formatCurrency, formatDate } from "@/lib/utils";
 import type { Product, Order } from "@/types";
 
 export default function DashboardPage() {
   const t = useTranslations("home");
   const tCommon = useTranslations("common");
   const tNav = useTranslations("navigation");
-  const locale = useLocale();
   const [chartPeriod, setChartPeriod] = useState<"monthly" | "quarterly" | "annually">("monthly");
 
   const { data: stats, isLoading: statsLoading } = useQuery({
@@ -62,17 +60,7 @@ export default function DashboardPage() {
   const recentOrders = orders.slice(0, 6);
   const lowStockProducts = products.filter((p) => p.stock <= 10).slice(0, 6);
 
-  const todayLabel = useMemo(() => {
-    if (locale === "fa") {
-      return formatJalaliDate(new Date());
-    }
-    return new Intl.DateTimeFormat("en-US", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }).format(new Date());
-  }, [locale]);
+  const todayLabel = useMemo(() => formatDate(new Date()), []);
 
   const quickActions = [
     {
@@ -119,7 +107,7 @@ export default function DashboardPage() {
       type: "order" as const,
       title: t("activity.newOrder", { id: o.id }),
       description: `${o.customerName} · ${formatCurrency(o.amount)}`,
-      time: o.date,
+      time: formatDate(o.date),
       href: `/orders/${o.id}`,
     }));
 

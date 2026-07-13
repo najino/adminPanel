@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { formatJalaliDate } from "@/lib/date";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -22,10 +23,23 @@ export function slugify(text: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
-export function formatDate(date: string | Date, locale = "en-US") {
-  return new Intl.DateTimeFormat(locale, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  }).format(new Date(date));
+/**
+ * Formats dates in Jalali (Shamsi) calendar for Persian admin display.
+ * Pass `locale` starting with `en` only if Gregorian is explicitly needed.
+ */
+export function formatDate(date: string | Date, locale = "fa") {
+  if (!date) return "";
+  const parsed = typeof date === "string" ? new Date(date) : date;
+  if (Number.isNaN(parsed.getTime())) return String(date);
+
+  const normalized = locale.toLowerCase();
+  if (normalized.startsWith("en")) {
+    return new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }).format(parsed);
+  }
+
+  return formatJalaliDate(parsed);
 }

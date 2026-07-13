@@ -48,9 +48,7 @@ import {
   reviewToPayload,
   updateHomepageReview,
 } from "@/services/storefront.service";
-import { formatJalaliDate } from "@/lib/date";
 import { formatDate } from "@/lib/utils";
-import { useLocale } from "next-intl";
 import type { HomepageReview } from "@/types/api/storefront";
 
 interface ReviewForm {
@@ -80,7 +78,6 @@ export default function CustomerReviewsPage() {
   const tp = useTranslations("pages");
   const ts = useTranslations("common.status");
   const tc = useTranslations("common");
-  const locale = useLocale();
   const queryClient = useQueryClient();
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -155,7 +152,7 @@ export default function CustomerReviewsPage() {
 
   const formatReviewDate = (iso?: string) => {
     if (!iso) return "—";
-    return locale === "fa" ? formatJalaliDate(iso) : formatDate(iso);
+    return formatDate(iso);
   };
 
   const columns: ColumnDef<HomepageReview>[] = [

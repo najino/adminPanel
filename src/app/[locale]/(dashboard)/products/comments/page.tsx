@@ -26,6 +26,7 @@ import {
   updateProductReviewStatus,
 } from "@/services/product.service";
 import type { AdminProductReview, ProductReviewStatus } from "@/types/api/products";
+import { formatDate } from "@/lib/utils";
 
 function RatingStars({ rating }: { rating: number }) {
   return (
@@ -97,7 +98,13 @@ export default function ProductCommentsPage() {
       header: t("columns.rating"),
       cell: ({ row }) => <RatingStars rating={row.original.rating} />,
     },
-    { accessorKey: "date", header: t("columns.date") },
+    {
+      accessorKey: "date",
+      header: t("columns.date"),
+      cell: ({ row }) => (
+        <span className="tabular-nums text-muted-foreground">{formatDate(row.original.date)}</span>
+      ),
+    },
     {
       accessorKey: "status",
       header: t("columns.status"),
