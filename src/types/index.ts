@@ -127,6 +127,13 @@ export interface BlogPost {
   seoDescription?: string;
 }
 
+export interface CommentReply {
+  id: string;
+  author: string;
+  content: string;
+  date: string;
+}
+
 export interface BlogComment {
   id: string;
   postTitle: string;
@@ -135,6 +142,7 @@ export interface BlogComment {
   status: "approved" | "rejected" | "pending";
   read: boolean;
   date: string;
+  replies?: CommentReply[];
 }
 
 export interface ContactMessage {

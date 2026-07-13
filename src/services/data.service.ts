@@ -175,6 +175,17 @@ function mapBlogComment(item: Record<string, unknown>): BlogComment {
   const status: BlogComment["status"] =
     statusRaw === "approved" ? "approved" : statusRaw === "rejected" ? "rejected" : "pending";
 
+  const repliesRaw = Array.isArray(item.replies) ? item.replies : [];
+  const replies = repliesRaw.map((r, i) => {
+    const reply = (r ?? {}) as Record<string, unknown>;
+    return {
+      id: String(reply.id ?? `reply-${i}`),
+      author: String(reply.author_name ?? reply.author ?? "Admin"),
+      content: String(reply.content ?? ""),
+      date: String(reply.created_at ?? reply.date ?? ""),
+    };
+  });
+
   return {
     id: String(item.id ?? ""),
     postTitle: String(item.post_title ?? ""),
@@ -183,6 +194,7 @@ function mapBlogComment(item: Record<string, unknown>): BlogComment {
     status,
     read: true,
     date: String(item.created_at ?? ""),
+    replies,
   };
 }
 
@@ -563,6 +575,40 @@ export async function deleteComment(id: string): Promise<void> {
     return;
   }
   await apiClient.delete(`${ADMIN}/blog/comments/${id}`);
+}
+
+export async function replyToComment(id: string, content: string): Promise<BlogComment> {
+  const trimmed = content.trim();
+  if (!trimmed) throw new Error("Empty reply");
+
+  if (USE_MOCK) {
+    await delay();
+    const comment = mockComments.find((c) => c.id === id);
+    if (!comment) throw new Error("Comment not found");
+    const reply = {
+      id: `reply-${Date.now()}`,
+      author: "Admin",
+      content: trimmed,
+      date: new Date().toISOString().slice(0, 10),
+    };
+    comment.replies = [...(comment.replies ?? []), reply];
+    comment.read = true;
+    if (comment.status === "pending") comment.status = "approved";
+    return { ...comment, replies: [...(comment.replies ?? [])] };
+  }
+
+  try {
+    const { data } = await apiClient.post<Record<string, unknown>>(
+      `${ADMIN}/blog/comments/${id}/replies`,
+      { content: trimmed },
+    );
+    return mapBlogComment(data);
+  } catch {
+    const { data } = await apiClient.patch<Record<string, unknown>>(`${ADMIN}/blog/comments/${id}`, {
+      admin_reply: trimmed,
+    });
+    return mapBlogComment(data);
+  }
 }
 
 export async function getComments(): Promise<BlogComment[]> {

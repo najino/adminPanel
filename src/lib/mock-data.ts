@@ -341,6 +341,14 @@ export const mockComments: BlogComment[] = [
     status: "approved",
     read: true,
     date: "2026-01-12",
+    replies: [
+      {
+        id: "r1",
+        author: "Admin",
+        content: "Glad you enjoyed it — thank you!",
+        date: "2026-01-12",
+      },
+    ],
   },
   {
     id: "2",
@@ -350,6 +358,7 @@ export const mockComments: BlogComment[] = [
     status: "pending",
     read: false,
     date: "2026-01-16",
+    replies: [],
   },
 ];
 

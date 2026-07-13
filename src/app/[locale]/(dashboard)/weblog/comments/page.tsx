@@ -1,14 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Check, X, Trash2, Mail, MailOpen } from "lucide-react";
+import { Check, X, Trash2, Mail, MailOpen, MessageSquareReply } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { PageHeader, StatusBadge } from "@/components/shared/page-elements";
 import { PageTransition } from "@/components/shared/page-transition";
 import { DataTable } from "@/components/tables/data-table";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,9 +22,15 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { deleteComment, getComments, updateComment } from "@/services/data.service";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { deleteComment, getComments, replyToComment, updateComment } from "@/services/data.service";
 import type { BlogComment } from "@/types";
-import { useState } from "react";
 
 export default function WeblogCommentsPage() {
   const t = useTranslations("posts");
@@ -30,6 +39,8 @@ export default function WeblogCommentsPage() {
   const tc = useTranslations("common");
   const queryClient = useQueryClient();
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+  const [replyTarget, setReplyTarget] = useState<BlogComment | null>(null);
+  const [replyText, setReplyText] = useState("");
 
   const { data: comments = [], isLoading } = useQuery({
     queryKey: ["comments"],
@@ -56,6 +67,32 @@ export default function WeblogCommentsPage() {
     onError: () => toast.error(tc("saveFailed")),
   });
 
+  const replyMutation = useMutation({
+    mutationFn: ({ id, content }: { id: string; content: string }) => replyToComment(id, content),
+    onSuccess: (updated) => {
+      queryClient.invalidateQueries({ queryKey: ["comments"] });
+      setReplyTarget(updated);
+      setReplyText("");
+      toast.success(t("commentModal.replySent"));
+    },
+    onError: () => toast.error(tc("saveFailed")),
+  });
+
+  const openReply = (comment: BlogComment) => {
+    setReplyTarget(comment);
+    setReplyText("");
+  };
+
+  const closeReply = () => {
+    setReplyTarget(null);
+    setReplyText("");
+  };
+
+  const handleSendReply = () => {
+    if (!replyTarget || !replyText.trim()) return;
+    replyMutation.mutate({ id: replyTarget.id, content: replyText });
+  };
+
   const columns: ColumnDef<BlogComment>[] = [
     { accessorKey: "author", header: t("commentsTable.columns.user") },
     { accessorKey: "postTitle", header: t("commentsTable.columns.post") },
@@ -63,6 +100,15 @@ export default function WeblogCommentsPage() {
       accessorKey: "content",
       header: t("commentsTable.columns.comment"),
       cell: ({ row }) => <span className="line-clamp-1">{row.original.content}</span>,
+    },
+    {
+      id: "replies",
+      header: t("commentsTable.columns.replies"),
+      cell: ({ row }) => (
+        <span className="text-muted-foreground tabular-nums">
+          {row.original.replies?.length ?? 0}
+        </span>
+      ),
     },
     { accessorKey: "date", header: t("commentsTable.columns.date") },
     {
@@ -95,6 +141,14 @@ export default function WeblogCommentsPage() {
           <Button
             variant="ghost"
             size="sm"
+            title={t("commentsTable.replyComment")}
+            onClick={() => openReply(row.original)}
+          >
+            <MessageSquareReply className="h-4 w-4 text-primary" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={() => updateMutation.mutate({ id: row.original.id, updates: { status: "approved" } })}
           >
             <Check className="h-4 w-4 text-success" />
@@ -124,6 +178,73 @@ export default function WeblogCommentsPage() {
         searchPlaceholder={t("commentFilters.searchPlaceholder")}
         isLoading={isLoading}
       />
+
+      <Dialog open={!!replyTarget} onOpenChange={(open) => !open && closeReply()}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>{t("commentModal.title")}</DialogTitle>
+          </DialogHeader>
+          {replyTarget && (
+            <div className="flex flex-col gap-4">
+              <div className="grid gap-2 rounded-lg border bg-muted/40 p-3 text-sm">
+                <p>
+                  <span className="text-muted-foreground">{t("commentsTable.columns.user")}: </span>
+                  {replyTarget.author}
+                </p>
+                <p>
+                  <span className="text-muted-foreground">{t("commentsTable.columns.post")}: </span>
+                  {replyTarget.postTitle}
+                </p>
+                <p className="leading-relaxed">{replyTarget.content}</p>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <Label>{t("commentModal.tabs.replies")}</Label>
+                {(replyTarget.replies?.length ?? 0) === 0 ? (
+                  <p className="text-sm text-muted-foreground">{t("commentModal.noReplies")}</p>
+                ) : (
+                  <ul className="flex max-h-48 flex-col gap-2 overflow-y-auto scrollbar-premium">
+                    {replyTarget.replies?.map((reply) => (
+                      <li
+                        key={reply.id}
+                        className="rounded-lg border border-primary/15 bg-primary/5 p-3 text-sm"
+                      >
+                        <div className="mb-1 flex items-center justify-between gap-2 text-xs text-muted-foreground">
+                          <span>{reply.author}</span>
+                          <span>{reply.date}</span>
+                        </div>
+                        <p>{reply.content}</p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="comment-reply">{t("commentsTable.replyComment")}</Label>
+                <Textarea
+                  id="comment-reply"
+                  value={replyText}
+                  onChange={(e) => setReplyText(e.target.value)}
+                  placeholder={t("commentModal.replyPlaceholder")}
+                  rows={4}
+                />
+              </div>
+            </div>
+          )}
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button variant="outline" onClick={closeReply}>
+              {t("commentModal.close")}
+            </Button>
+            <Button
+              onClick={handleSendReply}
+              disabled={!replyText.trim() || replyMutation.isPending}
+            >
+              {t("commentModal.send")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <AlertDialog open={!!deleteTarget} onOpenChange={() => setDeleteTarget(null)}>
         <AlertDialogContent>

@@ -1295,7 +1295,8 @@
       },
       "viewComment": "مشاهده نظر",
       "editComment": "ویرایش نظر",
-      "deleteComment": "حذف نظر"
+      "deleteComment": "حذف نظر",
+      "replyComment": "پاسخ"
     },
     "commentModal": {
       "title": "جزئیات نظر",
@@ -1307,6 +1308,7 @@
       "noReplies": "هنوز پاسخی وجود ندارد",
       "replyPlaceholder": "پاسخ بنویسید...",
       "send": "ارسال",
+      "replySent": "پاسخ ارسال شد",
       "approve": "تأیید",
       "reject": "رد",
       "archive": "بایگانی",
