@@ -5,6 +5,7 @@ import type {
   AdminBrand,
   AdminCategory,
   AdminProductResponse,
+  AdminProductStatus,
   CatalogAttribute,
   CatalogAttributeValue,
   CreateBrandPayload,
