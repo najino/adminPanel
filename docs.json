@@ -1,5 +1,5 @@
 {
-    "schemes": ["http"],
+    "schemes": ["https"],
     "swagger": "2.0",
     "info": {
         "description": "REST API for the eCommerce admin panel and public storefront. Supports JWT authentication with role-based access (admin, customer). Store endpoints under /api/v1/store are public; account routes require a customer token.",
@@ -15,7 +15,7 @@
         },
         "version": "1.0"
     },
-    "host": "185.243.48.122:8080",
+    "host": "staging.api.paryabtools.ir",
     "basePath": "/",
     "paths": {
         "/api/v1/admin/": {
@@ -403,6 +403,104 @@
                     "admin-blog"
                 ],
                 "summary": "Delete comment (Admin)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Comment ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/blog/comments/{id}/approve": {
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Convenience alias for PATCH .../status with status approved.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-blog"
+                ],
+                "summary": "Approve blog comment (Admin)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Comment ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/blog/comments/{id}/reject": {
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Convenience alias for PATCH .../status with status rejected.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-blog"
+                ],
+                "summary": "Reject blog comment (Admin)",
                 "parameters": [
                     {
                         "type": "string",
@@ -1533,6 +1631,43 @@
                 }
             }
         },
+        "/api/v1/admin/contact-messages/stats": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Returns unread and total contact message counts for the admin nav badge.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-contact"
+                ],
+                "summary": "Contact inbox stats (Admin)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_contact.InboxStatsOutput"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/admin/contact-messages/{id}": {
             "get": {
                 "security": [
@@ -1595,6 +1730,104 @@
                     "admin-contact"
                 ],
                 "summary": "Delete contact message (Admin)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Message ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/contact-messages/{id}/archive": {
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Convenience alias for PATCH .../status with status archived.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-contact"
+                ],
+                "summary": "Archive contact message (Admin)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Message ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/contact-messages/{id}/read": {
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Convenience alias for PATCH .../status with status read.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-contact"
+                ],
+                "summary": "Mark contact message as read (Admin)",
                 "parameters": [
                     {
                         "type": "string",
@@ -2830,6 +3063,232 @@
                     },
                     "403": {
                         "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/notifications": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Returns paginated admin notifications with optional read filter.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-notifications"
+                ],
+                "summary": "List notifications (Admin)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "all",
+                        "description": "Read filter (unread/read/all)",
+                        "name": "read",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 20,
+                        "description": "Items per page",
+                        "name": "per_page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.NotificationListResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/notifications/read-all": {
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-notifications"
+                ],
+                "summary": "Mark all notifications as read (Admin)",
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/notifications/stats": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Returns unread and total notification counts for the admin header badge.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-notifications"
+                ],
+                "summary": "Notification stats (Admin)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_notification.StatsOutput"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/notifications/{id}/read": {
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-notifications"
+                ],
+                "summary": "Mark notification as read (Admin)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Notification ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/notifications/{id}/unread": {
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-notifications"
+                ],
+                "summary": "Mark notification as unread (Admin)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Notification ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
                         "schema": {
                             "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
                         }
@@ -4261,6 +4720,573 @@
                 }
             }
         },
+        "/api/v1/admin/projects": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get a paginated list of all portfolio projects.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-projects"
+                ],
+                "summary": "List projects (Admin)",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 20,
+                        "description": "Items per page",
+                        "name": "per_page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search query",
+                        "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Category ID filter",
+                        "name": "category_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ProjectListResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Create a new portfolio project.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-projects"
+                ],
+                "summary": "Create project (Admin)",
+                "parameters": [
+                    {
+                        "description": "Project data",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_request.ProjectCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ProjectResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/projects/categories": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get list of all project categories for admin panel.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-projects"
+                ],
+                "summary": "List project categories (Admin)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ProjectCategoryResponse"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Create a new project category.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-projects"
+                ],
+                "summary": "Create project category (Admin)",
+                "parameters": [
+                    {
+                        "description": "Category data",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_request.ProjectCategoryCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ProjectCategoryResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/projects/categories/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get details of a single project category by ID.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-projects"
+                ],
+                "summary": "Get project category (Admin)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Category ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ProjectCategoryResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update details of an existing project category.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-projects"
+                ],
+                "summary": "Update project category (Admin)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Category ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Category data",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_request.ProjectCategoryUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ProjectCategoryResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Delete a project category by ID.",
+                "tags": [
+                    "admin-projects"
+                ],
+                "summary": "Delete project category (Admin)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Category ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/projects/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get details of a single project by ID.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-projects"
+                ],
+                "summary": "Get project (Admin)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Project ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ProjectResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update details of an existing portfolio project.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-projects"
+                ],
+                "summary": "Update project (Admin)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Project ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Project data",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_request.ProjectUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ProjectResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Delete a portfolio project by ID.",
+                "tags": [
+                    "admin-projects"
+                ],
+                "summary": "Delete project (Admin)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Project ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/admin/questions": {
             "get": {
                 "security": [
@@ -4546,6 +5572,76 @@
                 "responses": {
                     "204": {
                         "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/reviews/{id}/reply": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Post an admin reply to a top-level product review.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin-reviews"
+                ],
+                "summary": "Reply to review (Admin)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Review ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Reply content",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_request.ProductReviewReplyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ProductReviewReplyResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
                     },
                     "401": {
                         "description": "Unauthorized",
@@ -7405,6 +8501,26 @@
                 }
             }
         },
+        "/api/v1/store/about": {
+            "get": {
+                "description": "Returns aggregated about page content for the public storefront.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "store"
+                ],
+                "summary": "Get about page content",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_storefront.AboutPage"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/store/account/orders": {
             "get": {
                 "security": [
@@ -7491,6 +8607,80 @@
                     },
                     "404": {
                         "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/store/account/profile": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Returns profile, addresses, and purchase stats for the authenticated customer.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "store"
+                ],
+                "summary": "Get customer profile",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_storefront.AccountProfile"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Updates profile fields and replaces saved addresses for the authenticated customer.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "store"
+                ],
+                "summary": "Update customer profile",
+                "parameters": [
+                    {
+                        "description": "Profile update",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_request.UpdateStoreAccountProfileRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_storefront.AccountProfile"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
                         "schema": {
                             "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
                         }
@@ -7603,6 +8793,68 @@
                 }
             }
         },
+        "/api/v1/store/account/wishlist/count": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Returns the number of items in the authenticated customer's wishlist.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "store-wishlist"
+                ],
+                "summary": "Wishlist count",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_wishlist.WishlistCount"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/store/account/wishlist/ids": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Returns all product IDs in the authenticated customer's wishlist for quick heart-state checks.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "store-wishlist"
+                ],
+                "summary": "List wishlist product IDs",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_wishlist.WishlistIDs"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/store/account/wishlist/{productId}": {
             "delete": {
                 "security": [
@@ -7636,6 +8888,60 @@
                     },
                     "404": {
                         "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/store/blog": {
+            "get": {
+                "description": "Alias for GET /store/blog/posts for frontend compatibility.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "blog"
+                ],
+                "summary": "List blog posts (alias)",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 20,
+                        "description": "Items per page",
+                        "name": "per_page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search query",
+                        "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Category ID filter",
+                        "name": "category_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.BlogPostListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
                         "schema": {
                             "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
                         }
@@ -7855,6 +9161,209 @@
                 }
             }
         },
+        "/api/v1/store/blog/{slug}/comments": {
+            "get": {
+                "description": "Get approved comments for a published blog post resolved by slug.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "blog"
+                ],
+                "summary": "List post comments by slug",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Post slug",
+                        "name": "slug",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 20,
+                        "description": "Items per page",
+                        "name": "per_page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.BlogCommentListResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/store/brands": {
+            "get": {
+                "description": "Returns active brands for catalog filters.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "store"
+                ],
+                "summary": "List storefront brands",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_storefront.StoreBrandList"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/store/cart": {
+            "get": {
+                "description": "Returns the server-side cart with current prices and availability.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "store-cart"
+                ],
+                "summary": "Get cart",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_storefront.CartView"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Removes all items from the server-side cart.",
+                "tags": [
+                    "store-cart"
+                ],
+                "summary": "Clear cart",
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/api/v1/store/cart/items": {
+            "post": {
+                "description": "Adds a product to the server-side cart (increments quantity when line exists).",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "store-cart"
+                ],
+                "summary": "Add item to cart",
+                "parameters": [
+                    {
+                        "description": "Cart item",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_request.StoreCartAddItemRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_storefront.CartView"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/store/cart/items/{productId}": {
+            "delete": {
+                "description": "Removes a product line from the server-side cart.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "store-cart"
+                ],
+                "summary": "Remove cart item",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Product ID",
+                        "name": "productId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_storefront.CartView"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Sets cart line quantity; removes the line when quantity is zero.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "store-cart"
+                ],
+                "summary": "Update cart item quantity",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Product ID",
+                        "name": "productId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Quantity",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_request.StoreCartUpdateItemRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_storefront.CartView"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/store/categories": {
             "get": {
                 "description": "Returns the active category tree for the storefront.",
@@ -7912,6 +9421,64 @@
                 }
             }
         },
+        "/api/v1/store/checkout/payment/callback": {
+            "post": {
+                "description": "Handles PSP redirect callback after online payment and updates order payment status.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "store"
+                ],
+                "summary": "Payment gateway callback",
+                "parameters": [
+                    {
+                        "description": "Payment callback",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_request.StorePaymentCallbackRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_storefront.PaymentCallbackOutput"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/store/checkout/preview": {
             "post": {
                 "description": "Validates cart items and computes checkout totals without placing an order.",
@@ -7941,6 +9508,81 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/app_internal_application_storefront.PreviewCheckoutOutput"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/store/checkout/shipping-methods": {
+            "get": {
+                "description": "Returns available delivery options for a destination city.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "store"
+                ],
+                "summary": "List shipping methods",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Destination city",
+                        "name": "city",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_storefront.ShippingMethodList"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/store/checkout/validate-customer": {
+            "post": {
+                "description": "Checks whether the provided email or phone belongs to an existing account before guest checkout continues.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "store"
+                ],
+                "summary": "Validate guest checkout contact",
+                "parameters": [
+                    {
+                        "description": "Guest contact info",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_request.StoreCheckoutValidateCustomerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_storefront.ValidateGuestCheckoutCustomerOutput"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
                         }
                     }
                 }
@@ -8040,6 +9682,26 @@
                 }
             }
         },
+        "/api/v1/store/navigation": {
+            "get": {
+                "description": "Returns the active storefront navigation menu.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "store"
+                ],
+                "summary": "Get storefront navigation",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_storefront.StoreNavigation"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/store/products": {
             "get": {
                 "description": "Returns active products for the public storefront with search, filters, and sort.",
@@ -8096,6 +9758,90 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/app_internal_interfaces_http_dto_response.StoreProductListResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/store/products/search": {
+            "get": {
+                "description": "Returns quick product suggestions for header autocomplete.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "store"
+                ],
+                "summary": "Search storefront products",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Search query",
+                        "name": "q",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Max results",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_storefront.ProductSearchResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/store/products/{id}/related": {
+            "get": {
+                "description": "Returns related active products for a product detail page.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "store"
+                ],
+                "summary": "List related products",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Product ID or slug",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 8,
+                        "description": "Max results",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_storefront.ProductListData"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
                         }
                     }
                 }
@@ -8359,13 +10105,131 @@
                         "name": "slugOrId",
                         "in": "path",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Comma-separated embeds: reviews_summary,wishlist",
+                        "name": "include",
+                        "in": "query"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/app_internal_application_storefront.ProductDetail"
+                            "$ref": "#/definitions/app_internal_application_storefront.ProductDetailEnriched"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/store/projects": {
+            "get": {
+                "description": "Get a paginated list of portfolio projects.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "projects"
+                ],
+                "summary": "List projects",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 20,
+                        "description": "Items per page",
+                        "name": "per_page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search query",
+                        "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Category ID filter",
+                        "name": "category_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ProjectListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/store/projects/categories": {
+            "get": {
+                "description": "Get all project categories.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "projects"
+                ],
+                "summary": "List project categories",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ProjectCategoryResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/store/projects/{slug}": {
+            "get": {
+                "description": "Get a single portfolio project by slug.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "projects"
+                ],
+                "summary": "Get project",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Project slug",
+                        "name": "slug",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ProjectResponse"
                         }
                     },
                     "404": {
@@ -8392,6 +10256,26 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/app_internal_application_settings.PublicSettings"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/store/settings/checkout": {
+            "get": {
+                "description": "Returns minimum order amount, enabled payment methods, and COD availability.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "store"
+                ],
+                "summary": "Get checkout settings",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app_internal_application_storefront.CheckoutSettingsOutput"
                         }
                     }
                 }
@@ -8465,6 +10349,28 @@
         }
     },
     "definitions": {
+        "app_internal_application_contact.InboxStatsOutput": {
+            "type": "object",
+            "properties": {
+                "total_count": {
+                    "type": "integer"
+                },
+                "unread_count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "app_internal_application_notification.StatsOutput": {
+            "type": "object",
+            "properties": {
+                "total_count": {
+                    "type": "integer"
+                },
+                "unread_count": {
+                    "type": "integer"
+                }
+            }
+        },
         "app_internal_application_settings.PublicSettings": {
             "type": "object",
             "properties": {
@@ -8482,6 +10388,37 @@
                 }
             }
         },
+        "app_internal_application_storecontent.HomepageBlogPost": {
+            "type": "object",
+            "properties": {
+                "cover_image_url": {
+                    "type": "string"
+                },
+                "excerpt": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "app_internal_application_storecontent.HomepageBlogTeaser": {
+            "type": "object",
+            "properties": {
+                "posts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app_internal_application_storecontent.HomepageBlogPost"
+                    }
+                }
+            }
+        },
         "app_internal_application_storecontent.HomepageCTA": {
             "type": "object",
             "properties": {
@@ -8489,6 +10426,29 @@
                     "type": "string"
                 },
                 "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "app_internal_application_storecontent.HomepageCategory": {
+            "type": "object",
+            "properties": {
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app_internal_application_storecontent.HomepageCategory"
+                    }
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "products_count": {
+                    "type": "integer"
+                },
+                "slug": {
                     "type": "string"
                 }
             }
@@ -8596,6 +10556,15 @@
         "app_internal_application_storecontent.HomepageProjection": {
             "type": "object",
             "properties": {
+                "blog_teaser": {
+                    "$ref": "#/definitions/app_internal_application_storecontent.HomepageBlogTeaser"
+                },
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app_internal_application_storecontent.HomepageCategory"
+                    }
+                },
                 "contact_section": {
                     "$ref": "#/definitions/app_internal_application_storecontent.HomepageContactSection"
                 },
@@ -8637,8 +10606,87 @@
         "app_internal_application_storecontent.HomepageStats": {
             "type": "object",
             "properties": {
+                "customers_count": {
+                    "type": "integer"
+                },
+                "delivered_orders_count": {
+                    "type": "integer"
+                },
                 "products_count": {
                     "type": "integer"
+                },
+                "years_experience": {
+                    "type": "integer"
+                }
+            }
+        },
+        "app_internal_application_storefront.AboutPage": {
+            "type": "object",
+            "properties": {
+                "contact": {
+                    "$ref": "#/definitions/app_internal_domain_settings.PublicContact"
+                },
+                "hero": {
+                    "$ref": "#/definitions/app_internal_domain_settings.AboutHero"
+                },
+                "milestones": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app_internal_domain_settings.AboutMilestone"
+                    }
+                },
+                "mission": {
+                    "$ref": "#/definitions/app_internal_domain_settings.AboutTextBlock"
+                },
+                "seo": {
+                    "$ref": "#/definitions/app_internal_domain_settings.AboutSEO"
+                },
+                "social": {
+                    "$ref": "#/definitions/app_internal_domain_settings.PublicSocial"
+                },
+                "stats": {
+                    "$ref": "#/definitions/app_internal_domain_settings.AboutStats"
+                },
+                "story": {
+                    "$ref": "#/definitions/app_internal_domain_settings.AboutStory"
+                },
+                "team": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app_internal_domain_settings.AboutTeamMember"
+                    }
+                },
+                "vision": {
+                    "$ref": "#/definitions/app_internal_domain_settings.AboutTextBlock"
+                }
+            }
+        },
+        "app_internal_application_storefront.AccountAddress": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "is_default": {
+                    "type": "boolean"
+                },
+                "postal_code": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "street": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
                 }
             }
         },
@@ -8665,6 +10713,92 @@
                 },
                 "total_toman": {
                     "type": "integer"
+                }
+            }
+        },
+        "app_internal_application_storefront.AccountProfile": {
+            "type": "object",
+            "properties": {
+                "addresses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app_internal_application_storefront.AccountAddress"
+                    }
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "full_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "stats": {
+                    "$ref": "#/definitions/app_internal_application_storefront.AccountProfileStats"
+                }
+            }
+        },
+        "app_internal_application_storefront.AccountProfileStats": {
+            "type": "object",
+            "properties": {
+                "total_orders": {
+                    "type": "integer"
+                },
+                "total_spent_toman": {
+                    "type": "integer"
+                }
+            }
+        },
+        "app_internal_application_storefront.CartView": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app_internal_application_storefront.PreviewLineItem"
+                    }
+                },
+                "summary": {
+                    "$ref": "#/definitions/app_internal_application_storefront.CheckoutSummary"
+                }
+            }
+        },
+        "app_internal_application_storefront.CheckoutSettingsOutput": {
+            "type": "object",
+            "properties": {
+                "cod_cities": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "cod_enabled": {
+                    "type": "boolean"
+                },
+                "currency_label": {
+                    "type": "string"
+                },
+                "min_order_toman": {
+                    "type": "integer"
+                },
+                "payment_methods": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },
@@ -8711,6 +10845,17 @@
                 }
             }
         },
+        "app_internal_application_storefront.PaymentCallbackOutput": {
+            "type": "object",
+            "properties": {
+                "order_id": {
+                    "type": "string"
+                },
+                "payment_status": {
+                    "type": "string"
+                }
+            }
+        },
         "app_internal_application_storefront.PlaceCheckoutOutput": {
             "type": "object",
             "properties": {
@@ -8718,6 +10863,9 @@
                     "type": "string"
                 },
                 "order_number": {
+                    "type": "string"
+                },
+                "payment_expires_at": {
                     "type": "string"
                 },
                 "payment_status": {
@@ -8821,7 +10969,7 @@
                 }
             }
         },
-        "app_internal_application_storefront.ProductDetail": {
+        "app_internal_application_storefront.ProductDetailEnriched": {
             "type": "object",
             "properties": {
                 "attributes": {
@@ -8848,6 +10996,9 @@
                         "$ref": "#/definitions/app_internal_domain_product.Image"
                     }
                 },
+                "is_in_wishlist": {
+                    "type": "boolean"
+                },
                 "is_on_sale": {
                     "type": "boolean"
                 },
@@ -8859,6 +11010,9 @@
                 },
                 "price_toman": {
                     "type": "integer"
+                },
+                "reviews_summary": {
+                    "$ref": "#/definitions/app_internal_application_storefront.ReviewsSummary"
                 },
                 "sale_price_toman": {
                     "type": "integer"
@@ -8880,6 +11034,141 @@
                 }
             }
         },
+        "app_internal_application_storefront.ProductListData": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app_internal_application_storefront.ProductCard"
+                    }
+                }
+            }
+        },
+        "app_internal_application_storefront.ProductSearchHit": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price_toman": {
+                    "type": "integer"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "thumbnail_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "app_internal_application_storefront.ProductSearchResult": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app_internal_application_storefront.ProductSearchHit"
+                    }
+                }
+            }
+        },
+        "app_internal_application_storefront.ReviewsSummary": {
+            "type": "object",
+            "properties": {
+                "average_rating": {
+                    "type": "number"
+                },
+                "distribution": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                },
+                "total_count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "app_internal_application_storefront.ShippingMethod": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "eta_days": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "price_toman": {
+                    "type": "integer"
+                }
+            }
+        },
+        "app_internal_application_storefront.ShippingMethodList": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app_internal_application_storefront.ShippingMethod"
+                    }
+                }
+            }
+        },
+        "app_internal_application_storefront.StoreBrand": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "logo_url": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                }
+            }
+        },
+        "app_internal_application_storefront.StoreBrandList": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app_internal_application_storefront.StoreBrand"
+                    }
+                }
+            }
+        },
+        "app_internal_application_storefront.StoreNavigation": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app_internal_domain_settings.NavItem"
+                    }
+                }
+            }
+        },
+        "app_internal_application_storefront.ValidateGuestCheckoutCustomerOutput": {
+            "type": "object",
+            "properties": {
+                "ok": {
+                    "type": "boolean"
+                }
+            }
+        },
         "app_internal_application_theme.PublicThemeOutput": {
             "type": "object",
             "properties": {
@@ -8888,6 +11177,25 @@
                 },
                 "font_family": {
                     "type": "string"
+                }
+            }
+        },
+        "app_internal_application_wishlist.WishlistCount": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "app_internal_application_wishlist.WishlistIDs": {
+            "type": "object",
+            "properties": {
+                "product_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },
@@ -8971,6 +11279,101 @@
                 }
             }
         },
+        "app_internal_domain_settings.AboutHero": {
+            "type": "object",
+            "properties": {
+                "image_url": {
+                    "type": "string"
+                },
+                "subtitle": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "app_internal_domain_settings.AboutMilestone": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "string"
+                }
+            }
+        },
+        "app_internal_domain_settings.AboutSEO": {
+            "type": "object",
+            "properties": {
+                "meta_description": {
+                    "type": "string"
+                },
+                "meta_title": {
+                    "type": "string"
+                }
+            }
+        },
+        "app_internal_domain_settings.AboutStats": {
+            "type": "object",
+            "properties": {
+                "completed_projects": {
+                    "type": "integer"
+                },
+                "happy_customers": {
+                    "type": "integer"
+                },
+                "products_count": {
+                    "type": "integer"
+                },
+                "years_experience": {
+                    "type": "integer"
+                }
+            }
+        },
+        "app_internal_domain_settings.AboutStory": {
+            "type": "object",
+            "properties": {
+                "content_html": {
+                    "type": "string"
+                },
+                "content_markdown": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "app_internal_domain_settings.AboutTeamMember": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "photo_url": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                }
+            }
+        },
+        "app_internal_domain_settings.AboutTextBlock": {
+            "type": "object",
+            "properties": {
+                "text": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
         "app_internal_domain_settings.Contact": {
             "type": "object",
             "properties": {
@@ -8987,6 +11390,81 @@
                     "type": "string"
                 },
                 "phone": {
+                    "type": "string"
+                }
+            }
+        },
+        "app_internal_domain_settings.NavItem": {
+            "type": "object",
+            "properties": {
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app_internal_domain_settings.NavItem"
+                    }
+                },
+                "id": {
+                    "type": "string"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "sort_order": {
+                    "type": "integer"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "app_internal_domain_settings.PublicContact": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "mobile": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "working_hours": {
+                    "type": "string"
+                }
+            }
+        },
+        "app_internal_domain_settings.PublicSocial": {
+            "type": "object",
+            "properties": {
+                "facebook": {
+                    "type": "string"
+                },
+                "instagram": {
+                    "type": "string"
+                },
+                "linkedin": {
+                    "type": "string"
+                },
+                "telegram": {
+                    "type": "string"
+                },
+                "tiktok": {
+                    "type": "string"
+                },
+                "twitter": {
+                    "type": "string"
+                },
+                "whatsapp": {
+                    "type": "string"
+                },
+                "youtube": {
                     "type": "string"
                 }
             }
@@ -10052,6 +12530,17 @@
                 }
             }
         },
+        "app_internal_interfaces_http_dto_request.ProductReviewReplyRequest": {
+            "type": "object",
+            "required": [
+                "content"
+            ],
+            "properties": {
+                "content": {
+                    "type": "string"
+                }
+            }
+        },
         "app_internal_interfaces_http_dto_request.ProductReviewStatusUpdateRequest": {
             "type": "object",
             "required": [
@@ -10087,6 +12576,128 @@
                     "type": "integer",
                     "maximum": 5,
                     "minimum": 1
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 255
+                }
+            }
+        },
+        "app_internal_interfaces_http_dto_request.ProjectCategoryCreateRequest": {
+            "type": "object",
+            "required": [
+                "slug",
+                "title"
+            ],
+            "properties": {
+                "slug": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 255
+                }
+            }
+        },
+        "app_internal_interfaces_http_dto_request.ProjectCategoryUpdateRequest": {
+            "type": "object",
+            "required": [
+                "slug",
+                "title"
+            ],
+            "properties": {
+                "slug": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 255
+                }
+            }
+        },
+        "app_internal_interfaces_http_dto_request.ProjectCreateRequest": {
+            "type": "object",
+            "required": [
+                "slug",
+                "title"
+            ],
+            "properties": {
+                "category_id": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "employer": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "footage": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "image": {
+                    "type": "string",
+                    "maxLength": 500
+                },
+                "implementation_year": {
+                    "type": "integer",
+                    "maximum": 9999,
+                    "minimum": 0
+                },
+                "location": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "slug": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 255
+                }
+            }
+        },
+        "app_internal_interfaces_http_dto_request.ProjectUpdateRequest": {
+            "type": "object",
+            "required": [
+                "slug",
+                "title"
+            ],
+            "properties": {
+                "category_id": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "employer": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "footage": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "image": {
+                    "type": "string",
+                    "maxLength": 500
+                },
+                "implementation_year": {
+                    "type": "integer",
+                    "maximum": 9999,
+                    "minimum": 0
+                },
+                "location": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "slug": {
+                    "type": "string",
+                    "maxLength": 255
                 },
                 "title": {
                     "type": "string",
@@ -10189,6 +12800,79 @@
                 }
             }
         },
+        "app_internal_interfaces_http_dto_request.StoreAccountAddressRequest": {
+            "type": "object",
+            "required": [
+                "city",
+                "postal_code",
+                "street"
+            ],
+            "properties": {
+                "city": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "country": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "is_default": {
+                    "type": "boolean"
+                },
+                "postal_code": {
+                    "type": "string",
+                    "maxLength": 20
+                },
+                "state": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "street": {
+                    "type": "string",
+                    "maxLength": 300
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "home",
+                        "work",
+                        "billing",
+                        "shipping"
+                    ]
+                }
+            }
+        },
+        "app_internal_interfaces_http_dto_request.StoreCartAddItemRequest": {
+            "type": "object",
+            "required": [
+                "product_id"
+            ],
+            "properties": {
+                "product_id": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "sku_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "app_internal_interfaces_http_dto_request.StoreCartUpdateItemRequest": {
+            "type": "object",
+            "required": [
+                "quantity"
+            ],
+            "properties": {
+                "quantity": {
+                    "type": "integer",
+                    "minimum": 0
+                }
+            }
+        },
         "app_internal_interfaces_http_dto_request.StoreCheckoutCustomerRequest": {
             "type": "object",
             "required": [
@@ -10214,48 +12898,27 @@
                 }
             }
         },
-        "app_internal_interfaces_http_dto_request.StoreCheckoutItemRequest": {
-            "type": "object",
-            "required": [
-                "product_id",
-                "quantity"
-            ],
-            "properties": {
-                "product_id": {
-                    "type": "string"
-                },
-                "quantity": {
-                    "type": "integer"
-                },
-                "sku_id": {
-                    "type": "string"
-                }
-            }
-        },
         "app_internal_interfaces_http_dto_request.StoreCheckoutPreviewRequest": {
             "type": "object",
             "required": [
-                "items"
+                "shipping_city",
+                "shipping_method"
             ],
             "properties": {
                 "coupon_code": {
                     "type": "string",
                     "maxLength": 50
                 },
-                "items": {
-                    "type": "array",
-                    "minItems": 1,
-                    "items": {
-                        "$ref": "#/definitions/app_internal_interfaces_http_dto_request.StoreCheckoutItemRequest"
-                    }
+                "shipping_city": {
+                    "type": "string",
+                    "maxLength": 100
                 },
-                "shipping_amount": {
-                    "type": "number",
-                    "minimum": 0
-                },
-                "tax_amount": {
-                    "type": "number",
-                    "minimum": 0
+                "shipping_method": {
+                    "type": "string",
+                    "enum": [
+                        "post",
+                        "courier"
+                    ]
                 }
             }
         },
@@ -10263,8 +12926,9 @@
             "type": "object",
             "required": [
                 "customer",
-                "items",
-                "shipping_address"
+                "shipping_address",
+                "shipping_city",
+                "shipping_method"
             ],
             "properties": {
                 "billing_address": {
@@ -10277,13 +12941,6 @@
                 "customer": {
                     "$ref": "#/definitions/app_internal_interfaces_http_dto_request.StoreCheckoutCustomerRequest"
                 },
-                "items": {
-                    "type": "array",
-                    "minItems": 1,
-                    "items": {
-                        "$ref": "#/definitions/app_internal_interfaces_http_dto_request.StoreCheckoutItemRequest"
-                    }
-                },
                 "notes": {
                     "type": "string",
                     "maxLength": 2000
@@ -10295,13 +12952,31 @@
                 "shipping_address": {
                     "$ref": "#/definitions/app_internal_interfaces_http_dto_request.OrderAddressRequest"
                 },
-                "shipping_amount": {
-                    "type": "number",
-                    "minimum": 0
+                "shipping_city": {
+                    "type": "string",
+                    "maxLength": 100
                 },
-                "tax_amount": {
-                    "type": "number",
-                    "minimum": 0
+                "shipping_method": {
+                    "type": "string",
+                    "enum": [
+                        "post",
+                        "courier"
+                    ]
+                }
+            }
+        },
+        "app_internal_interfaces_http_dto_request.StoreCheckoutValidateCustomerRequest": {
+            "type": "object",
+            "required": [
+                "email"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string",
+                    "maxLength": 20
                 }
             }
         },
@@ -10319,6 +12994,36 @@
                 "subtotal_toman": {
                     "type": "integer",
                     "minimum": 0
+                }
+            }
+        },
+        "app_internal_interfaces_http_dto_request.StorePaymentCallbackRequest": {
+            "type": "object",
+            "required": [
+                "authority",
+                "order_id",
+                "status"
+            ],
+            "properties": {
+                "authority": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "order_id": {
+                    "type": "string"
+                },
+                "signature": {
+                    "type": "string",
+                    "maxLength": 128
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "OK",
+                        "NOK",
+                        "ok",
+                        "nok"
+                    ]
                 }
             }
         },
@@ -10811,6 +13516,33 @@
                 }
             }
         },
+        "app_internal_interfaces_http_dto_request.UpdateStoreAccountProfileRequest": {
+            "type": "object",
+            "required": [
+                "first_name",
+                "last_name"
+            ],
+            "properties": {
+                "addresses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app_internal_interfaces_http_dto_request.StoreAccountAddressRequest"
+                    }
+                },
+                "first_name": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "last_name": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "phone": {
+                    "type": "string",
+                    "maxLength": 20
+                }
+            }
+        },
         "app_internal_interfaces_http_dto_request.UpdateStoreStyleRequest": {
             "type": "object",
             "properties": {
@@ -10921,6 +13653,9 @@
                 "customer_id": {
                     "type": "string"
                 },
+                "has_reply": {
+                    "type": "boolean"
+                },
                 "id": {
                     "type": "string"
                 },
@@ -10932,6 +13667,12 @@
                 },
                 "rating": {
                     "type": "integer"
+                },
+                "replies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ProductReviewReplyResponse"
+                    }
                 },
                 "status": {
                     "type": "string"
@@ -11114,7 +13855,13 @@
                 "content": {
                     "type": "string"
                 },
+                "cover_image_url": {
+                    "type": "string"
+                },
                 "created_at": {
+                    "type": "string"
+                },
+                "excerpt": {
                     "type": "string"
                 },
                 "featured_image": {
@@ -11169,7 +13916,13 @@
                 "content": {
                     "type": "string"
                 },
+                "cover_image_url": {
+                    "type": "string"
+                },
                 "created_at": {
+                    "type": "string"
+                },
+                "excerpt": {
                     "type": "string"
                 },
                 "featured_image": {
@@ -11982,6 +14735,50 @@
                 }
             }
         },
+        "app_internal_interfaces_http_dto_response.NotificationListResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app_internal_interfaces_http_dto_response.NotificationResponse"
+                    }
+                },
+                "meta": {
+                    "$ref": "#/definitions/app_pkg_pagination.Meta"
+                }
+            }
+        },
+        "app_internal_interfaces_http_dto_response.NotificationResponse": {
+            "type": "object",
+            "properties": {
+                "body": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "is_read": {
+                    "type": "boolean"
+                },
+                "payload": {
+                    "type": "object",
+                    "additionalProperties": {}
+                },
+                "read_at": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
         "app_internal_interfaces_http_dto_response.OrderAddressResponse": {
             "type": "object",
             "properties": {
@@ -12534,11 +15331,28 @@
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ProductReviewResponse"
+                        "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ProductReviewTreeResponse"
                     }
                 },
                 "meta": {
                     "$ref": "#/definitions/app_pkg_pagination.Meta"
+                }
+            }
+        },
+        "app_internal_interfaces_http_dto_response.ProductReviewReplyResponse": {
+            "type": "object",
+            "properties": {
+                "author_name": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
                 }
             }
         },
@@ -12589,6 +15403,44 @@
                 },
                 "total_count": {
                     "type": "integer"
+                }
+            }
+        },
+        "app_internal_interfaces_http_dto_response.ProductReviewTreeResponse": {
+            "type": "object",
+            "properties": {
+                "author_name": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "customer_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "product_id": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "integer"
+                },
+                "replies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ProductReviewReplyResponse"
+                    }
+                },
+                "status": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
                 }
             }
         },
@@ -12652,6 +15504,122 @@
                 },
                 "total": {
                     "type": "integer"
+                }
+            }
+        },
+        "app_internal_interfaces_http_dto_response.ProjectCategoryResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "app_internal_interfaces_http_dto_response.ProjectListItemResponse": {
+            "type": "object",
+            "properties": {
+                "category_id": {
+                    "type": "string"
+                },
+                "category_title": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "employer": {
+                    "type": "string"
+                },
+                "footage": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "implementation_year": {
+                    "type": "integer"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "app_internal_interfaces_http_dto_response.ProjectListResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/app_internal_interfaces_http_dto_response.ProjectListItemResponse"
+                    }
+                },
+                "meta": {
+                    "$ref": "#/definitions/app_pkg_pagination.Meta"
+                }
+            }
+        },
+        "app_internal_interfaces_http_dto_response.ProjectResponse": {
+            "type": "object",
+            "properties": {
+                "category_id": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "employer": {
+                    "type": "string"
+                },
+                "footage": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "implementation_year": {
+                    "type": "integer"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
                 }
             }
         },
@@ -13014,6 +15982,9 @@
         "app_internal_interfaces_http_dto_response.WishlistItemResponse": {
             "type": "object",
             "properties": {
+                "added_at": {
+                    "type": "string"
+                },
                 "created_at": {
                     "type": "string"
                 },
@@ -13057,10 +16028,19 @@
                 "price": {
                     "type": "number"
                 },
+                "price_toman": {
+                    "type": "integer"
+                },
                 "sale_price": {
                     "type": "number"
                 },
+                "sale_price_toman": {
+                    "type": "integer"
+                },
                 "slug": {
+                    "type": "string"
+                },
+                "thumbnail_url": {
                     "type": "string"
                 }
             }

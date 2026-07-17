@@ -75,23 +75,23 @@ function mapProductReview(item: Record<string, unknown>): AdminProductReview {
     const r = reply as Record<string, unknown>;
     return {
       id: String(r.id ?? ""),
-      authorName: String(r.author_name ?? ""),
+      authorName: String(r.author_name ?? r.authorName ?? ""),
       content: String(r.content ?? ""),
-      createdAt: String(r.created_at ?? ""),
+      createdAt: String(r.created_at ?? r.createdAt ?? ""),
     };
   });
 
   return {
     id: String(item.id ?? ""),
-    productId: String(item.product_id ?? ""),
-    productName: String(item.product_name ?? ""),
-    authorName: String(item.author_name ?? ""),
+    productId: String(item.product_id ?? item.productId ?? ""),
+    productName: String(item.product_name ?? item.productName ?? ""),
+    authorName: String(item.author_name ?? item.authorName ?? ""),
     title: item.title ? String(item.title) : undefined,
     content: String(item.content ?? ""),
     rating: Number(item.rating ?? 0),
     status,
-    date: String(item.created_at ?? ""),
-    hasReply: Boolean(item.has_reply ?? replies.length > 0),
+    date: String(item.created_at ?? item.createdAt ?? item.date ?? ""),
+    hasReply: Boolean(item.has_reply ?? item.hasReply ?? replies.length > 0),
     replies,
   };
 }
@@ -586,13 +586,20 @@ export async function getProductReviews(params?: {
     return result;
   }
 
-  const query: Record<string, unknown> = { per_page: 100 };
+  const query: Record<string, unknown> = { page: 1, per_page: 100 };
   if (params?.status) query.status = params.status;
   if (params?.search) query.q = params.search;
-  const { data } = await apiClient.get<PaginatedData<Record<string, unknown>>>(`${ADMIN}/reviews`, {
-    params: query,
-  });
-  return (data.data ?? []).map(mapProductReview);
+  const { data } = await apiClient.get<
+    PaginatedData<Record<string, unknown>> | Record<string, unknown>[]
+  >(`${ADMIN}/reviews`, { params: query });
+
+  const rows = Array.isArray(data)
+    ? data
+    : Array.isArray((data as PaginatedData<Record<string, unknown>>).data)
+      ? (data as PaginatedData<Record<string, unknown>>).data
+      : [];
+
+  return rows.map(mapProductReview);
 }
 
 export async function updateProductReviewStatus(
