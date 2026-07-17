@@ -70,6 +70,17 @@ function mapProductReview(item: Record<string, unknown>): AdminProductReview {
   const status: ProductReviewStatus =
     statusRaw === "approved" ? "approved" : statusRaw === "rejected" ? "rejected" : "pending";
 
+  const repliesRaw = Array.isArray(item.replies) ? item.replies : [];
+  const replies = repliesRaw.map((reply) => {
+    const r = reply as Record<string, unknown>;
+    return {
+      id: String(r.id ?? ""),
+      authorName: String(r.author_name ?? ""),
+      content: String(r.content ?? ""),
+      createdAt: String(r.created_at ?? ""),
+    };
+  });
+
   return {
     id: String(item.id ?? ""),
     productId: String(item.product_id ?? ""),
@@ -80,6 +91,8 @@ function mapProductReview(item: Record<string, unknown>): AdminProductReview {
     rating: Number(item.rating ?? 0),
     status,
     date: String(item.created_at ?? ""),
+    hasReply: Boolean(item.has_reply ?? replies.length > 0),
+    replies,
   };
 }
 
@@ -585,18 +598,44 @@ export async function getProductReviews(params?: {
 export async function updateProductReviewStatus(
   id: string,
   status: ProductReviewStatus,
-): Promise<AdminProductReview> {
+): Promise<void> {
   if (USE_MOCK) {
     await delay();
     const review = mockProductReviews.find((r) => r.id === id);
     if (!review) throw new Error("Review not found");
     review.status = status;
-    return { ...review };
+    return;
   }
-  const { data } = await apiClient.patch<Record<string, unknown>>(`${ADMIN}/reviews/${id}/status`, {
-    status,
+  await apiClient.patch(`${ADMIN}/reviews/${id}/status`, { status });
+}
+
+export async function replyToProductReview(
+  id: string,
+  content: string,
+): Promise<{ id: string; authorName: string; content: string; createdAt: string }> {
+  if (USE_MOCK) {
+    await delay();
+    const review = mockProductReviews.find((r) => r.id === id);
+    if (!review) throw new Error("Review not found");
+    const reply = {
+      id: `reply-${Date.now()}`,
+      authorName: "Admin",
+      content,
+      createdAt: new Date().toISOString(),
+    };
+    review.replies = [...(review.replies ?? []), reply];
+    review.hasReply = true;
+    return reply;
+  }
+  const { data } = await apiClient.post<Record<string, unknown>>(`${ADMIN}/reviews/${id}/reply`, {
+    content,
   });
-  return mapProductReview(data);
+  return {
+    id: String(data.id ?? ""),
+    authorName: String(data.author_name ?? "Admin"),
+    content: String(data.content ?? content),
+    createdAt: String(data.created_at ?? new Date().toISOString()),
+  };
 }
 
 export async function deleteProductReview(id: string): Promise<void> {
@@ -607,4 +646,29 @@ export async function deleteProductReview(id: string): Promise<void> {
     return;
   }
   await apiClient.delete(`${ADMIN}/reviews/${id}`);
+}
+
+/** Aggregate approved review stars per product for list/detail views. */
+export async function getProductRatingSummaries(): Promise<
+  Record<string, { average: number; count: number }>
+> {
+  const reviews = await getProductReviews({ status: "approved" });
+  const buckets = new Map<string, { sum: number; count: number }>();
+
+  for (const review of reviews) {
+    if (!review.productId || review.rating <= 0) continue;
+    const current = buckets.get(review.productId) ?? { sum: 0, count: 0 };
+    current.sum += review.rating;
+    current.count += 1;
+    buckets.set(review.productId, current);
+  }
+
+  const result: Record<string, { average: number; count: number }> = {};
+  for (const [productId, { sum, count }] of buckets) {
+    result[productId] = {
+      average: Math.round((sum / count) * 10) / 10,
+      count,
+    };
+  }
+  return result;
 }

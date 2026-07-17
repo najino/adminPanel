@@ -171,6 +171,13 @@ export interface UploadResponse {
 
 export type ProductReviewStatus = "pending" | "approved" | "rejected";
 
+export interface ProductReviewReply {
+  id: string;
+  authorName: string;
+  content: string;
+  createdAt: string;
+}
+
 export interface AdminProductReview {
   id: string;
   productId: string;
@@ -181,4 +188,12 @@ export interface AdminProductReview {
   rating: number;
   status: ProductReviewStatus;
   date: string;
+  hasReply?: boolean;
+  replies?: ProductReviewReply[];
+}
+
+export interface ProductRatingSummary {
+  productId: string;
+  average: number;
+  count: number;
 }

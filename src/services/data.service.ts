@@ -1004,6 +1004,51 @@ export async function uploadFile(file: File): Promise<{ url: string }> {
   return data;
 }
 
+function notificationHrefFromType(
+  type: string,
+  payload?: Record<string, unknown> | null,
+): string {
+  const id = payload?.order_id ?? payload?.product_id ?? payload?.id;
+  switch (type) {
+    case "order":
+      return id ? `/orders/${String(id)}` : "/orders";
+    case "review":
+      return "/products/comments";
+    case "comment":
+      return "/weblog/comments";
+    case "contact":
+      return "/contact";
+    case "stock":
+      return "/products";
+    case "user":
+      return id ? `/users/${String(id)}` : "/users";
+    default:
+      return "/";
+  }
+}
+
+function mapNotification(item: Record<string, unknown>): AdminNotification {
+  const type = String(item.type ?? "order") as AdminNotification["type"];
+  const payload =
+    item.payload && typeof item.payload === "object"
+      ? (item.payload as Record<string, unknown>)
+      : null;
+  const hrefFromApi = item.href ? String(item.href) : "";
+
+  return {
+    id: String(item.id ?? ""),
+    type,
+    title: item.title ? String(item.title) : undefined,
+    body: item.body ? String(item.body) : undefined,
+    titleKey: item.title_key ? String(item.title_key) : undefined,
+    descriptionKey: item.description_key ? String(item.description_key) : undefined,
+    titleParams: (item.title_params as Record<string, string | number> | undefined) ?? undefined,
+    href: hrefFromApi || notificationHrefFromType(type, payload),
+    read: Boolean(item.read ?? item.is_read ?? false),
+    createdAt: String(item.created_at ?? new Date().toISOString()),
+  };
+}
+
 export async function getNotifications(): Promise<AdminNotification[]> {
   if (USE_MOCK) {
     await delay(150);
@@ -1014,22 +1059,41 @@ export async function getNotifications(): Promise<AdminNotification[]> {
   try {
     const { data } = await apiClient.get<ApiListResponse<Record<string, unknown>>>(
       `${ADMIN}/notifications`,
-      { params: { per_page: 20 } },
+      { params: { per_page: 20, read: "all" } },
     );
-    return (data.data ?? []).map((item) => ({
-      id: String(item.id ?? ""),
-      type: (String(item.type ?? "order") as AdminNotification["type"]),
-      titleKey: String(item.title_key ?? item.title ?? "items.generic"),
-      descriptionKey: item.description_key ? String(item.description_key) : undefined,
-      titleParams: (item.title_params as Record<string, string | number> | undefined) ?? undefined,
-      href: String(item.href ?? "/"),
-      read: Boolean(item.read ?? item.is_read ?? false),
-      createdAt: String(item.created_at ?? new Date().toISOString()),
-    }));
+    return (data.data ?? [])
+      .map(mapNotification)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   } catch {
     return [...mockNotifications].sort(
       (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
     );
+  }
+}
+
+export async function getNotificationStats(): Promise<{
+  unreadCount: number;
+  totalCount: number;
+}> {
+  if (USE_MOCK) {
+    await delay(80);
+    const unreadCount = mockNotifications.filter((n) => !n.read).length;
+    return { unreadCount, totalCount: mockNotifications.length };
+  }
+  try {
+    const { data } = await apiClient.get<{ unread_count?: number; total_count?: number }>(
+      `${ADMIN}/notifications/stats`,
+    );
+    return {
+      unreadCount: Number(data.unread_count ?? 0),
+      totalCount: Number(data.total_count ?? 0),
+    };
+  } catch {
+    const list = await getNotifications();
+    return {
+      unreadCount: list.filter((n) => !n.read).length,
+      totalCount: list.length,
+    };
   }
 }
 
@@ -1056,7 +1120,7 @@ export async function markAllNotificationsRead(): Promise<void> {
     return;
   }
   try {
-    await apiClient.post(`${ADMIN}/notifications/read-all`);
+    await apiClient.patch(`${ADMIN}/notifications/read-all`);
   } catch {
     /* no-op when endpoint is unavailable */
   }

@@ -1395,6 +1395,18 @@
     "editProductTitle": "ویرایش محصول",
     "reviews": {
       "searchPlaceholder": "جستجوی نظرات...",
+      "pendingHint": "{count} نظر در انتظار بررسی",
+      "hasReply": "پاسخ ادمین ثبت شده",
+      "reply": "پاسخ",
+      "replyTitle": "پاسخ به نظر",
+      "replyLabel": "پاسخ شما",
+      "replyPlaceholder": "پاسخ ادمین را بنویسید...",
+      "sendReply": "ارسال پاسخ",
+      "replySent": "پاسخ ارسال شد",
+      "previousReplies": "پاسخ‌های قبلی",
+      "filters": {
+        "allStatus": "همه وضعیت‌ها"
+      },
       "columns": {
         "user": "کاربر",
         "product": "محصول",
@@ -1432,6 +1444,7 @@
         "category": "دسته‌بندی",
         "brand": "برند",
         "price": "قیمت",
+        "rating": "امتیاز",
         "stock": "موجودی",
         "status": "وضعیت",
         "actions": "عملیات"

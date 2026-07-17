@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { ColumnDef } from "@tanstack/react-table";
-import { Eye, Pencil, Search, Trash2 } from "lucide-react";
+import { Eye, Pencil, Search, Star, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { PageTransition } from "@/components/shared/page-transition";
 import { PageHeader, StatusBadge } from "@/components/shared/page-elements";
@@ -32,8 +32,41 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { getProducts, getCategories, deleteProduct } from "@/services/data.service";
+import { getProductRatingSummaries } from "@/services/product.service";
 import { formatCurrency } from "@/lib/utils";
 import type { Product } from "@/types";
+
+function ProductRatingCell({
+  average,
+  count,
+}: {
+  average?: number;
+  count?: number;
+}) {
+  if (!count || !average) {
+    return <span className="text-xs text-muted-foreground">—</span>;
+  }
+  const filled = Math.round(average);
+  return (
+    <div className="flex flex-col gap-0.5" title={`${average}/5 · ${count}`}>
+      <div className="flex items-center gap-0.5">
+        {Array.from({ length: 5 }, (_, i) => (
+          <Star
+            key={i}
+            className={
+              i < filled
+                ? "size-3.5 fill-amber-400 text-amber-400"
+                : "size-3.5 text-muted-foreground/35"
+            }
+          />
+        ))}
+      </div>
+      <span className="text-[11px] tabular-nums text-muted-foreground">
+        {average} ({count})
+      </span>
+    </div>
+  );
+}
 
 export default function ProductsPage() {
   const t = useTranslations("products");
@@ -58,6 +91,11 @@ export default function ProductsPage() {
         category: category !== "all" ? category : undefined,
         status: status !== "all" ? status : undefined,
       }),
+  });
+
+  const { data: ratingSummaries = {} } = useQuery({
+    queryKey: ["product-rating-summaries"],
+    queryFn: getProductRatingSummaries,
   });
 
   const deleteMutation = useMutation({
@@ -100,6 +138,16 @@ export default function ProductsPage() {
       cell: ({ row }) => (
         <span className="tabular-nums font-medium">{formatCurrency(row.original.price)}</span>
       ),
+    },
+    {
+      id: "rating",
+      header: t("table.columns.rating"),
+      cell: ({ row }) => {
+        const summary = ratingSummaries[row.original.id];
+        return (
+          <ProductRatingCell average={summary?.average} count={summary?.count} />
+        );
+      },
     },
     {
       accessorKey: "status",

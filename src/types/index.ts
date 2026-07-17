@@ -206,10 +206,20 @@ export type AdminNotificationType =
 export interface AdminNotification {
   id: string;
   type: AdminNotificationType;
-  titleKey: string;
+  /** i18n key under common.notification (mock / legacy) */
+  titleKey?: string;
+  /** Plain title from API */
+  title?: string;
   descriptionKey?: string;
+  /** Plain body from API */
+  body?: string;
   titleParams?: Record<string, string | number>;
   href: string;
   read: boolean;
   createdAt: string;
+}
+
+export interface NotificationStats {
+  unreadCount: number;
+  totalCount: number;
 }

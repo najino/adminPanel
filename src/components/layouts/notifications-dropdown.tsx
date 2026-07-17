@@ -22,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
+  getNotificationStats,
   getNotifications,
   markAllNotificationsRead,
   markNotificationRead,
@@ -52,17 +53,22 @@ function notificationTitle(
   item: AdminNotification,
   t: ReturnType<typeof useTranslations>,
 ): string {
-  try {
-    return t(item.titleKey as never, item.titleParams as never);
-  } catch {
-    return item.titleKey;
+  if (item.title?.trim()) return item.title;
+  if (item.titleKey) {
+    try {
+      return t(item.titleKey as never, item.titleParams as never);
+    } catch {
+      return item.titleKey;
+    }
   }
+  return t("items.generic");
 }
 
 function notificationDescription(
   item: AdminNotification,
   t: ReturnType<typeof useTranslations>,
 ): string | null {
+  if (item.body?.trim()) return item.body;
   if (!item.descriptionKey) return null;
   try {
     return t(item.descriptionKey as never);
@@ -83,16 +89,28 @@ export function NotificationsDropdown() {
     refetchInterval: 60_000,
   });
 
-  const unreadCount = notifications.filter((n) => !n.read).length;
+  const { data: stats } = useQuery({
+    queryKey: ["notifications-stats"],
+    queryFn: getNotificationStats,
+    refetchInterval: 60_000,
+  });
+
+  const unreadCount =
+    stats?.unreadCount ?? notifications.filter((n) => !n.read).length;
+
+  const invalidate = () => {
+    queryClient.invalidateQueries({ queryKey: ["notifications"] });
+    queryClient.invalidateQueries({ queryKey: ["notifications-stats"] });
+  };
 
   const markReadMutation = useMutation({
     mutationFn: markNotificationRead,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["notifications"] }),
+    onSuccess: invalidate,
   });
 
   const markAllMutation = useMutation({
     mutationFn: markAllNotificationsRead,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["notifications"] }),
+    onSuccess: invalidate,
   });
 
   const handleOpen = (item: AdminNotification) => {

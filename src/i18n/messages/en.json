@@ -1388,6 +1388,18 @@
     "editProductTitle": "Edit Product",
     "reviews": {
       "searchPlaceholder": "Search comments...",
+      "pendingHint": "{count} reviews waiting for moderation",
+      "hasReply": "Admin replied",
+      "reply": "Reply",
+      "replyTitle": "Reply to review",
+      "replyLabel": "Your reply",
+      "replyPlaceholder": "Write an admin reply...",
+      "sendReply": "Send reply",
+      "replySent": "Reply sent",
+      "previousReplies": "Previous replies",
+      "filters": {
+        "allStatus": "All statuses"
+      },
       "columns": {
         "user": "User",
         "product": "Product",
@@ -1425,6 +1437,7 @@
         "category": "Category",
         "brand": "Brand",
         "price": "Price",
+        "rating": "Rating",
         "stock": "Stock",
         "status": "Status",
         "actions": "Actions"
