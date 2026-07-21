@@ -991,6 +991,19 @@ export async function updateStoreStyle(payload: unknown) {
   };
 }
 
+function resolveMediaUrl(url: string): string {
+  const trimmed = url.trim();
+  if (!trimmed) return trimmed;
+  if (/^(https?:|blob:|data:)/i.test(trimmed)) return trimmed;
+  const base = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
+  try {
+    const origin = new URL(base).origin;
+    return trimmed.startsWith("/") ? `${origin}${trimmed}` : `${origin}/${trimmed}`;
+  } catch {
+    return trimmed;
+  }
+}
+
 export async function uploadFile(file: File): Promise<{ url: string }> {
   if (USE_MOCK) {
     await delay(800);
@@ -998,10 +1011,10 @@ export async function uploadFile(file: File): Promise<{ url: string }> {
   }
   const formData = new FormData();
   formData.append("file", file);
-  const { data } = await apiClient.post<{ url: string }>(`${ADMIN}/uploads`, formData, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
-  return data;
+  const { data } = await apiClient.post<Record<string, unknown>>(`${ADMIN}/uploads`, formData);
+  const raw = String(data.url ?? data.path ?? data.file_url ?? "");
+  if (!raw) throw new Error("Upload response missing url");
+  return { url: resolveMediaUrl(raw) };
 }
 
 function notificationHrefFromType(

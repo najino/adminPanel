@@ -159,15 +159,42 @@ function cartesianSkus(
   });
 }
 
+function resolveMediaUrl(url: string): string {
+  const trimmed = url.trim();
+  if (!trimmed) return trimmed;
+  if (/^(https?:|blob:|data:)/i.test(trimmed)) return trimmed;
+  const base = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
+  try {
+    const origin = new URL(base).origin;
+    return trimmed.startsWith("/") ? `${origin}${trimmed}` : `${origin}/${trimmed}`;
+  } catch {
+    return trimmed;
+  }
+}
+
+function mapAdminBrand(item: Record<string, unknown>): AdminBrand {
+  const logoRaw = String(
+    item.logo_url ?? item.logoUrl ?? item.logo ?? item.image_url ?? item.imageUrl ?? "",
+  );
+  return {
+    id: String(item.id ?? ""),
+    name: String(item.name ?? ""),
+    slug: item.slug ? String(item.slug) : undefined,
+    description: item.description ? String(item.description) : undefined,
+    logo_url: logoRaw ? resolveMediaUrl(logoRaw) : undefined,
+    is_active: item.is_active === undefined ? true : Boolean(item.is_active),
+  };
+}
+
 export async function getAdminBrands(): Promise<AdminBrand[]> {
   if (USE_MOCK) {
     await delay();
     return mockBrands.filter((b) => b.is_active !== false);
   }
-  const { data } = await apiClient.get<PaginatedData<AdminBrand>>(`${ADMIN}/brands`, {
+  const { data } = await apiClient.get<PaginatedData<Record<string, unknown>>>(`${ADMIN}/brands`, {
     params: { per_page: 100 },
   });
-  return data.data;
+  return (data.data ?? []).map(mapAdminBrand);
 }
 
 export async function createAdminBrand(payload: CreateBrandPayload): Promise<AdminBrand> {
@@ -184,14 +211,14 @@ export async function createAdminBrand(payload: CreateBrandPayload): Promise<Adm
     mockBrands.push(brand);
     return brand;
   }
-  const { data } = await apiClient.post<AdminBrand>(`${ADMIN}/brands`, {
+  const { data } = await apiClient.post<Record<string, unknown>>(`${ADMIN}/brands`, {
     name: payload.name,
     slug: payload.slug || slugify(payload.name),
     description: payload.description,
     logo_url: payload.logo_url,
     is_active: payload.is_active ?? true,
   });
-  return data;
+  return mapAdminBrand(data);
 }
 
 export async function updateAdminBrand(id: string, payload: UpdateBrandPayload): Promise<AdminBrand> {
@@ -202,8 +229,8 @@ export async function updateAdminBrand(id: string, payload: UpdateBrandPayload):
     mockBrands[idx] = { ...mockBrands[idx], ...payload };
     return mockBrands[idx];
   }
-  const { data } = await apiClient.put<AdminBrand>(`${ADMIN}/brands/${id}`, payload);
-  return data;
+  const { data } = await apiClient.put<Record<string, unknown>>(`${ADMIN}/brands/${id}`, payload);
+  return mapAdminBrand(data);
 }
 
 export async function deleteAdminBrand(id: string): Promise<void> {
@@ -370,10 +397,15 @@ export async function uploadProductImage(file: File): Promise<UploadResponse> {
   }
   const formData = new FormData();
   formData.append("file", file);
-  const { data } = await apiClient.post<UploadResponse>(`${ADMIN}/uploads`, formData, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
-  return data;
+  const { data } = await apiClient.post<Record<string, unknown>>(`${ADMIN}/uploads`, formData);
+  const raw = String(data.url ?? data.path ?? data.file_url ?? "");
+  if (!raw) throw new Error("Upload response missing url");
+  return {
+    url: resolveMediaUrl(raw),
+    filename: data.filename ? String(data.filename) : file.name,
+    content_type: data.content_type ? String(data.content_type) : file.type,
+    size: typeof data.size === "number" ? data.size : file.size,
+  };
 }
 
 export async function createAdminProduct(

@@ -45,6 +45,14 @@ apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+  // Let the browser/axios set multipart boundary — do not keep application/json
+  if (typeof FormData !== "undefined" && config.data instanceof FormData && config.headers) {
+    if (typeof config.headers.delete === "function") {
+      config.headers.delete("Content-Type");
+    } else {
+      delete (config.headers as Record<string, unknown>)["Content-Type"];
+    }
+  }
   return config;
 });
 

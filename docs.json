@@ -1,5 +1,7 @@
 {
-    "schemes": ["https"],
+    "schemes": [
+        "https"
+    ],
     "swagger": "2.0",
     "info": {
         "description": "REST API for the eCommerce admin panel and public storefront. Supports JWT authentication with role-based access (admin, customer). Store endpoints under /api/v1/store are public; account routes require a customer token.",
@@ -6394,7 +6396,7 @@
                         "BearerAuth": []
                     }
                 ],
-                "description": "Returns all FAQ Q\u0026A items.",
+                "description": "Returns all FAQ Q&A items.",
                 "produces": [
                     "application/json"
                 ],
@@ -6429,7 +6431,7 @@
                         "BearerAuth": []
                     }
                 ],
-                "description": "Creates an FAQ Q\u0026A item.",
+                "description": "Creates an FAQ Q&A item.",
                 "consumes": [
                     "application/json"
                 ],
@@ -6486,7 +6488,7 @@
                         "BearerAuth": []
                     }
                 ],
-                "description": "Updates an FAQ Q\u0026A item.",
+                "description": "Updates an FAQ Q&A item.",
                 "consumes": [
                     "application/json"
                 ],
@@ -6554,7 +6556,7 @@
                         "BearerAuth": []
                     }
                 ],
-                "description": "Deletes an FAQ Q\u0026A item.",
+                "description": "Deletes an FAQ Q&A item.",
                 "produces": [
                     "application/json"
                 ],
@@ -11964,6 +11966,11 @@
                 "slug": {
                     "type": "string",
                     "maxLength": 100
+                },
+                "logo_url": {
+                    "type": "string",
+                    "maxLength": 500,
+                    "description": "Public URL of brand logo image"
                 }
             }
         },
@@ -13081,6 +13088,11 @@
                 "slug": {
                     "type": "string",
                     "maxLength": 100
+                },
+                "logo_url": {
+                    "type": "string",
+                    "maxLength": 500,
+                    "description": "Public URL of brand logo image"
                 }
             }
         },
@@ -13987,6 +13999,9 @@
                     "type": "string"
                 },
                 "updated_at": {
+                    "type": "string"
+                },
+                "logo_url": {
                     "type": "string"
                 }
             }
