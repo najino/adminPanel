@@ -172,17 +172,39 @@ function resolveMediaUrl(url: string): string {
   }
 }
 
+function unwrapRecord(payload: unknown): Record<string, unknown> {
+  if (!payload || typeof payload !== "object") return {};
+  const obj = payload as Record<string, unknown>;
+  if (obj.data && typeof obj.data === "object" && !Array.isArray(obj.data)) {
+    return obj.data as Record<string, unknown>;
+  }
+  return obj;
+}
+
 function mapAdminBrand(item: Record<string, unknown>): AdminBrand {
   const logoRaw = String(
-    item.logo_url ?? item.logoUrl ?? item.logo ?? item.image_url ?? item.imageUrl ?? "",
+    item.logo_url ??
+      item.logoUrl ??
+      item.LogoURL ??
+      item.logo ??
+      item.image_url ??
+      item.imageUrl ??
+      item.image ??
+      "",
   );
   return {
-    id: String(item.id ?? ""),
-    name: String(item.name ?? ""),
-    slug: item.slug ? String(item.slug) : undefined,
-    description: item.description ? String(item.description) : undefined,
+    id: String(item.id ?? item.ID ?? ""),
+    name: String(item.name ?? item.Name ?? ""),
+    slug: item.slug || item.Slug ? String(item.slug ?? item.Slug) : undefined,
+    description:
+      item.description || item.Description
+        ? String(item.description ?? item.Description)
+        : undefined,
     logo_url: logoRaw ? resolveMediaUrl(logoRaw) : undefined,
-    is_active: item.is_active === undefined ? true : Boolean(item.is_active),
+    is_active:
+      item.is_active === undefined && item.IsActive === undefined
+        ? true
+        : Boolean(item.is_active ?? item.IsActive),
   };
 }
 
@@ -194,7 +216,38 @@ export async function getAdminBrands(): Promise<AdminBrand[]> {
   const { data } = await apiClient.get<PaginatedData<Record<string, unknown>>>(`${ADMIN}/brands`, {
     params: { per_page: 100 },
   });
-  return (data.data ?? []).map(mapAdminBrand);
+  const brands = (data.data ?? []).map(mapAdminBrand);
+
+  // Admin BrandResponse historically omitted logo_url; store brands include it.
+  const missingLogo = brands.some((b) => !b.logo_url);
+  if (!missingLogo) return brands;
+
+  try {
+    const storeRes = await apiClient.get<{ data?: Record<string, unknown>[] } | Record<string, unknown>[]>(
+      "/store/brands",
+    );
+    const storePayload = storeRes.data;
+    const storeRows = Array.isArray(storePayload)
+      ? storePayload
+      : Array.isArray(storePayload?.data)
+        ? storePayload.data
+        : [];
+    const byId = new Map<string, string>();
+    const bySlug = new Map<string, string>();
+    for (const row of storeRows) {
+      const mapped = mapAdminBrand(row);
+      if (!mapped.logo_url) continue;
+      if (mapped.id) byId.set(mapped.id, mapped.logo_url);
+      if (mapped.slug) bySlug.set(mapped.slug, mapped.logo_url);
+    }
+    return brands.map((brand) => {
+      if (brand.logo_url) return brand;
+      const logo = byId.get(brand.id) ?? (brand.slug ? bySlug.get(brand.slug) : undefined);
+      return logo ? { ...brand, logo_url: logo } : brand;
+    });
+  } catch {
+    return brands;
+  }
 }
 
 export async function createAdminBrand(payload: CreateBrandPayload): Promise<AdminBrand> {
@@ -211,14 +264,24 @@ export async function createAdminBrand(payload: CreateBrandPayload): Promise<Adm
     mockBrands.push(brand);
     return brand;
   }
-  const { data } = await apiClient.post<Record<string, unknown>>(`${ADMIN}/brands`, {
+  const body: Record<string, unknown> = {
     name: payload.name,
     slug: payload.slug || slugify(payload.name),
-    description: payload.description,
-    logo_url: payload.logo_url,
+    description: payload.description ?? "",
     is_active: payload.is_active ?? true,
-  });
-  return mapAdminBrand(data);
+  };
+  // Always send logo_url when present so backends that support it can persist it.
+  if (payload.logo_url) {
+    body.logo_url = payload.logo_url;
+    body.logo = payload.logo_url;
+    body.image_url = payload.logo_url;
+  }
+  const { data } = await apiClient.post(`${ADMIN}/brands`, body);
+  const mapped = mapAdminBrand(unwrapRecord(data));
+  if (!mapped.logo_url && payload.logo_url) {
+    mapped.logo_url = payload.logo_url;
+  }
+  return mapped;
 }
 
 export async function updateAdminBrand(id: string, payload: UpdateBrandPayload): Promise<AdminBrand> {
@@ -229,8 +292,18 @@ export async function updateAdminBrand(id: string, payload: UpdateBrandPayload):
     mockBrands[idx] = { ...mockBrands[idx], ...payload };
     return mockBrands[idx];
   }
-  const { data } = await apiClient.put<Record<string, unknown>>(`${ADMIN}/brands/${id}`, payload);
-  return mapAdminBrand(data);
+  const body: Record<string, unknown> = { ...payload };
+  if (payload.logo_url) {
+    body.logo_url = payload.logo_url;
+    body.logo = payload.logo_url;
+    body.image_url = payload.logo_url;
+  }
+  const { data } = await apiClient.put(`${ADMIN}/brands/${id}`, body);
+  const mapped = mapAdminBrand(unwrapRecord(data));
+  if (!mapped.logo_url && payload.logo_url) {
+    mapped.logo_url = payload.logo_url;
+  }
+  return mapped;
 }
 
 export async function deleteAdminBrand(id: string): Promise<void> {
