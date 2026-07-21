@@ -77,10 +77,25 @@ export default function ProductBrandsPage() {
 
   const invalidate = () => queryClient.invalidateQueries({ queryKey: ["admin-brands"] });
 
+  const upsertBrandInCache = (brand: AdminBrand) => {
+    queryClient.setQueryData<AdminBrand[]>(["admin-brands"], (prev) => {
+      const list = prev ?? [];
+      const idx = list.findIndex((b) => b.id === brand.id);
+      if (idx === -1) return [brand, ...list];
+      const next = [...list];
+      next[idx] = {
+        ...next[idx],
+        ...brand,
+        logo_url: brand.logo_url || next[idx].logo_url,
+      };
+      return next;
+    });
+  };
+
   const createMutation = useMutation({
     mutationFn: createAdminBrand,
-    onSuccess: () => {
-      invalidate();
+    onSuccess: (brand) => {
+      upsertBrandInCache(brand);
       closeDialog();
       toast.success(t("created"));
     },
@@ -90,8 +105,8 @@ export default function ProductBrandsPage() {
   const updateMutation = useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: Parameters<typeof updateAdminBrand>[1] }) =>
       updateAdminBrand(id, payload),
-    onSuccess: () => {
-      invalidate();
+    onSuccess: (brand) => {
+      upsertBrandInCache(brand);
       closeDialog();
       toast.success(t("updated"));
     },
@@ -162,19 +177,29 @@ export default function ProductBrandsPage() {
     const name = form.name.trim();
     if (!name) return;
 
-    const payload = {
+    const logo_url = form.logo_url.trim();
+
+    if (editingId) {
+      updateMutation.mutate({
+        id: editingId,
+        payload: {
+          name,
+          slug: form.slug.trim() || slugify(name),
+          description: form.description.trim() || undefined,
+          logo_url,
+          is_active: form.is_active,
+        },
+      });
+      return;
+    }
+
+    createMutation.mutate({
       name,
       slug: form.slug.trim() || slugify(name),
       description: form.description.trim() || undefined,
-      logo_url: form.logo_url.trim() || undefined,
+      logo_url: logo_url || undefined,
       is_active: form.is_active,
-    };
-
-    if (editingId) {
-      updateMutation.mutate({ id: editingId, payload });
-    } else {
-      createMutation.mutate(payload);
-    }
+    });
   };
 
   const columns: ColumnDef<AdminBrand>[] = [

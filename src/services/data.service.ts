@@ -1012,8 +1012,13 @@ export async function uploadFile(file: File): Promise<{ url: string }> {
   const formData = new FormData();
   formData.append("file", file);
   const { data } = await apiClient.post<Record<string, unknown>>(`${ADMIN}/uploads`, formData);
-  const raw = String(data.url ?? data.path ?? data.file_url ?? "");
+  const payload =
+    data && typeof data === "object" && data.data && typeof data.data === "object" && !Array.isArray(data.data)
+      ? (data.data as Record<string, unknown>)
+      : data;
+  const raw = String(payload.url ?? payload.path ?? payload.file_url ?? "").trim();
   if (!raw) throw new Error("Upload response missing url");
+  // Keep API-relative paths as returned; resolve for browser display.
   return { url: resolveMediaUrl(raw) };
 }
 
