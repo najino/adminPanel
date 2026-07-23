@@ -609,8 +609,80 @@ export async function getAdminProduct(id: string): Promise<AdminProductResponse>
     if (!product) throw new Error("Product not found");
     return mockProductToAdmin(product);
   }
-  const { data } = await apiClient.get<AdminProductResponse>(`${ADMIN}/products/${id}`);
-  return data;
+  const { data } = await apiClient.get<Record<string, unknown>>(`${ADMIN}/products/${id}`);
+  const raw = unwrapRecord(data);
+  if (!raw.id && !raw.ID) throw new Error("Product not found");
+
+  const inventoryRaw =
+    raw.inventory && typeof raw.inventory === "object"
+      ? (raw.inventory as Record<string, unknown>)
+      : undefined;
+  const attributesRaw = Array.isArray(raw.attributes) ? raw.attributes : [];
+  const imagesRaw = Array.isArray(raw.images) ? raw.images : [];
+  const skusRaw = Array.isArray(raw.skus) ? raw.skus : [];
+
+  return {
+    id: String(raw.id ?? raw.ID ?? id),
+    name: String(raw.name ?? raw.Name ?? ""),
+    slug: raw.slug ? String(raw.slug) : undefined,
+    description: raw.description ? String(raw.description) : undefined,
+    short_description: raw.short_description ? String(raw.short_description) : undefined,
+    price: Number(raw.price ?? 0),
+    sale_price:
+      raw.sale_price === null || raw.sale_price === undefined
+        ? undefined
+        : Number(raw.sale_price),
+    brand: raw.brand ? String(raw.brand) : undefined,
+    category_id: raw.category_id ? String(raw.category_id) : undefined,
+    status: (String(raw.status ?? "draft") as AdminProductStatus),
+    is_featured: Boolean(raw.is_featured),
+    attributes: attributesRaw.map((item, i) => {
+      const attr = (item ?? {}) as Record<string, unknown>;
+      const values = Array.isArray(attr.values)
+        ? attr.values.map(String)
+        : Array.isArray(attr.Values)
+          ? (attr.Values as unknown[]).map(String)
+          : [];
+      return {
+        id: String(attr.id ?? attr.ID ?? `attr-${i}`),
+        name: String(attr.name ?? attr.Name ?? ""),
+        values,
+      };
+    }),
+    images: imagesRaw.map((item, i) => {
+      const img = (item ?? {}) as Record<string, unknown>;
+      return {
+        id: String(img.id ?? img.ID ?? `img-${i}`),
+        url: resolveMediaUrl(String(img.url ?? img.URL ?? "")),
+        alt_text: img.alt_text ? String(img.alt_text) : undefined,
+        sort_order: Number(img.sort_order ?? i),
+      };
+    }),
+    inventory: inventoryRaw
+      ? {
+          quantity: Number(inventoryRaw.quantity ?? 0),
+          low_stock_threshold:
+            inventoryRaw.low_stock_threshold === undefined
+              ? undefined
+              : Number(inventoryRaw.low_stock_threshold),
+          is_low_stock: Boolean(inventoryRaw.is_low_stock),
+          is_out_of_stock: Boolean(inventoryRaw.is_out_of_stock),
+        }
+      : undefined,
+    skus: skusRaw.map((item, i) => {
+      const sku = (item ?? {}) as Record<string, unknown>;
+      return {
+        id: String(sku.id ?? sku.ID ?? `sku-${i}`),
+        code: String(sku.code ?? sku.Code ?? ""),
+        attributes:
+          sku.attributes && typeof sku.attributes === "object"
+            ? (sku.attributes as Record<string, string>)
+            : undefined,
+      };
+    }),
+    created_at: raw.created_at ? String(raw.created_at) : undefined,
+    updated_at: raw.updated_at ? String(raw.updated_at) : undefined,
+  };
 }
 
 export async function updateAdminProduct(
@@ -664,11 +736,23 @@ export async function updateAdminProduct(
     return mockProductToAdmin(mockProducts[idx]);
   }
 
-  const { inventory, ...productPayload } = payload;
-  const { data } = await apiClient.put<AdminProductResponse>(
-    `${ADMIN}/products/${id}`,
-    productPayload,
-  );
+  // UpdateProductRequest (docs.json) — inventory is a separate PATCH.
+  const { inventory, ...rest } = payload;
+  const productPayload: Record<string, unknown> = {};
+  if (rest.name !== undefined) productPayload.name = rest.name;
+  if (rest.slug !== undefined) productPayload.slug = rest.slug;
+  if (rest.short_description !== undefined) productPayload.short_description = rest.short_description;
+  if (rest.description !== undefined) productPayload.description = rest.description;
+  if (rest.price !== undefined) productPayload.price = rest.price;
+  if (rest.sale_price !== undefined) productPayload.sale_price = rest.sale_price;
+  if (rest.category_id !== undefined) productPayload.category_id = rest.category_id;
+  if (rest.brand !== undefined) productPayload.brand = rest.brand;
+  if (rest.status !== undefined) productPayload.status = rest.status;
+  if (rest.is_featured !== undefined) productPayload.is_featured = rest.is_featured;
+  if (rest.attributes !== undefined) productPayload.attributes = rest.attributes;
+  if (rest.images !== undefined) productPayload.images = rest.images;
+
+  await apiClient.put(`${ADMIN}/products/${id}`, productPayload);
 
   if (inventory) {
     await apiClient.patch(`${ADMIN}/products/${id}/inventory`, {
@@ -676,10 +760,9 @@ export async function updateAdminProduct(
       low_stock_threshold: inventory.low_stock_threshold,
       adjustment_reason: "admin_panel_update",
     });
-    return getAdminProduct(id);
   }
 
-  return data;
+  return getAdminProduct(id);
 }
 
 export async function getProductReviews(params?: {

@@ -41,13 +41,20 @@ import {
 import type { AdminProductStatus, ProductImagePayload } from "@/types/api/products";
 import { cn } from "@/lib/utils";
 
+const optionalNonNegativeNumber = z.preprocess((value) => {
+  if (value === "" || value === null || value === undefined) return undefined;
+  if (typeof value === "number") return Number.isFinite(value) ? value : undefined;
+  const parsed = Number(String(value).replace(/,/g, "").trim());
+  return Number.isFinite(parsed) ? parsed : undefined;
+}, z.number().min(0).optional());
+
 const productSchema = z.object({
   name: z.string().min(1).max(300),
   slug: z.string().max(300).optional(),
   short_description: z.string().max(500).optional(),
   description: z.string().optional(),
   price: z.coerce.number().min(0),
-  sale_price: z.number().min(0).optional(),
+  sale_price: optionalNonNegativeNumber,
   category_id: z.string().optional(),
   brand: z.string().max(100).optional(),
   status: z.enum(["draft", "active", "archived"]),
@@ -155,11 +162,9 @@ export default function CreateProductPage() {
   };
 
   const onSubmit = (data: ProductForm) => {
-    const invalidAttributes = attributeRows.filter((r) => r.values.length === 0);
-    if (invalidAttributes.length > 0) {
-      toast.error(t("form.attributes.valuesRequired"));
-      return;
-    }
+    const attributes = attributeRows
+      .filter((r) => r.name.trim() && Array.isArray(r.values) && r.values.length > 0)
+      .map((r) => ({ name: r.name, values: r.values }));
 
     mutation.mutate({
       name: data.name,
@@ -173,10 +178,7 @@ export default function CreateProductPage() {
       brand: data.brand || undefined,
       status: data.status as AdminProductStatus,
       is_featured: data.is_featured,
-      attributes:
-        attributeRows.length > 0
-          ? attributeRows.map((r) => ({ name: r.name, values: r.values }))
-          : undefined,
+      attributes: attributes.length > 0 ? attributes : undefined,
       images: images.length > 0 ? images : undefined,
       inventory: {
         quantity: data.quantity,

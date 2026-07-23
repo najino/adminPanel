@@ -43,13 +43,20 @@ import {
 import type { AdminProductStatus, ProductImagePayload } from "@/types/api/products";
 import { cn } from "@/lib/utils";
 
+const optionalNonNegativeNumber = z.preprocess((value) => {
+  if (value === "" || value === null || value === undefined) return undefined;
+  if (typeof value === "number") return Number.isFinite(value) ? value : undefined;
+  const parsed = Number(String(value).replace(/,/g, "").trim());
+  return Number.isFinite(parsed) ? parsed : undefined;
+}, z.number().min(0).optional());
+
 const productSchema = z.object({
   name: z.string().min(1).max(300),
   slug: z.string().max(300).optional(),
   short_description: z.string().max(500).optional(),
   description: z.string().optional(),
   price: z.coerce.number().min(0),
-  sale_price: z.number().min(0).optional(),
+  sale_price: optionalNonNegativeNumber,
   category_id: z.string().optional(),
   brand: z.string().max(100).optional(),
   status: z.enum(["draft", "active", "archived"]),
@@ -132,8 +139,11 @@ export default function EditProductPage() {
       slug: product.slug ?? "",
       short_description: product.short_description ?? "",
       description: product.description ?? "",
-      price: product.price,
-      sale_price: product.sale_price,
+      price: Number(product.price) || 0,
+      sale_price:
+        product.sale_price === null || product.sale_price === undefined
+          ? undefined
+          : Number(product.sale_price),
       category_id: product.category_id ?? "",
       brand: product.brand ?? "",
       status: product.status,
@@ -152,16 +162,18 @@ export default function EditProductPage() {
   }, [product, hydrated, reset]);
 
   useEffect(() => {
-    if (!product || attributesHydrated || catalogAttributes.length === 0) return;
+    if (!product || attributesHydrated) return;
+    // Allow hydrating even when catalog is still empty (name/values come from product).
     setAttributeRows(
       (product.attributes ?? []).map((a) => {
         const catalog = catalogAttributes.find(
           (c) => c.name.toLowerCase() === a.name.toLowerCase() || c.id === a.id,
         );
+        const rawValues = Array.isArray(a.values) ? a.values : [];
         return {
           attributeId: catalog?.id ?? a.id,
           name: a.name,
-          values: a.values,
+          values: rawValues.map(String).filter(Boolean),
         };
       }),
     );
@@ -218,18 +230,21 @@ export default function EditProductPage() {
     );
   };
 
+  const onInvalid = () => {
+    toast.error(t("form.actions.updateFailed"));
+  };
+
   const onSubmit = (data: ProductForm) => {
-    const invalidAttributes = attributeRows.filter((r) => r.values.length === 0);
-    if (invalidAttributes.length > 0) {
-      toast.error(t("form.attributes.valuesRequired"));
-      return;
-    }
+    // Skip incomplete attribute rows instead of blocking the whole save.
+    const attributes = attributeRows
+      .filter((r) => r.name.trim() && Array.isArray(r.values) && r.values.length > 0)
+      .map((r) => ({ name: r.name, values: r.values }));
 
     mutation.mutate({
       name: data.name,
-      slug: data.slug || undefined,
-      short_description: data.short_description || undefined,
-      description: data.description || undefined,
+      slug: data.slug?.trim() || undefined,
+      short_description: data.short_description?.trim() || undefined,
+      description: data.description?.trim() || undefined,
       price: data.price,
       sale_price:
         data.sale_price === undefined || Number.isNaN(data.sale_price)
@@ -239,10 +254,7 @@ export default function EditProductPage() {
       brand: data.brand || undefined,
       status: data.status as AdminProductStatus,
       is_featured: data.is_featured,
-      attributes:
-        attributeRows.length > 0
-          ? attributeRows.map((r) => ({ name: r.name, values: r.values }))
-          : [],
+      attributes,
       images: images.length > 0 ? images : [],
       inventory: {
         quantity: data.quantity,
@@ -282,7 +294,7 @@ export default function EditProductPage() {
     <PageTransition>
       <PageHeader title={t("editProductTitle")} />
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+      <form onSubmit={handleSubmit(onSubmit, onInvalid)} className="flex flex-col gap-6">
         <SectionCard title={t("form.information.title")}>
           <div className="grid gap-4 sm:grid-cols-2">
             <FormField
