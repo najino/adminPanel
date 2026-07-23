@@ -41,20 +41,13 @@ import {
 import type { AdminProductStatus, ProductImagePayload } from "@/types/api/products";
 import { cn } from "@/lib/utils";
 
-const optionalNonNegativeNumber = z.preprocess((value) => {
-  if (value === "" || value === null || value === undefined) return undefined;
-  if (typeof value === "number") return Number.isFinite(value) ? value : undefined;
-  const parsed = Number(String(value).replace(/,/g, "").trim());
-  return Number.isFinite(parsed) ? parsed : undefined;
-}, z.number().min(0).optional());
-
 const productSchema = z.object({
   name: z.string().min(1).max(300),
   slug: z.string().max(300).optional(),
   short_description: z.string().max(500).optional(),
   description: z.string().optional(),
   price: z.coerce.number().min(0),
-  sale_price: optionalNonNegativeNumber,
+  sale_price: z.number().min(0).optional(),
   category_id: z.string().optional(),
   brand: z.string().max(100).optional(),
   status: z.enum(["draft", "active", "archived"]),
@@ -301,7 +294,11 @@ export default function CreateProductPage() {
                 autoComplete="off"
                 className="h-10 tabular-nums"
                 {...register("sale_price", {
-                  setValueAs: (v) => (v === "" || v === null ? undefined : parseFloat(v)),
+                  setValueAs: (v) => {
+                    if (v === "" || v === null || v === undefined) return undefined;
+                    const n = typeof v === "number" ? v : parseFloat(String(v).replace(/,/g, ""));
+                    return Number.isFinite(n) ? n : undefined;
+                  },
                 })}
               />
             </FormField>
