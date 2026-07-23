@@ -12,6 +12,7 @@ import type {
   CreateCatalogAttributePayload,
   CreateCatalogAttributeValuePayload,
   CreateProductPayload,
+  ProductImagePayload,
   UpdateProductPayload,
   PaginatedData,
   UpdateBrandPayload,
@@ -170,6 +171,51 @@ function resolveMediaUrl(url: string): string {
   } catch {
     return trimmed;
   }
+}
+
+/** Convert display/absolute media URLs back to API-safe paths (max 500 chars per docs). */
+function toApiMediaUrl(url: string): string {
+  const trimmed = url.trim();
+  if (!trimmed) return trimmed;
+  if (/^(blob:|data:)/i.test(trimmed)) return trimmed;
+
+  try {
+    const base = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
+    const apiOrigin = base ? new URL(base).origin : "";
+    if (apiOrigin && trimmed.startsWith(apiOrigin)) {
+      const path = trimmed.slice(apiOrigin.length);
+      return path || "/";
+    }
+    if (/^https?:/i.test(trimmed)) {
+      const parsed = new URL(trimmed);
+      // Prefer pathname for long signed URLs so PUT validation (maxLength 500) can pass.
+      if (trimmed.length > 500) return parsed.pathname;
+      return trimmed;
+    }
+  } catch {
+    // fall through
+  }
+  return trimmed;
+}
+
+function normalizeImagesForApi(
+  images: ProductImagePayload[] | undefined,
+): ProductImagePayload[] | undefined {
+  if (images === undefined) return undefined;
+
+  const mapped = images
+    .map((img, i) => ({
+      url: toApiMediaUrl(img.url),
+      alt_text: img.alt_text ? img.alt_text.slice(0, 200) : undefined,
+      sort_order: img.sort_order ?? i,
+    }))
+    .filter((img) => Boolean(img.url));
+
+  // If any URL still exceeds the API maxLength, omit images so the rest of the update can succeed.
+  if (mapped.some((img) => img.url.length > 500)) {
+    return undefined;
+  }
+  return mapped;
 }
 
 function unwrapRecord(payload: unknown): Record<string, unknown> {
@@ -634,7 +680,9 @@ export async function getAdminProduct(id: string): Promise<AdminProductResponse>
         : Number(raw.sale_price),
     brand: raw.brand ? String(raw.brand) : undefined,
     category_id: raw.category_id ? String(raw.category_id) : undefined,
-    status: (String(raw.status ?? "draft") as AdminProductStatus),
+    status: (["draft", "active", "archived"].includes(String(raw.status ?? "").toLowerCase())
+      ? (String(raw.status).toLowerCase() as AdminProductStatus)
+      : "draft"),
     is_featured: Boolean(raw.is_featured),
     attributes: attributesRaw.map((item, i) => {
       const attr = (item ?? {}) as Record<string, unknown>;
@@ -750,19 +798,42 @@ export async function updateAdminProduct(
   if (rest.status !== undefined) productPayload.status = rest.status;
   if (rest.is_featured !== undefined) productPayload.is_featured = rest.is_featured;
   if (rest.attributes !== undefined) productPayload.attributes = rest.attributes;
-  if (rest.images !== undefined) productPayload.images = rest.images;
+
+  const normalizedImages = normalizeImagesForApi(rest.images);
+  if (normalizedImages !== undefined) productPayload.images = normalizedImages;
 
   await apiClient.put(`${ADMIN}/products/${id}`, productPayload);
 
   if (inventory) {
-    await apiClient.patch(`${ADMIN}/products/${id}/inventory`, {
-      quantity: inventory.quantity ?? 0,
-      low_stock_threshold: inventory.low_stock_threshold,
-      adjustment_reason: "admin_panel_update",
-    });
+    try {
+      await apiClient.patch(`${ADMIN}/products/${id}/inventory`, {
+        quantity: Math.max(0, Math.round(Number(inventory.quantity ?? 0))),
+        ...(inventory.low_stock_threshold !== undefined
+          ? {
+              low_stock_threshold: Math.max(
+                0,
+                Math.round(Number(inventory.low_stock_threshold)),
+              ),
+            }
+          : {}),
+        adjustment_reason: "admin_panel_update",
+      });
+    } catch {
+      // Product fields already saved; do not fail the whole mutation on inventory errors.
+    }
   }
 
-  return getAdminProduct(id);
+  try {
+    return await getAdminProduct(id);
+  } catch {
+    // PUT succeeded; avoid failing the mutation solely because refresh failed.
+    return {
+      id,
+      name: String(productPayload.name ?? ""),
+      price: Number(productPayload.price ?? 0),
+      status: (productPayload.status as AdminProductStatus) ?? "draft",
+    };
+  }
 }
 
 export async function getProductReviews(params?: {

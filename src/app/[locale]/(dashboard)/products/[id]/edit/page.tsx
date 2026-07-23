@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type FieldErrors, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -43,22 +43,64 @@ import {
 import type { AdminProductStatus, ProductImagePayload } from "@/types/api/products";
 import { cn } from "@/lib/utils";
 
+const PRODUCT_STATUSES = ["draft", "active", "archived"] as const;
+
+function toLatinDigits(value: string): string {
+  return value
+    .replace(/[۰-۹]/g, (d) => String("۰۱۲۳۴۵۶۷۸۹".indexOf(d)))
+    .replace(/[٠-٩]/g, (d) => String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));
+}
+
+function parseOptionalNumber(value: unknown): number | undefined {
+  if (value === "" || value === null || value === undefined) return undefined;
+  if (typeof value === "number") return Number.isFinite(value) ? value : undefined;
+  const cleaned = toLatinDigits(String(value)).replace(/,/g, "").trim();
+  if (!cleaned) return undefined;
+  const n = Number(cleaned);
+  return Number.isFinite(n) ? n : undefined;
+}
+
+function parseRequiredNumber(value: unknown, fallback = 0): number {
+  const n = parseOptionalNumber(value);
+  return n === undefined ? fallback : n;
+}
+
+function normalizeStatus(value: unknown): (typeof PRODUCT_STATUSES)[number] {
+  const raw = String(value ?? "draft").toLowerCase();
+  return (PRODUCT_STATUSES as readonly string[]).includes(raw)
+    ? (raw as (typeof PRODUCT_STATUSES)[number])
+    : "draft";
+}
+
 const productSchema = z.object({
   name: z.string().min(1).max(300),
   slug: z.string().max(300).optional(),
   short_description: z.string().max(500).optional(),
   description: z.string().optional(),
-  price: z.coerce.number().min(0),
-  sale_price: z.number().min(0).optional(),
+  price: z.preprocess((v) => parseRequiredNumber(v, 0), z.number().min(0)),
+  sale_price: z.preprocess((v) => parseOptionalNumber(v), z.number().min(0).optional()),
   category_id: z.string().optional(),
   brand: z.string().max(100).optional(),
-  status: z.enum(["draft", "active", "archived"]),
+  status: z.enum(PRODUCT_STATUSES),
   is_featured: z.boolean(),
-  quantity: z.coerce.number().min(0),
-  low_stock_threshold: z.coerce.number().min(0),
+  quantity: z.preprocess((v) => parseRequiredNumber(v, 0), z.number().min(0)),
+  low_stock_threshold: z.preprocess((v) => parseRequiredNumber(v, 0), z.number().min(0)),
 });
 
-type ProductForm = z.infer<typeof productSchema>;
+type ProductForm = {
+  name: string;
+  slug?: string;
+  short_description?: string;
+  description?: string;
+  price: number;
+  sale_price?: number;
+  category_id?: string;
+  brand?: string;
+  status: (typeof PRODUCT_STATUSES)[number];
+  is_featured: boolean;
+  quantity: number;
+  low_stock_threshold: number;
+};
 
 function slugify(text: string): string {
   return text
@@ -116,7 +158,7 @@ export default function EditProductPage() {
     watch,
     formState: { errors },
   } = useForm<ProductForm>({
-    resolver: zodResolver(productSchema),
+    resolver: zodResolver(productSchema) as Resolver<ProductForm>,
     defaultValues: {
       status: "draft",
       is_featured: false,
@@ -132,24 +174,26 @@ export default function EditProductPage() {
       slug: product.slug ?? "",
       short_description: product.short_description ?? "",
       description: product.description ?? "",
-      price: Number(product.price) || 0,
-      sale_price:
-        product.sale_price === null || product.sale_price === undefined
-          ? undefined
-          : Number(product.sale_price),
+      price: parseRequiredNumber(product.price, 0),
+      sale_price: parseOptionalNumber(product.sale_price),
       category_id: product.category_id ?? "",
       brand: product.brand ?? "",
-      status: product.status,
+      status: normalizeStatus(product.status),
       is_featured: product.is_featured ?? false,
-      quantity: product.inventory?.quantity ?? 0,
-      low_stock_threshold: product.inventory?.low_stock_threshold ?? 5,
+      quantity: Math.max(0, Math.round(parseRequiredNumber(product.inventory?.quantity, 0))),
+      low_stock_threshold: Math.max(
+        0,
+        Math.round(parseRequiredNumber(product.inventory?.low_stock_threshold, 5)),
+      ),
     });
     setImages(
-      (product.images ?? []).map((img, i) => ({
-        url: img.url,
-        alt_text: img.alt_text,
-        sort_order: img.sort_order ?? i,
-      })),
+      (product.images ?? [])
+        .filter((img) => Boolean(img.url?.trim()))
+        .map((img, i) => ({
+          url: img.url,
+          alt_text: img.alt_text,
+          sort_order: img.sort_order ?? i,
+        })),
     );
     setHydrated(true);
   }, [product, hydrated, reset]);
@@ -183,7 +227,7 @@ export default function EditProductPage() {
     mutationFn: (payload: Parameters<typeof updateAdminProduct>[1]) =>
       updateAdminProduct(productId, payload),
     onSuccess: () => {
-      toast.success(t("form.actions.updateProduct"));
+      toast.success(t("form.actions.updateSuccess"));
       router.push("/products");
     },
     onError: (err: Error) => {
@@ -223,8 +267,9 @@ export default function EditProductPage() {
     );
   };
 
-  const onInvalid = () => {
-    toast.error(t("form.actions.updateFailed"));
+  const onInvalid = (errs: FieldErrors<ProductForm>) => {
+    const first = Object.values(errs).find((e) => e?.message)?.message;
+    toast.error(typeof first === "string" && first ? first : t("form.actions.validationFailed"));
   };
 
   const onSubmit = (data: ProductForm) => {
@@ -239,19 +284,17 @@ export default function EditProductPage() {
       short_description: data.short_description?.trim() || undefined,
       description: data.description?.trim() || undefined,
       price: data.price,
-      sale_price:
-        data.sale_price === undefined || Number.isNaN(data.sale_price)
-          ? undefined
-          : Number(data.sale_price),
+      sale_price: parseOptionalNumber(data.sale_price),
       category_id: data.category_id || undefined,
-      brand: data.brand || undefined,
+      brand: data.brand?.trim() || undefined,
       status: data.status as AdminProductStatus,
       is_featured: data.is_featured,
       attributes,
-      images: images.length > 0 ? images : [],
+      // Omit images when empty so we don't wipe existing gallery on accidental empty state.
+      ...(images.length > 0 ? { images } : {}),
       inventory: {
-        quantity: data.quantity,
-        low_stock_threshold: data.low_stock_threshold,
+        quantity: Math.max(0, Math.round(data.quantity)),
+        low_stock_threshold: Math.max(0, Math.round(data.low_stock_threshold)),
       },
     });
   };
@@ -336,6 +379,9 @@ export default function EditProductPage() {
                   <SelectValue placeholder={t("form.organization.selectBrand")} />
                 </SelectTrigger>
                 <SelectContent>
+                  {brand && !brands.some((b) => b.name === brand) && (
+                    <SelectItem value={brand}>{brand}</SelectItem>
+                  )}
                   {brands.map((b) => (
                     <SelectItem key={b.id} value={b.name}>
                       {b.name}
@@ -385,7 +431,7 @@ export default function EditProductPage() {
                 autoComplete="off"
                 placeholder={t("form.pricing.pricePlaceholder")}
                 className="h-10 tabular-nums"
-                {...register("price")}
+                {...register("price", { setValueAs: parseRequiredNumber })}
               />
             </FormField>
 
@@ -400,13 +446,7 @@ export default function EditProductPage() {
                 inputMode="decimal"
                 autoComplete="off"
                 className="h-10 tabular-nums"
-                {...register("sale_price", {
-                  setValueAs: (v) => {
-                    if (v === "" || v === null || v === undefined) return undefined;
-                    const n = typeof v === "number" ? v : parseFloat(String(v).replace(/,/g, ""));
-                    return Number.isFinite(n) ? n : undefined;
-                  },
-                })}
+                {...register("sale_price", { setValueAs: parseOptionalNumber })}
               />
             </FormField>
 
@@ -422,7 +462,9 @@ export default function EditProductPage() {
                 autoComplete="off"
                 placeholder={t("form.pricing.stockPlaceholder")}
                 className="h-10 tabular-nums"
-                {...register("quantity")}
+                {...register("quantity", {
+                  setValueAs: (v) => Math.max(0, Math.round(parseRequiredNumber(v, 0))),
+                })}
               />
             </FormField>
 
@@ -438,7 +480,9 @@ export default function EditProductPage() {
                 inputMode="numeric"
                 autoComplete="off"
                 className="h-10 tabular-nums"
-                {...register("low_stock_threshold")}
+                {...register("low_stock_threshold", {
+                  setValueAs: (v) => Math.max(0, Math.round(parseRequiredNumber(v, 0))),
+                })}
               />
             </FormField>
           </div>
@@ -479,6 +523,9 @@ export default function EditProductPage() {
                   <SelectValue placeholder={t("form.organization.selectCategory")} />
                 </SelectTrigger>
                 <SelectContent>
+                  {categoryId && !categories.some((c) => c.id === categoryId) && (
+                    <SelectItem value={categoryId}>{categoryId}</SelectItem>
+                  )}
                   {categories.map((cat) => (
                     <SelectItem key={cat.id} value={cat.id}>
                       {cat.name}

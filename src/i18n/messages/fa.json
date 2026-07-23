@@ -1666,8 +1666,10 @@
         "cancel": "انصراف",
         "saveProduct": "ذخیره محصول",
         "updateProduct": "ذخیره تغییرات",
+        "updateSuccess": "محصول با موفقیت به‌روزرسانی شد",
         "saveFailed": "ایجاد محصول ناموفق بود",
         "updateFailed": "به‌روزرسانی محصول ناموفق بود",
+        "validationFailed": "لطفاً فیلدهای فرم را بررسی کنید",
         "notFound": "محصول یافت نشد"
       }
     }

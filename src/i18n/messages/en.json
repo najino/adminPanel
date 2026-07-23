@@ -1659,8 +1659,10 @@
         "cancel": "Cancel",
         "saveProduct": "Save Product",
         "updateProduct": "Save Changes",
+        "updateSuccess": "Product updated successfully",
         "saveFailed": "Failed to create product",
         "updateFailed": "Failed to update product",
+        "validationFailed": "Please check the form fields",
         "notFound": "Product not found"
       }
     }
