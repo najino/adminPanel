@@ -72,6 +72,10 @@
       "dashboardDescription": "E-commerce admin dashboard"
     },
     "chartTab": {
+      "today": "Today",
+      "week": "Week",
+      "month": "Month",
+      "year": "Year",
       "monthly": "Monthly",
       "quarterly": "Quarterly",
       "annually": "Annually"
@@ -634,7 +638,8 @@
     },
     "chart": {
       "title": "Sales & Revenue",
-      "subtitle": "Monthly sales and revenue performance",
+      "subtitle": "Sales and revenue performance by period",
+      "empty": "No data for this period",
       "sales": "Sales",
       "revenue": "Revenue",
       "months": {
@@ -663,6 +668,7 @@
     "recentOrders": {
       "title": "Recent Orders",
       "seeAll": "See all",
+      "empty": "No orders yet",
       "columns": {
         "products": "Products",
         "category": "Category",
@@ -705,6 +711,7 @@
     },
     "activity": {
       "title": "Recent activity",
+      "empty": "No recent activity",
       "newOrder": "New order #{id}",
       "paymentReceived": "Payment received",
       "newUser": "New customer registered",

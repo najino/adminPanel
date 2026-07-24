@@ -27,7 +27,13 @@ import { SalesChart } from "@/components/charts/sales-chart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { getDashboardStats, getChartData, getProducts, getOrders } from "@/services/data.service";
+import {
+  getChartData,
+  getDashboardLowStock,
+  getDashboardRecentOrders,
+  getDashboardStats,
+  type RevenuePeriod,
+} from "@/services/data.service";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import type { Product, Order } from "@/types";
 
@@ -35,7 +41,7 @@ export default function DashboardPage() {
   const t = useTranslations("home");
   const tCommon = useTranslations("common");
   const tNav = useTranslations("navigation");
-  const [chartPeriod, setChartPeriod] = useState<"monthly" | "quarterly" | "annually">("monthly");
+  const [chartPeriod, setChartPeriod] = useState<RevenuePeriod>("month");
 
   const { data: stats, isLoading: statsLoading } = useQuery({
     queryKey: ["dashboard-stats"],
@@ -47,18 +53,15 @@ export default function DashboardPage() {
     queryFn: () => getChartData(chartPeriod),
   });
 
-  const { data: products = [], isLoading: productsLoading } = useQuery({
-    queryKey: ["products"],
-    queryFn: () => getProducts(),
+  const { data: recentOrders = [], isLoading: ordersLoading } = useQuery({
+    queryKey: ["dashboard-recent-orders"],
+    queryFn: () => getDashboardRecentOrders(6),
   });
 
-  const { data: orders = [], isLoading: ordersLoading } = useQuery({
-    queryKey: ["orders"],
-    queryFn: () => getOrders(),
+  const { data: lowStockProducts = [], isLoading: productsLoading } = useQuery({
+    queryKey: ["dashboard-low-stock"],
+    queryFn: () => getDashboardLowStock(6),
   });
-
-  const recentOrders = orders.slice(0, 6);
-  const lowStockProducts = products.filter((p) => p.stock <= 10).slice(0, 6);
 
   const todayLabel = useMemo(() => formatDate(new Date()), []);
 
@@ -102,41 +105,15 @@ export default function DashboardPage() {
   ];
 
   const activityItems: ActivityItem[] = useMemo(() => {
-    const fromOrders: ActivityItem[] = recentOrders.slice(0, 3).map((o) => ({
+    return recentOrders.slice(0, 8).map((o) => ({
       id: `order-${o.id}`,
       type: "order" as const,
       title: t("activity.newOrder", { id: o.id }),
       description: `${o.customerName} · ${formatCurrency(o.amount)}`,
-      time: formatDate(o.date),
+      time: o.date ? formatDate(o.date) : "",
       href: `/orders/${o.id}`,
     }));
-
-    return [
-      ...fromOrders,
-      {
-        id: "payment-1",
-        type: "payment" as const,
-        title: t("activity.paymentReceived"),
-        description: formatCurrency(stats?.totalRevenue ? Math.round(stats.totalRevenue / 12) : 0),
-        time: t("activity.justNow"),
-      },
-      {
-        id: "user-1",
-        type: "user" as const,
-        title: t("activity.newUser"),
-        description: t("activity.newUserDesc"),
-        time: t("activity.hoursAgo", { count: 2 }),
-        href: "/users",
-      },
-      {
-        id: "refund-1",
-        type: "refund" as const,
-        title: t("activity.refund"),
-        description: t("activity.refundDesc"),
-        time: t("activity.hoursAgo", { count: 5 }),
-      },
-    ];
-  }, [recentOrders, stats?.totalRevenue, t]);
+  }, [recentOrders, t]);
 
   const ordersColumns: ColumnDef<Order>[] = [
     {
@@ -153,12 +130,12 @@ export default function DashboardPage() {
         return (
           <div className="flex items-center gap-3">
             <Avatar className="size-8">
-              <AvatarFallback className="text-[11px]">{initials}</AvatarFallback>
+              <AvatarFallback className="text-[11px]">{initials || "—"}</AvatarFallback>
             </Avatar>
             <div className="min-w-0">
               <p className="truncate text-sm font-medium">{name}</p>
               <p className="truncate text-xs text-muted-foreground">
-                {row.original.products.slice(0, 2).join(", ")}
+                {row.original.products.slice(0, 2).join(", ") || "—"}
               </p>
             </div>
           </div>
@@ -284,16 +261,21 @@ export default function DashboardPage() {
         >
           <Tabs
             value={chartPeriod}
-            onValueChange={(v) => setChartPeriod(v as typeof chartPeriod)}
+            onValueChange={(v) => setChartPeriod(v as RevenuePeriod)}
           >
             <TabsList className="mb-4">
-              <TabsTrigger value="monthly">{tCommon("chartTab.monthly")}</TabsTrigger>
-              <TabsTrigger value="quarterly">{tCommon("chartTab.quarterly")}</TabsTrigger>
-              <TabsTrigger value="annually">{tCommon("chartTab.annually")}</TabsTrigger>
+              <TabsTrigger value="today">{tCommon("chartTab.today")}</TabsTrigger>
+              <TabsTrigger value="week">{tCommon("chartTab.week")}</TabsTrigger>
+              <TabsTrigger value="month">{tCommon("chartTab.month")}</TabsTrigger>
+              <TabsTrigger value="year">{tCommon("chartTab.year")}</TabsTrigger>
             </TabsList>
             <TabsContent value={chartPeriod}>
               {chartLoading ? (
                 <Skeleton className="h-80 w-full rounded-xl" />
+              ) : chartData.length === 0 ? (
+                <p className="flex h-80 items-center justify-center text-sm text-muted-foreground">
+                  {t("chart.empty")}
+                </p>
               ) : (
                 <SalesChart data={chartData} />
               )}
@@ -302,7 +284,17 @@ export default function DashboardPage() {
         </SectionCard>
 
         <SectionCard title={t("activity.title")}>
-          <ActivityTimeline items={activityItems} />
+          {ordersLoading ? (
+            <div className="flex flex-col gap-3">
+              <Skeleton className="h-14 w-full rounded-lg" />
+              <Skeleton className="h-14 w-full rounded-lg" />
+              <Skeleton className="h-14 w-full rounded-lg" />
+            </div>
+          ) : activityItems.length === 0 ? (
+            <p className="py-6 text-center text-sm text-muted-foreground">{t("activity.empty")}</p>
+          ) : (
+            <ActivityTimeline items={activityItems} />
+          )}
         </SectionCard>
       </div>
 
@@ -319,6 +311,11 @@ export default function DashboardPage() {
             compact
             embedded
           />
+          {recentOrders.length === 0 && !ordersLoading && (
+            <p className="px-1 py-6 text-center text-sm text-muted-foreground">
+              {t("recentOrders.empty")}
+            </p>
+          )}
         </SectionCard>
 
         <SectionCard

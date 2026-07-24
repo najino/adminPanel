@@ -12,7 +12,6 @@ import type {
   CreateCatalogAttributePayload,
   CreateCatalogAttributeValuePayload,
   CreateProductPayload,
-  ProductImagePayload,
   UpdateProductPayload,
   PaginatedData,
   UpdateBrandPayload,
@@ -171,51 +170,6 @@ function resolveMediaUrl(url: string): string {
   } catch {
     return trimmed;
   }
-}
-
-/** Convert display/absolute media URLs back to API-safe paths (max 500 chars per docs). */
-function toApiMediaUrl(url: string): string {
-  const trimmed = url.trim();
-  if (!trimmed) return trimmed;
-  if (/^(blob:|data:)/i.test(trimmed)) return trimmed;
-
-  try {
-    const base = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
-    const apiOrigin = base ? new URL(base).origin : "";
-    if (apiOrigin && trimmed.startsWith(apiOrigin)) {
-      const path = trimmed.slice(apiOrigin.length);
-      return path || "/";
-    }
-    if (/^https?:/i.test(trimmed)) {
-      const parsed = new URL(trimmed);
-      // Prefer pathname for long signed URLs so PUT validation (maxLength 500) can pass.
-      if (trimmed.length > 500) return parsed.pathname;
-      return trimmed;
-    }
-  } catch {
-    // fall through
-  }
-  return trimmed;
-}
-
-function normalizeImagesForApi(
-  images: ProductImagePayload[] | undefined,
-): ProductImagePayload[] | undefined {
-  if (images === undefined) return undefined;
-
-  const mapped = images
-    .map((img, i) => ({
-      url: toApiMediaUrl(img.url),
-      alt_text: img.alt_text ? img.alt_text.slice(0, 200) : undefined,
-      sort_order: img.sort_order ?? i,
-    }))
-    .filter((img) => Boolean(img.url));
-
-  // If any URL still exceeds the API maxLength, omit images so the rest of the update can succeed.
-  if (mapped.some((img) => img.url.length > 500)) {
-    return undefined;
-  }
-  return mapped;
 }
 
 function unwrapRecord(payload: unknown): Record<string, unknown> {
@@ -655,82 +609,8 @@ export async function getAdminProduct(id: string): Promise<AdminProductResponse>
     if (!product) throw new Error("Product not found");
     return mockProductToAdmin(product);
   }
-  const { data } = await apiClient.get<Record<string, unknown>>(`${ADMIN}/products/${id}`);
-  const raw = unwrapRecord(data);
-  if (!raw.id && !raw.ID) throw new Error("Product not found");
-
-  const inventoryRaw =
-    raw.inventory && typeof raw.inventory === "object"
-      ? (raw.inventory as Record<string, unknown>)
-      : undefined;
-  const attributesRaw = Array.isArray(raw.attributes) ? raw.attributes : [];
-  const imagesRaw = Array.isArray(raw.images) ? raw.images : [];
-  const skusRaw = Array.isArray(raw.skus) ? raw.skus : [];
-
-  return {
-    id: String(raw.id ?? raw.ID ?? id),
-    name: String(raw.name ?? raw.Name ?? ""),
-    slug: raw.slug ? String(raw.slug) : undefined,
-    description: raw.description ? String(raw.description) : undefined,
-    short_description: raw.short_description ? String(raw.short_description) : undefined,
-    price: Number(raw.price ?? 0),
-    sale_price:
-      raw.sale_price === null || raw.sale_price === undefined
-        ? undefined
-        : Number(raw.sale_price),
-    brand: raw.brand ? String(raw.brand) : undefined,
-    category_id: raw.category_id ? String(raw.category_id) : undefined,
-    status: (["draft", "active", "archived"].includes(String(raw.status ?? "").toLowerCase())
-      ? (String(raw.status).toLowerCase() as AdminProductStatus)
-      : "draft"),
-    is_featured: Boolean(raw.is_featured),
-    attributes: attributesRaw.map((item, i) => {
-      const attr = (item ?? {}) as Record<string, unknown>;
-      const values = Array.isArray(attr.values)
-        ? attr.values.map(String)
-        : Array.isArray(attr.Values)
-          ? (attr.Values as unknown[]).map(String)
-          : [];
-      return {
-        id: String(attr.id ?? attr.ID ?? `attr-${i}`),
-        name: String(attr.name ?? attr.Name ?? ""),
-        values,
-      };
-    }),
-    images: imagesRaw.map((item, i) => {
-      const img = (item ?? {}) as Record<string, unknown>;
-      return {
-        id: String(img.id ?? img.ID ?? `img-${i}`),
-        url: resolveMediaUrl(String(img.url ?? img.URL ?? "")),
-        alt_text: img.alt_text ? String(img.alt_text) : undefined,
-        sort_order: Number(img.sort_order ?? i),
-      };
-    }),
-    inventory: inventoryRaw
-      ? {
-          quantity: Number(inventoryRaw.quantity ?? 0),
-          low_stock_threshold:
-            inventoryRaw.low_stock_threshold === undefined
-              ? undefined
-              : Number(inventoryRaw.low_stock_threshold),
-          is_low_stock: Boolean(inventoryRaw.is_low_stock),
-          is_out_of_stock: Boolean(inventoryRaw.is_out_of_stock),
-        }
-      : undefined,
-    skus: skusRaw.map((item, i) => {
-      const sku = (item ?? {}) as Record<string, unknown>;
-      return {
-        id: String(sku.id ?? sku.ID ?? `sku-${i}`),
-        code: String(sku.code ?? sku.Code ?? ""),
-        attributes:
-          sku.attributes && typeof sku.attributes === "object"
-            ? (sku.attributes as Record<string, string>)
-            : undefined,
-      };
-    }),
-    created_at: raw.created_at ? String(raw.created_at) : undefined,
-    updated_at: raw.updated_at ? String(raw.updated_at) : undefined,
-  };
+  const { data } = await apiClient.get<AdminProductResponse>(`${ADMIN}/products/${id}`);
+  return data;
 }
 
 export async function updateAdminProduct(
@@ -784,56 +664,22 @@ export async function updateAdminProduct(
     return mockProductToAdmin(mockProducts[idx]);
   }
 
-  // UpdateProductRequest (docs.json) — inventory is a separate PATCH.
-  const { inventory, ...rest } = payload;
-  const productPayload: Record<string, unknown> = {};
-  if (rest.name !== undefined) productPayload.name = rest.name;
-  if (rest.slug !== undefined) productPayload.slug = rest.slug;
-  if (rest.short_description !== undefined) productPayload.short_description = rest.short_description;
-  if (rest.description !== undefined) productPayload.description = rest.description;
-  if (rest.price !== undefined) productPayload.price = rest.price;
-  if (rest.sale_price !== undefined) productPayload.sale_price = rest.sale_price;
-  if (rest.category_id !== undefined) productPayload.category_id = rest.category_id;
-  if (rest.brand !== undefined) productPayload.brand = rest.brand;
-  if (rest.status !== undefined) productPayload.status = rest.status;
-  if (rest.is_featured !== undefined) productPayload.is_featured = rest.is_featured;
-  if (rest.attributes !== undefined) productPayload.attributes = rest.attributes;
-
-  const normalizedImages = normalizeImagesForApi(rest.images);
-  if (normalizedImages !== undefined) productPayload.images = normalizedImages;
-
-  await apiClient.put(`${ADMIN}/products/${id}`, productPayload);
+  const { inventory, ...productPayload } = payload;
+  const { data } = await apiClient.put<AdminProductResponse>(
+    `${ADMIN}/products/${id}`,
+    productPayload,
+  );
 
   if (inventory) {
-    try {
-      await apiClient.patch(`${ADMIN}/products/${id}/inventory`, {
-        quantity: Math.max(0, Math.round(Number(inventory.quantity ?? 0))),
-        ...(inventory.low_stock_threshold !== undefined
-          ? {
-              low_stock_threshold: Math.max(
-                0,
-                Math.round(Number(inventory.low_stock_threshold)),
-              ),
-            }
-          : {}),
-        adjustment_reason: "admin_panel_update",
-      });
-    } catch {
-      // Product fields already saved; do not fail the whole mutation on inventory errors.
-    }
+    await apiClient.patch(`${ADMIN}/products/${id}/inventory`, {
+      quantity: inventory.quantity ?? 0,
+      low_stock_threshold: inventory.low_stock_threshold,
+      adjustment_reason: "admin_panel_update",
+    });
+    return getAdminProduct(id);
   }
 
-  try {
-    return await getAdminProduct(id);
-  } catch {
-    // PUT succeeded; avoid failing the mutation solely because refresh failed.
-    return {
-      id,
-      name: String(productPayload.name ?? ""),
-      price: Number(productPayload.price ?? 0),
-      status: (productPayload.status as AdminProductStatus) ?? "draft",
-    };
-  }
+  return data;
 }
 
 export async function getProductReviews(params?: {

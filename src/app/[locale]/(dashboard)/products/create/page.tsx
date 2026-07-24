@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useForm, type FieldErrors } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -57,36 +57,6 @@ const productSchema = z.object({
 });
 
 type ProductForm = z.infer<typeof productSchema>;
-
-const PRODUCT_FORM_FIELD_ORDER: (keyof ProductForm)[] = [
-  "name",
-  "slug",
-  "brand",
-  "short_description",
-  "description",
-  "price",
-  "sale_price",
-  "quantity",
-  "low_stock_threshold",
-  "category_id",
-  "status",
-  "is_featured",
-];
-
-function focusFormField(field: string) {
-  const target =
-    document.getElementById(field) ??
-    (document.querySelector(`[name="${field}"]`) as HTMLElement | null);
-  if (!target) return;
-  target.scrollIntoView({ behavior: "smooth", block: "center" });
-  if (typeof target.focus === "function") {
-    try {
-      target.focus({ preventScroll: true });
-    } catch {
-      target.focus();
-    }
-  }
-}
 
 function slugify(text: string): string {
   return text
@@ -184,38 +154,12 @@ export default function CreateProductPage() {
     }
   };
 
-  const onInvalid = (errs: FieldErrors<ProductForm>) => {
-    const fieldLabels: Record<keyof ProductForm, string> = {
-      name: t("form.information.productName"),
-      slug: t("form.information.slug"),
-      short_description: t("form.information.shortDescription"),
-      description: t("form.information.description"),
-      price: t("form.pricing.price"),
-      sale_price: t("form.pricing.salePrice"),
-      quantity: t("form.pricing.stockQuantity"),
-      low_stock_threshold: t("form.pricing.lowStockThreshold"),
-      category_id: t("form.organization.category"),
-      brand: t("form.organization.brand"),
-      status: t("form.organization.status"),
-      is_featured: t("form.organization.featuredProduct"),
-    };
-
-    const invalidFields = PRODUCT_FORM_FIELD_ORDER.filter((key) => errs[key]);
-    const labels = invalidFields.map((key) => fieldLabels[key]);
-    toast.error(
-      labels.length > 0
-        ? t("form.actions.validationFailedFields", { fields: labels.join("، ") })
-        : t("form.actions.validationFailed"),
-    );
-    if (invalidFields[0]) {
-      requestAnimationFrame(() => focusFormField(invalidFields[0]));
-    }
-  };
-
   const onSubmit = (data: ProductForm) => {
-    const attributes = attributeRows
-      .filter((r) => r.name.trim() && Array.isArray(r.values) && r.values.length > 0)
-      .map((r) => ({ name: r.name, values: r.values }));
+    const invalidAttributes = attributeRows.filter((r) => r.values.length === 0);
+    if (invalidAttributes.length > 0) {
+      toast.error(t("form.attributes.valuesRequired"));
+      return;
+    }
 
     mutation.mutate({
       name: data.name,
@@ -229,7 +173,10 @@ export default function CreateProductPage() {
       brand: data.brand || undefined,
       status: data.status as AdminProductStatus,
       is_featured: data.is_featured,
-      attributes: attributes.length > 0 ? attributes : undefined,
+      attributes:
+        attributeRows.length > 0
+          ? attributeRows.map((r) => ({ name: r.name, values: r.values }))
+          : undefined,
       images: images.length > 0 ? images : undefined,
       inventory: {
         quantity: data.quantity,
@@ -242,7 +189,7 @@ export default function CreateProductPage() {
     <PageTransition>
       <PageHeader title={t("addProductTitle")} />
 
-      <form onSubmit={handleSubmit(onSubmit, onInvalid)} className="flex flex-col gap-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
         <SectionCard title={t("form.information.title")}>
           <div className="grid gap-4 sm:grid-cols-2">
             <FormField
@@ -352,11 +299,7 @@ export default function CreateProductPage() {
                 autoComplete="off"
                 className="h-10 tabular-nums"
                 {...register("sale_price", {
-                  setValueAs: (v) => {
-                    if (v === "" || v === null || v === undefined) return undefined;
-                    const n = typeof v === "number" ? v : parseFloat(String(v).replace(/,/g, ""));
-                    return Number.isFinite(n) ? n : undefined;
-                  },
+                  setValueAs: (v) => (v === "" || v === null ? undefined : parseFloat(v)),
                 })}
               />
             </FormField>
@@ -436,28 +379,13 @@ export default function CreateProductPage() {
               </Select>
             </FormField>
 
-            <FormField
-              label={t("form.organization.status")}
-              htmlFor="status"
-              error={errors.status?.message}
-              required
-            >
+            <FormField label={t("form.organization.status")} htmlFor="status">
               <Select
-                value={status || "draft"}
-                onValueChange={(v) =>
-                  setValue("status", v as ProductForm["status"], {
-                    shouldValidate: true,
-                    shouldDirty: true,
-                  })
-                }
+                value={status}
+                onValueChange={(v) => setValue("status", v as ProductForm["status"])}
               >
-                <SelectTrigger
-                  id="status"
-                  className={cn("h-10 w-full", errors.status && "border-destructive")}
-                  aria-invalid={!!errors.status}
-                  aria-describedby={errors.status ? "status-error" : undefined}
-                >
-                  <SelectValue placeholder={t("form.organization.selectStatus")} />
+                <SelectTrigger id="status" className="h-10 w-full">
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="draft">

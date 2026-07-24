@@ -212,20 +212,40 @@ function mapContactMessage(item: Record<string, unknown>): ContactMessage {
   };
 }
 
+function unwrapRecord(payload: unknown): Record<string, unknown> {
+  if (!payload || typeof payload !== "object") return {};
+  const obj = payload as Record<string, unknown>;
+  if (obj.data && typeof obj.data === "object" && !Array.isArray(obj.data)) {
+    return obj.data as Record<string, unknown>;
+  }
+  return obj;
+}
+
+function unwrapList(payload: unknown): Record<string, unknown>[] {
+  if (Array.isArray(payload)) return payload as Record<string, unknown>[];
+  if (!payload || typeof payload !== "object") return [];
+  const obj = payload as Record<string, unknown>;
+  if (Array.isArray(obj.data)) return obj.data as Record<string, unknown>[];
+  return [];
+}
+
+export type RevenuePeriod = "today" | "week" | "month" | "year";
+
 export async function getDashboardStats(): Promise<DashboardStats> {
   if (USE_MOCK) {
     await delay();
     return mockDashboardStats;
   }
   const { data } = await apiClient.get<Record<string, unknown>>(`${ADMIN}/dashboard/stats`);
-  const growth = (data.growth ?? {}) as Record<string, unknown>;
+  const raw = unwrapRecord(data);
+  const growth = (raw.growth ?? {}) as Record<string, unknown>;
   return {
-    totalRevenue: Number(data.total_revenue ?? 0),
-    totalOrders: Number(data.total_orders ?? 0),
-    totalCustomers: Number(data.total_customers ?? 0),
-    totalProducts: Number(data.total_products ?? 0),
-    pendingOrders: Number(data.pending_orders ?? 0),
-    lowStockProducts: Number(data.low_stock_count ?? 0),
+    totalRevenue: Number(raw.total_revenue ?? 0),
+    totalOrders: Number(raw.total_orders ?? 0),
+    totalCustomers: Number(raw.total_customers ?? 0),
+    totalProducts: Number(raw.total_products ?? 0),
+    pendingOrders: Number(raw.pending_orders ?? 0),
+    lowStockProducts: Number(raw.low_stock_count ?? 0),
     revenueTrend: Number(growth.total_revenue ?? 0),
     ordersTrend: Number(growth.total_orders ?? 0),
     customersTrend: Number(growth.total_customers ?? 0),
@@ -235,17 +255,76 @@ export async function getDashboardStats(): Promise<DashboardStats> {
   };
 }
 
-export async function getChartData(_period: "monthly" | "quarterly" | "annually"): Promise<ChartDataPoint[]> {
+export async function getChartData(period: RevenuePeriod = "month"): Promise<ChartDataPoint[]> {
   if (USE_MOCK) {
     await delay();
     return mockChartData;
   }
-  const { data } = await apiClient.get<{ data: Array<{ date: string; orders: number; revenue: number }> }>(`${ADMIN}/dashboard/revenue`);
-  return (data.data ?? []).map((p) => ({
-    month: p.date,
+  const { data } = await apiClient.get<Record<string, unknown>>(`${ADMIN}/dashboard/revenue`, {
+    params: { period },
+  });
+  const points = unwrapList(data);
+  return points.map((p) => ({
+    month: String(p.date ?? ""),
     sales: Number(p.orders ?? 0),
     revenue: Number(p.revenue ?? 0),
   }));
+}
+
+/** GET /admin/dashboard/recent-orders — RecentOrdersResponse */
+export async function getDashboardRecentOrders(limit = 6): Promise<Order[]> {
+  if (USE_MOCK) {
+    await delay();
+    return mockOrders.slice(0, limit);
+  }
+  const { data } = await apiClient.get<Record<string, unknown>>(`${ADMIN}/dashboard/recent-orders`, {
+    params: { limit },
+  });
+  return unwrapList(data).map(mapRecentOrder);
+}
+
+function mapRecentOrder(item: Record<string, unknown>): Order {
+  const productName = item.product_name ? String(item.product_name) : "";
+  const itemCount = Number(item.item_count ?? 0);
+  return {
+    id: String(item.id ?? item.order_number ?? ""),
+    customerId: "",
+    customerName: String(item.customer_name ?? "—"),
+    products: productName
+      ? [productName]
+      : itemCount > 0
+        ? [`${itemCount}`]
+        : [],
+    date: String(item.created_at ?? ""),
+    amount: Number(item.total ?? 0),
+    status: toOrderStatus(String(item.status ?? "")),
+    paymentMethod: String(item.payment_status ?? ""),
+  };
+}
+
+/** GET /admin/dashboard/low-stock — ProductListResponse */
+export async function getDashboardLowStock(perPage = 6): Promise<Product[]> {
+  if (USE_MOCK) {
+    await delay();
+    return mockProducts.filter((p) => p.stock <= 10).slice(0, perPage);
+  }
+  const { data } = await apiClient.get<Record<string, unknown>>(`${ADMIN}/dashboard/low-stock`, {
+    params: { page: 1, per_page: perPage, sort: "quantity", order: "asc" },
+  });
+  return unwrapList(data).map(mapProduct);
+}
+
+/** GET /admin/dashboard/featured-products — FeaturedProductsResponse */
+export async function getDashboardFeaturedProducts(limit = 5): Promise<Product[]> {
+  if (USE_MOCK) {
+    await delay();
+    return mockProducts.filter((p) => p.status === "active").slice(0, limit);
+  }
+  const { data } = await apiClient.get<Record<string, unknown>>(
+    `${ADMIN}/dashboard/featured-products`,
+    { params: { limit } },
+  );
+  return unwrapList(data).map(mapProduct);
 }
 
 export async function getProducts(params?: { search?: string; category?: string; status?: string }): Promise<Product[]> {

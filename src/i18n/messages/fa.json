@@ -169,7 +169,7 @@
       "tooBigNumber": "مقدار باید حداکثر {max} باشد",
       "tooSmallArray": "حداقل {min} مورد انتخاب کنید",
       "tooBigArray": "حداکثر {max} مورد انتخاب کنید",
-      "invalidEnum": "لطفاً یکی از گزینه‌های موجود را انتخاب کنید",
+      "invalidEnum": "یک گزینه معتبر انتخاب کنید",
       "invalidDate": "تاریخ معتبر وارد کنید",
       "default": "مقدار نامعتبر است"
     },
@@ -1666,11 +1666,8 @@
         "cancel": "انصراف",
         "saveProduct": "ذخیره محصول",
         "updateProduct": "ذخیره تغییرات",
-        "updateSuccess": "محصول با موفقیت به‌روزرسانی شد",
         "saveFailed": "ایجاد محصول ناموفق بود",
         "updateFailed": "به‌روزرسانی محصول ناموفق بود",
-        "validationFailed": "لطفاً فیلدهای فرم را بررسی کنید",
-        "validationFailedFields": "این فیلدها را تکمیل یا اصلاح کنید: {fields}",
         "notFound": "محصول یافت نشد"
       }
     }
