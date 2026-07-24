@@ -169,7 +169,7 @@
       "tooBigNumber": "Must be at most {max}",
       "tooSmallArray": "Select at least {min} item(s)",
       "tooBigArray": "Select at most {max} item(s)",
-      "invalidEnum": "Please select a valid option",
+      "invalidEnum": "Please choose one of the available options",
       "invalidDate": "Please enter a valid date",
       "default": "Invalid value"
     },
@@ -1663,6 +1663,7 @@
         "saveFailed": "Failed to create product",
         "updateFailed": "Failed to update product",
         "validationFailed": "Please check the form fields",
+        "validationFailedFields": "Please fix these fields: {fields}",
         "notFound": "Product not found"
       }
     }

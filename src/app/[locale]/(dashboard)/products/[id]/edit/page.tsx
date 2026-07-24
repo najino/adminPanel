@@ -81,7 +81,7 @@ const productSchema = z.object({
   sale_price: z.preprocess((v) => parseOptionalNumber(v), z.number().min(0).optional()),
   category_id: z.string().optional(),
   brand: z.string().max(100).optional(),
-  status: z.enum(PRODUCT_STATUSES),
+  status: z.preprocess(normalizeStatus, z.enum(PRODUCT_STATUSES)),
   is_featured: z.boolean(),
   quantity: z.preprocess((v) => parseRequiredNumber(v, 0), z.number().min(0)),
   low_stock_threshold: z.preprocess((v) => parseRequiredNumber(v, 0), z.number().min(0)),
@@ -101,6 +101,38 @@ type ProductForm = {
   quantity: number;
   low_stock_threshold: number;
 };
+
+const PRODUCT_FORM_FIELD_ORDER: (keyof ProductForm)[] = [
+  "name",
+  "slug",
+  "brand",
+  "short_description",
+  "description",
+  "price",
+  "sale_price",
+  "quantity",
+  "low_stock_threshold",
+  "category_id",
+  "status",
+  "is_featured",
+];
+
+function focusFormField(field: string) {
+  const byId = document.getElementById(field);
+  const target =
+    byId ??
+    (document.querySelector(`[name="${field}"]`) as HTMLElement | null) ??
+    (document.querySelector(`#${field}`) as HTMLElement | null);
+  if (!target) return;
+  target.scrollIntoView({ behavior: "smooth", block: "center" });
+  if (typeof target.focus === "function") {
+    try {
+      target.focus({ preventScroll: true });
+    } catch {
+      target.focus();
+    }
+  }
+}
 
 function slugify(text: string): string {
   return text
@@ -268,8 +300,33 @@ export default function EditProductPage() {
   };
 
   const onInvalid = (errs: FieldErrors<ProductForm>) => {
-    const first = Object.values(errs).find((e) => e?.message)?.message;
-    toast.error(typeof first === "string" && first ? first : t("form.actions.validationFailed"));
+    const fieldLabels: Record<keyof ProductForm, string> = {
+      name: t("form.information.productName"),
+      slug: t("form.information.slug"),
+      short_description: t("form.information.shortDescription"),
+      description: t("form.information.description"),
+      price: t("form.pricing.price"),
+      sale_price: t("form.pricing.salePrice"),
+      quantity: t("form.pricing.stockQuantity"),
+      low_stock_threshold: t("form.pricing.lowStockThreshold"),
+      category_id: t("form.organization.category"),
+      brand: t("form.organization.brand"),
+      status: t("form.organization.status"),
+      is_featured: t("form.organization.featuredProduct"),
+    };
+
+    const invalidFields = PRODUCT_FORM_FIELD_ORDER.filter((key) => errs[key]);
+    const labels = invalidFields.map((key) => fieldLabels[key]);
+    toast.error(
+      labels.length > 0
+        ? t("form.actions.validationFailedFields", { fields: labels.join("، ") })
+        : t("form.actions.validationFailed"),
+    );
+
+    if (invalidFields[0]) {
+      // Let RHF paint field errors first, then scroll/focus.
+      requestAnimationFrame(() => focusFormField(invalidFields[0]));
+    }
   };
 
   const onSubmit = (data: ProductForm) => {
@@ -343,7 +400,9 @@ export default function EditProductPage() {
               <Input
                 id="name"
                 placeholder={t("form.information.productNamePlaceholder")}
-                className="h-10"
+                className={cn("h-10", errors.name && "border-destructive")}
+                aria-invalid={!!errors.name}
+                aria-describedby={errors.name ? "name-error" : undefined}
                 {...register("name")}
                 onBlur={handleNameBlur}
               />
@@ -372,10 +431,17 @@ export default function EditProductPage() {
             >
               <Select
                 value={brand || undefined}
-                onValueChange={(v) => setValue("brand", v)}
+                onValueChange={(v) =>
+                  setValue("brand", v, { shouldValidate: true, shouldDirty: true })
+                }
                 disabled={brandsLoading}
               >
-                <SelectTrigger id="brand" className="h-10 w-full">
+                <SelectTrigger
+                  id="brand"
+                  className={cn("h-10 w-full", errors.brand && "border-destructive")}
+                  aria-invalid={!!errors.brand}
+                  aria-describedby={errors.brand ? "brand-error" : undefined}
+                >
                   <SelectValue placeholder={t("form.organization.selectBrand")} />
                 </SelectTrigger>
                 <SelectContent>
@@ -430,7 +496,9 @@ export default function EditProductPage() {
                 inputMode="decimal"
                 autoComplete="off"
                 placeholder={t("form.pricing.pricePlaceholder")}
-                className="h-10 tabular-nums"
+                className={cn("h-10 tabular-nums", errors.price && "border-destructive")}
+                aria-invalid={!!errors.price}
+                aria-describedby={errors.price ? "price-error" : undefined}
                 {...register("price", { setValueAs: parseRequiredNumber })}
               />
             </FormField>
@@ -445,7 +513,9 @@ export default function EditProductPage() {
                 type="text"
                 inputMode="decimal"
                 autoComplete="off"
-                className="h-10 tabular-nums"
+                className={cn("h-10 tabular-nums", errors.sale_price && "border-destructive")}
+                aria-invalid={!!errors.sale_price}
+                aria-describedby={errors.sale_price ? "sale_price-error" : undefined}
                 {...register("sale_price", { setValueAs: parseOptionalNumber })}
               />
             </FormField>
@@ -516,10 +586,17 @@ export default function EditProductPage() {
             >
               <Select
                 value={categoryId || undefined}
-                onValueChange={(v) => setValue("category_id", v)}
+                onValueChange={(v) =>
+                  setValue("category_id", v, { shouldValidate: true, shouldDirty: true })
+                }
                 disabled={categoriesLoading}
               >
-                <SelectTrigger id="category_id" className="h-10 w-full">
+                <SelectTrigger
+                  id="category_id"
+                  className={cn("h-10 w-full", errors.category_id && "border-destructive")}
+                  aria-invalid={!!errors.category_id}
+                  aria-describedby={errors.category_id ? "category_id-error" : undefined}
+                >
                   <SelectValue placeholder={t("form.organization.selectCategory")} />
                 </SelectTrigger>
                 <SelectContent>
@@ -535,13 +612,28 @@ export default function EditProductPage() {
               </Select>
             </FormField>
 
-            <FormField label={t("form.organization.status")} htmlFor="status">
+            <FormField
+              label={t("form.organization.status")}
+              htmlFor="status"
+              error={errors.status?.message}
+              required
+            >
               <Select
-                value={status}
-                onValueChange={(v) => setValue("status", v as ProductForm["status"])}
+                value={status || "draft"}
+                onValueChange={(v) =>
+                  setValue("status", v as ProductForm["status"], {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                  })
+                }
               >
-                <SelectTrigger id="status" className="h-10 w-full">
-                  <SelectValue />
+                <SelectTrigger
+                  id="status"
+                  className={cn("h-10 w-full", errors.status && "border-destructive")}
+                  aria-invalid={!!errors.status}
+                  aria-describedby={errors.status ? "status-error" : undefined}
+                >
+                  <SelectValue placeholder={t("form.organization.selectStatus")} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="draft">

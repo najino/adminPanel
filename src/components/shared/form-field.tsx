@@ -19,8 +19,14 @@ export function FormField({
   children: React.ReactNode;
 }) {
   return (
-    <div className={cn("flex flex-col gap-2", className)}>
-      <Label htmlFor={htmlFor} className="text-foreground/90">
+    <div
+      className={cn("flex flex-col gap-2", className)}
+      data-invalid={error ? "true" : undefined}
+    >
+      <Label
+        htmlFor={htmlFor}
+        className={cn("text-foreground/90", error && "text-destructive")}
+      >
         {label}
         {required && (
           <span className="text-destructive" aria-hidden>
@@ -31,7 +37,7 @@ export function FormField({
       </Label>
       {children}
       {error ? (
-        <p className="text-sm text-destructive" role="alert">
+        <p id={htmlFor ? `${htmlFor}-error` : undefined} className="text-sm text-destructive" role="alert">
           {error}
         </p>
       ) : helper ? (

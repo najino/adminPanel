@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type FieldErrors } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -57,6 +57,36 @@ const productSchema = z.object({
 });
 
 type ProductForm = z.infer<typeof productSchema>;
+
+const PRODUCT_FORM_FIELD_ORDER: (keyof ProductForm)[] = [
+  "name",
+  "slug",
+  "brand",
+  "short_description",
+  "description",
+  "price",
+  "sale_price",
+  "quantity",
+  "low_stock_threshold",
+  "category_id",
+  "status",
+  "is_featured",
+];
+
+function focusFormField(field: string) {
+  const target =
+    document.getElementById(field) ??
+    (document.querySelector(`[name="${field}"]`) as HTMLElement | null);
+  if (!target) return;
+  target.scrollIntoView({ behavior: "smooth", block: "center" });
+  if (typeof target.focus === "function") {
+    try {
+      target.focus({ preventScroll: true });
+    } catch {
+      target.focus();
+    }
+  }
+}
 
 function slugify(text: string): string {
   return text
@@ -154,6 +184,34 @@ export default function CreateProductPage() {
     }
   };
 
+  const onInvalid = (errs: FieldErrors<ProductForm>) => {
+    const fieldLabels: Record<keyof ProductForm, string> = {
+      name: t("form.information.productName"),
+      slug: t("form.information.slug"),
+      short_description: t("form.information.shortDescription"),
+      description: t("form.information.description"),
+      price: t("form.pricing.price"),
+      sale_price: t("form.pricing.salePrice"),
+      quantity: t("form.pricing.stockQuantity"),
+      low_stock_threshold: t("form.pricing.lowStockThreshold"),
+      category_id: t("form.organization.category"),
+      brand: t("form.organization.brand"),
+      status: t("form.organization.status"),
+      is_featured: t("form.organization.featuredProduct"),
+    };
+
+    const invalidFields = PRODUCT_FORM_FIELD_ORDER.filter((key) => errs[key]);
+    const labels = invalidFields.map((key) => fieldLabels[key]);
+    toast.error(
+      labels.length > 0
+        ? t("form.actions.validationFailedFields", { fields: labels.join("، ") })
+        : t("form.actions.validationFailed"),
+    );
+    if (invalidFields[0]) {
+      requestAnimationFrame(() => focusFormField(invalidFields[0]));
+    }
+  };
+
   const onSubmit = (data: ProductForm) => {
     const attributes = attributeRows
       .filter((r) => r.name.trim() && Array.isArray(r.values) && r.values.length > 0)
@@ -184,7 +242,7 @@ export default function CreateProductPage() {
     <PageTransition>
       <PageHeader title={t("addProductTitle")} />
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+      <form onSubmit={handleSubmit(onSubmit, onInvalid)} className="flex flex-col gap-6">
         <SectionCard title={t("form.information.title")}>
           <div className="grid gap-4 sm:grid-cols-2">
             <FormField
@@ -378,13 +436,28 @@ export default function CreateProductPage() {
               </Select>
             </FormField>
 
-            <FormField label={t("form.organization.status")} htmlFor="status">
+            <FormField
+              label={t("form.organization.status")}
+              htmlFor="status"
+              error={errors.status?.message}
+              required
+            >
               <Select
-                value={status}
-                onValueChange={(v) => setValue("status", v as ProductForm["status"])}
+                value={status || "draft"}
+                onValueChange={(v) =>
+                  setValue("status", v as ProductForm["status"], {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                  })
+                }
               >
-                <SelectTrigger id="status" className="h-10 w-full">
-                  <SelectValue />
+                <SelectTrigger
+                  id="status"
+                  className={cn("h-10 w-full", errors.status && "border-destructive")}
+                  aria-invalid={!!errors.status}
+                  aria-describedby={errors.status ? "status-error" : undefined}
+                >
+                  <SelectValue placeholder={t("form.organization.selectStatus")} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="draft">
