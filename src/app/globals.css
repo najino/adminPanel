@@ -3,8 +3,8 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Premium SaaS — Blue / Slate */
-  --background: #f8fafc;
+  /* Light panel — soft slate shell, white surfaces */
+  --background: #f1f5f9;
   --foreground: #0f172a;
   --card: #ffffff;
   --card-foreground: #0f172a;
@@ -12,28 +12,28 @@
   --popover-foreground: #0f172a;
   --primary: #2563eb;
   --primary-foreground: #ffffff;
-  --secondary: #f1f5f9;
+  --secondary: #e2e8f0;
   --secondary-foreground: #0f172a;
-  --muted: #f1f5f9;
+  --muted: #e8eef6;
   --muted-foreground: #64748b;
   --accent: #eff6ff;
   --accent-foreground: #1e40af;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --success: #22c55e;
+  --success: #16a34a;
   --success-foreground: #ffffff;
   --success-muted: #f0fdf4;
-  --warning: #f59e0b;
+  --warning: #d97706;
   --warning-foreground: #78350f;
   --warning-muted: #fffbeb;
-  --info: #0ea5e9;
+  --info: #0284c7;
   --info-foreground: #ffffff;
   --info-muted: #f0f9ff;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
+  --border: #dbe3ee;
+  --input: #dbe3ee;
   --ring: #2563eb;
   --sidebar: #ffffff;
-  --sidebar-foreground: #64748b;
+  --sidebar-foreground: #475569;
   --sidebar-border: #e2e8f0;
   --sidebar-accent: #eff6ff;
   --sidebar-accent-foreground: #1e40af;
@@ -41,9 +41,9 @@
   --sidebar-primary-foreground: #ffffff;
   --chart-1: #2563eb;
   --chart-2: #60a5fa;
-  --chart-3: #0ea5e9;
-  --chart-4: #f59e0b;
-  --chart-5: #8b5cf6;
+  --chart-3: #16a34a;
+  --chart-4: #d97706;
+  --chart-5: #7c3aed;
   --shadow-sm: 0 1px 2px rgb(15 23 42 / 0.04), 0 1px 3px rgb(15 23 42 / 0.03);
   --shadow-md: 0 4px 16px rgb(15 23 42 / 0.06), 0 1px 3px rgb(15 23 42 / 0.04);
   --shadow-lg: 0 12px 40px rgb(15 23 42 / 0.08), 0 4px 12px rgb(15 23 42 / 0.04);
@@ -257,12 +257,8 @@
     @apply shadow-elevated-md border-border;
   }
 
-  .dark .premium-card {
-    @apply border-white/5 bg-[#151c2e];
-  }
-
   .panel-surface {
-    @apply rounded-2xl border border-border/60 bg-card shadow-elevated-sm dark:border-white/5 dark:bg-[#151c2e]/90;
+    @apply rounded-2xl border border-border/70 bg-card shadow-elevated-sm dark:border-white/5;
   }
 
   .spark-glow {

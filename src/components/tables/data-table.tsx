@@ -122,7 +122,7 @@ export function DataTable<TData, TValue>({
       <div
         className={cn(
           "overflow-hidden",
-          !embedded && "rounded-2xl border border-border/60 bg-card shadow-elevated-sm dark:border-white/5 dark:bg-[#151c2e]",
+          !embedded && "rounded-2xl border border-border/70 bg-card shadow-elevated-sm dark:border-white/5",
         )}
       >
         <div className="overflow-x-auto">

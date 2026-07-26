@@ -34,8 +34,8 @@ export function SectionCard({
     ) : null;
 
   return (
-    <Card className={cn("overflow-hidden dark:border-white/5 dark:bg-[#151c2e]/90", className)}>
-      <CardHeader className="flex flex-row items-start justify-between gap-4 border-b border-border/40 pb-4 dark:border-white/5">
+    <Card className={cn("overflow-hidden", className)}>
+      <CardHeader className="flex flex-row items-start justify-between gap-4 border-b border-border/60 pb-4 dark:border-white/5">
         <div className="flex min-w-0 flex-col gap-1">
           <CardTitle className="text-base font-semibold">{title}</CardTitle>
           {description && <CardDescription>{description}</CardDescription>}

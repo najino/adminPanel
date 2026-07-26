@@ -31,12 +31,12 @@ const statusVariants: Record<
 };
 
 const accentMap = {
-  emerald: "bg-emerald-500/15 text-emerald-400",
-  blue: "bg-blue-500/15 text-blue-400",
-  violet: "bg-violet-500/15 text-violet-400",
-  amber: "bg-amber-500/15 text-amber-400",
-  rose: "bg-rose-500/15 text-rose-400",
-  cyan: "bg-cyan-500/15 text-cyan-400",
+  emerald: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
+  blue: "bg-blue-500/15 text-blue-600 dark:text-blue-400",
+  violet: "bg-violet-500/15 text-violet-600 dark:text-violet-400",
+  amber: "bg-amber-500/15 text-amber-600 dark:text-amber-400",
+  rose: "bg-rose-500/15 text-rose-600 dark:text-rose-400",
+  cyan: "bg-cyan-500/15 text-cyan-600 dark:text-cyan-400",
   primary: "bg-primary/15 text-primary",
 } as const;
 
@@ -76,7 +76,7 @@ export function StatCard({
   return (
     <div
       className={cn(
-        "group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-border/60 bg-card p-5 shadow-elevated-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-elevated-md motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:border-white/5 dark:bg-[#151c2e]/90",
+        "group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-border/70 bg-card p-5 shadow-elevated-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-elevated-md motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:border-white/5",
         className,
       )}
     >
@@ -176,8 +176,8 @@ export function EmptyState({
   icon?: React.ComponentType<{ className?: string }>;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-border/70 bg-card/40 px-6 py-16 text-center dark:border-white/10 dark:bg-[#151c2e]/50">
-      <div className="flex size-12 items-center justify-center rounded-2xl bg-muted dark:bg-white/5">
+    <div className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-border bg-muted/40 px-6 py-16 text-center dark:border-white/10 dark:bg-card/40">
+      <div className="flex size-12 items-center justify-center rounded-2xl bg-muted">
         <Icon className="size-5 text-muted-foreground" aria-hidden />
       </div>
       <div className="flex flex-col gap-1">

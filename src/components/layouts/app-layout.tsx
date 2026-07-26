@@ -30,14 +30,14 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-[#0b1120]">
+      <div className="flex h-screen items-center justify-center bg-background">
         <LoadingSpinner size="lg" />
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#0b1020] p-3 lg:gap-4">
+    <div className="flex h-screen overflow-hidden bg-muted p-3 lg:gap-4 dark:bg-background">
       <div className="hidden shrink-0 lg:block">
         <Sidebar collapsed={collapsed} />
       </div>
@@ -51,7 +51,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         </SheetContent>
       </Sheet>
 
-      <div className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-3xl border border-white/5 bg-[#12182a]/80 shadow-elevated-md backdrop-blur-xl">
+      <div className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-3xl border border-border/70 bg-card shadow-elevated-md backdrop-blur-xl dark:border-white/5 dark:bg-card/90">
         <Header
           onToggleSidebar={() => {
             if (window.innerWidth < 1024) {
@@ -61,7 +61,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             }
           }}
         />
-        <main className="scrollbar-premium flex-1 overflow-y-auto p-4 lg:p-6">
+        <main className="scrollbar-premium flex-1 overflow-y-auto bg-background/40 p-4 lg:p-6 dark:bg-transparent">
           <div className={cn("mx-auto w-full max-w-[1440px]")}>{children}</div>
         </main>
       </div>

@@ -36,7 +36,9 @@ function NavIcon({
     <Icon
       className={cn(
         "size-5 shrink-0 transition-colors",
-        active ? "text-white" : "text-slate-400 group-hover:text-indigo-300",
+        active
+          ? "text-primary-foreground"
+          : "text-muted-foreground group-hover:text-foreground",
       )}
       strokeWidth={1.75}
       aria-hidden
@@ -82,7 +84,7 @@ function NavLink({
           <TooltipTrigger asChild>
             <button
               type="button"
-              className="group flex w-full items-center justify-center rounded-xl p-3 text-slate-300 transition-colors hover:bg-white/5"
+              className="group flex w-full items-center justify-center rounded-xl p-3 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
               aria-label={label}
             >
               <NavIcon nameKey={item.nameKey} />
@@ -112,17 +114,17 @@ function NavLink({
           type="button"
           onClick={() => setOpen(!open)}
           aria-expanded={expanded}
-          className="group flex w-full items-center justify-between rounded-xl p-3 transition-all duration-150 hover:bg-white/5 motion-reduce:transition-none"
+          className="group flex w-full items-center justify-between rounded-xl p-3 transition-all duration-150 hover:bg-accent motion-reduce:transition-none"
         >
           <span className="flex min-w-0 items-center gap-3">
             <NavIcon nameKey={item.nameKey} />
-            <span className="truncate text-sm font-medium text-slate-300 transition-colors group-hover:text-white">
+            <span className="truncate text-sm font-medium text-muted-foreground transition-colors group-hover:text-foreground">
               {label}
             </span>
           </span>
           <ChevronDown
             className={cn(
-              "size-4 shrink-0 text-slate-600 transition-transform duration-200",
+              "size-4 shrink-0 text-muted-foreground/60 transition-transform duration-200",
               expanded && "rotate-180",
             )}
             strokeWidth={2}
@@ -136,7 +138,7 @@ function NavLink({
           )}
         >
           <div className="min-h-0 overflow-hidden">
-            <div className="ms-4 flex flex-col gap-1 border-s border-white/10 ps-3">
+            <div className="ms-4 flex flex-col gap-1 border-s border-border ps-3">
               {item.children.map((child) => (
                 <NavLink
                   key={child.nameKey}
@@ -171,8 +173,8 @@ function NavLink({
       className={cn(
         "group flex items-center gap-3 rounded-xl p-3 text-sm font-medium transition-all duration-150 motion-reduce:transition-none",
         active
-          ? "bg-blue-600 text-white shadow-sm shadow-blue-600/25"
-          : "text-slate-300 hover:bg-white/5 hover:text-white",
+          ? "bg-primary text-primary-foreground shadow-sm shadow-primary/25"
+          : "text-muted-foreground hover:bg-accent hover:text-foreground",
         collapsed && "justify-center",
         nested && "py-2.5",
       )}
@@ -231,7 +233,7 @@ export function Sidebar({ collapsed, onNavigate }: SidebarProps) {
     <TooltipProvider delayDuration={0}>
       <aside
         className={cn(
-          "flex h-full flex-col overflow-hidden rounded-3xl border border-white/5 bg-[#0f172a] text-slate-200 shadow-2xl transition-[width] duration-300 motion-reduce:transition-none",
+          "flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-sidebar text-sidebar-foreground shadow-elevated-md transition-[width] duration-300 motion-reduce:transition-none dark:border-white/5 dark:shadow-2xl",
           collapsed ? "w-[84px] p-3" : "w-72 p-6",
         )}
       >
@@ -239,14 +241,14 @@ export function Sidebar({ collapsed, onNavigate }: SidebarProps) {
           <div className="mb-6 shrink-0">
             <div className="relative">
               <Search
-                className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-indigo-400"
+                className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-primary"
                 aria-hidden
               />
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={`${tCommon("search")}...`}
-                className="w-full rounded-xl border border-slate-800 bg-slate-900/80 py-2.5 ps-10 pe-3 text-sm text-slate-200 outline-none transition-all placeholder:text-slate-500 focus:bg-slate-900 focus:ring-1 focus:ring-indigo-500"
+                className="w-full rounded-xl border border-input bg-background py-2.5 ps-10 pe-3 text-sm text-foreground outline-none transition-all placeholder:text-muted-foreground focus:ring-1 focus:ring-primary dark:border-white/10 dark:bg-white/5"
                 aria-label={tCommon("search")}
               />
             </div>
@@ -254,7 +256,7 @@ export function Sidebar({ collapsed, onNavigate }: SidebarProps) {
         ) : (
           <button
             type="button"
-            className="mb-4 flex size-10 items-center justify-center self-center rounded-xl border border-slate-800 text-indigo-400 transition-colors hover:bg-white/5"
+            className="mb-4 flex size-10 items-center justify-center self-center rounded-xl border border-border text-primary transition-colors hover:bg-accent"
             aria-label={tCommon("search")}
           >
             <Search className="size-4" strokeWidth={1.75} />
@@ -274,17 +276,21 @@ export function Sidebar({ collapsed, onNavigate }: SidebarProps) {
               collapsed && "justify-center",
             )}
           >
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-indigo-500/20">
-              <Store className="size-5 text-indigo-400" strokeWidth={1.75} aria-hidden />
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/15">
+              <Store className="size-5 text-primary" strokeWidth={1.75} aria-hidden />
             </div>
             {!collapsed && (
-              <span className="truncate text-lg font-bold leading-tight text-white">
+              <span className="truncate text-lg font-bold leading-tight text-foreground">
                 {tCommon("appName")}
               </span>
             )}
           </Link>
           {!collapsed && (
-            <ChevronDown className="size-4 shrink-0 text-slate-500" strokeWidth={2} aria-hidden />
+            <ChevronDown
+              className="size-4 shrink-0 text-muted-foreground"
+              strokeWidth={2}
+              aria-hidden
+            />
           )}
         </div>
 
@@ -308,13 +314,13 @@ export function Sidebar({ collapsed, onNavigate }: SidebarProps) {
           ))}
         </nav>
 
-        <div className={cn("mt-auto shrink-0 border-t border-slate-800 pt-6", collapsed && "pt-4")}>
+        <div className={cn("mt-auto shrink-0 border-t border-border pt-6", collapsed && "pt-4")}>
           {collapsed ? (
             <Tooltip>
               <TooltipTrigger asChild>
                 <button
                   type="button"
-                  className="mx-auto flex size-10 items-center justify-center rounded-xl border border-slate-800/50 bg-slate-900/60 text-indigo-400 transition-colors hover:bg-white/5"
+                  className="mx-auto flex size-10 items-center justify-center rounded-xl border border-border bg-muted text-primary transition-colors hover:bg-accent"
                   onClick={() => setTheme(isDark ? "light" : "dark")}
                   aria-label={tCommon("darkMode")}
                 >
@@ -328,16 +334,16 @@ export function Sidebar({ collapsed, onNavigate }: SidebarProps) {
               <TooltipContent side={tipSide}>{tCommon("darkMode")}</TooltipContent>
             </Tooltip>
           ) : (
-            <div className="flex items-center justify-between rounded-2xl border border-slate-800/50 bg-slate-900/60 px-3 py-3">
+            <div className="flex items-center justify-between rounded-2xl border border-border bg-muted/70 px-3 py-3 dark:bg-white/5">
               <div className="flex items-center gap-3">
                 {isDark ? (
-                  <Moon className="size-5 text-indigo-400" strokeWidth={1.75} aria-hidden />
+                  <Moon className="size-5 text-primary" strokeWidth={1.75} aria-hidden />
                 ) : (
-                  <Sun className="size-5 text-slate-400" strokeWidth={1.75} aria-hidden />
+                  <Sun className="size-5 text-amber-500" strokeWidth={1.75} aria-hidden />
                 )}
                 <Label
                   htmlFor="sidebar-dark-mode"
-                  className="cursor-pointer text-sm font-medium text-slate-200"
+                  className="cursor-pointer text-sm font-medium text-foreground"
                 >
                   {tCommon("darkMode")}
                 </Label>
@@ -348,7 +354,7 @@ export function Sidebar({ collapsed, onNavigate }: SidebarProps) {
                 disabled={!mounted}
                 onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
                 aria-label={tCommon("darkMode")}
-                className="data-[state=checked]:bg-indigo-600 data-[state=unchecked]:bg-slate-700"
+                className="data-[state=checked]:bg-primary data-[state=unchecked]:bg-input"
               />
             </div>
           )}

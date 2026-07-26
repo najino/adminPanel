@@ -79,11 +79,11 @@ export function QuickActions({
           key={href}
           href={href}
           className={cn(
-            "group flex flex-col items-center justify-center gap-3 rounded-2xl border border-border/60 bg-transparent p-6 text-center transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:bg-white/[0.03] motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:border-white/10",
+            "group flex flex-col items-center justify-center gap-3 rounded-2xl border border-border bg-background/50 p-6 text-center transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:bg-accent/40 motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:border-white/10 dark:bg-transparent dark:hover:bg-white/[0.03]",
             compact ? "min-h-[120px]" : "min-h-[140px]",
           )}
         >
-          <div className="flex size-12 items-center justify-center rounded-xl border border-border/70 text-slate-300 transition-colors group-hover:border-primary/40 group-hover:text-primary dark:border-white/10">
+          <div className="flex size-12 items-center justify-center rounded-xl border border-border text-muted-foreground transition-colors group-hover:border-primary/40 group-hover:text-primary dark:border-white/10">
             <Icon className="size-5" strokeWidth={1.75} aria-hidden />
           </div>
           <div className="min-w-0 flex flex-col gap-0.5">
