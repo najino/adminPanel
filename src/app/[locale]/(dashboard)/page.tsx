@@ -1,20 +1,15 @@
 "use client";
 
-import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ColumnDef } from "@tanstack/react-table";
 import {
-  AlertTriangle,
-  Clock,
   DollarSign,
-  FileText,
   Package,
   PackagePlus,
   Settings,
   ShoppingCart,
-  Ticket,
   Users,
 } from "lucide-react";
 import { PageTransition } from "@/components/shared/page-transition";
@@ -27,6 +22,7 @@ import { SalesChart } from "@/components/charts/sales-chart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useAuth } from "@/providers/auth-provider";
 import {
   getChartData,
   getDashboardLowStock,
@@ -41,6 +37,8 @@ export default function DashboardPage() {
   const t = useTranslations("home");
   const tCommon = useTranslations("common");
   const tNav = useTranslations("navigation");
+  const locale = useLocale();
+  const { user } = useAuth();
   const [chartPeriod, setChartPeriod] = useState<RevenuePeriod>("month");
 
   const { data: stats, isLoading: statsLoading } = useQuery({
@@ -64,6 +62,9 @@ export default function DashboardPage() {
   });
 
   const todayLabel = useMemo(() => formatDate(new Date()), []);
+  const welcomeName = user?.firstName || "admin";
+  const welcomeTitle =
+    locale === "fa" ? `${t("welcome")}، ${welcomeName}` : `${t("welcome")}, ${welcomeName}`;
 
   const quickActions = [
     {
@@ -77,18 +78,6 @@ export default function DashboardPage() {
       label: tNav("allOrders"),
       description: t("quickActions.orders"),
       icon: ShoppingCart,
-    },
-    {
-      href: "/coupons",
-      label: tNav("coupons"),
-      description: t("quickActions.coupons"),
-      icon: Ticket,
-    },
-    {
-      href: "/weblog/create",
-      label: tNav("addPost"),
-      description: t("quickActions.post"),
-      icon: FileText,
     },
     {
       href: "/users",
@@ -192,12 +181,12 @@ export default function DashboardPage() {
   return (
     <PageTransition>
       <PageHeader
-        title={t("welcome")}
+        title={welcomeTitle}
         description={`${t("welcomeSubtitle")} · ${todayLabel}`}
         showBreadcrumbs={false}
       />
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard
           title={t("kpi.totalRevenue")}
           value={formatCurrency(stats?.totalRevenue ?? 0)}
@@ -230,28 +219,11 @@ export default function DashboardPage() {
           icon={Package}
           accent="cyan"
         />
-        <StatCard
-          title={t("kpi.pendingOrders")}
-          value={String(stats?.pendingOrders ?? 0)}
-          trend={stats?.pendingTrend}
-          isLoading={statsLoading}
-          icon={Clock}
-          accent="amber"
-        />
-        <StatCard
-          title={t("kpi.lowStockProducts")}
-          value={String(stats?.lowStockProducts ?? 0)}
-          trend={stats?.lowStockTrend}
-          isLoading={statsLoading}
-          icon={AlertTriangle}
-          accent="rose"
-        />
       </div>
 
-      <div className="mt-8 flex flex-col gap-3">
-        <h2 className="text-sm font-medium text-muted-foreground">{t("quickActions.title")}</h2>
-        <QuickActions actions={quickActions} />
-      </div>
+      <SectionCard title={t("quickActions.title")} className="mt-8">
+        <QuickActions actions={quickActions} compact />
+      </SectionCard>
 
       <div className="mt-8 grid gap-6 xl:grid-cols-3">
         <SectionCard
@@ -336,12 +308,6 @@ export default function DashboardPage() {
             </p>
           )}
         </SectionCard>
-      </div>
-
-      <div className="mt-6 text-end">
-        <Link href="/orders" className="text-sm font-medium text-primary hover:underline">
-          {t("recentOrders.seeAll")}
-        </Link>
       </div>
     </PageTransition>
   );

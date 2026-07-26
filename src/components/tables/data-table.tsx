@@ -122,14 +122,14 @@ export function DataTable<TData, TValue>({
       <div
         className={cn(
           "overflow-hidden",
-          !embedded && "rounded-2xl border border-border bg-card shadow-elevated-sm",
+          !embedded && "rounded-2xl border border-border/60 bg-card shadow-elevated-sm dark:border-white/5 dark:bg-[#151c2e]",
         )}
       >
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className={cn(!embedded && "sticky top-0 z-10")}>
               {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id} className="border-b border-border bg-muted/50">
+                <tr key={headerGroup.id} className="border-b border-border/60 bg-muted/40 dark:border-white/5 dark:bg-white/[0.03]">
                   {headerGroup.headers.map((header) => (
                     <th
                       key={header.id}
@@ -152,7 +152,7 @@ export function DataTable<TData, TValue>({
                 table.getRowModel().rows.map((row) => (
                   <tr
                     key={row.id}
-                    className="border-b border-border/50 transition-colors last:border-0 hover:bg-muted/40 rounded-xl motion-reduce:transition-none"
+                    className="border-b border-border/40 transition-colors last:border-0 hover:bg-muted/30 dark:border-white/5 dark:hover:bg-white/[0.03] motion-reduce:transition-none"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <td key={cell.id} className="px-4 py-3.5">

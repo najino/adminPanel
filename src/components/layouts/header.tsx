@@ -28,7 +28,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
 import { NotificationsDropdown } from "@/components/layouts/notifications-dropdown";
 import { useAuth } from "@/providers/auth-provider";
 import { cn } from "@/lib/utils";
@@ -66,34 +65,38 @@ export function Header({ onToggleSidebar }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-3 border-b border-border/50 bg-transparent px-4 lg:px-6 dark:border-white/8">
+    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-3 border-b border-white/5 bg-[#12182a]/75 px-4 backdrop-blur-xl lg:px-6">
       <Button
         type="button"
         variant="ghost"
         size="icon"
-        className="rounded-xl"
+        className="rounded-xl text-slate-300 hover:bg-white/5 hover:text-white"
         onClick={onToggleSidebar}
         aria-label={t("toggleSidebar")}
       >
         <Menu className="size-[18px]" />
       </Button>
 
-      <div className="relative hidden min-w-0 flex-1 md:block md:max-w-md">
+      <div className="relative mx-auto hidden min-w-0 flex-1 md:block md:max-w-lg">
         <Search
-          className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+          className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-slate-500"
           aria-hidden
         />
         <Input
-          placeholder={t("searchPlaceholder")}
-          className="h-9 rounded-xl border-border/60 bg-background/40 ps-9 shadow-none dark:border-white/10 dark:bg-white/5"
+          placeholder={`${t("search")}...`}
+          className="h-9 rounded-full border-white/10 bg-white/5 ps-9 text-slate-200 shadow-none placeholder:text-slate-500 focus-visible:ring-primary/40"
           aria-label={t("search")}
         />
       </div>
 
-      <div className="ms-auto flex items-center gap-1.5">
+      <div className="ms-auto flex items-center gap-1">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button type="button" size="sm" className="hidden gap-1.5 rounded-xl sm:inline-flex">
+            <Button
+              type="button"
+              size="sm"
+              className="hidden gap-1.5 rounded-xl bg-blue-600 text-white shadow-none hover:bg-blue-500 sm:inline-flex"
+            >
               <Plus className="size-4" aria-hidden />
               {t("quickCreate")}
             </Button>
@@ -124,7 +127,7 @@ export function Header({ onToggleSidebar }: HeaderProps) {
           type="button"
           variant="ghost"
           size="icon"
-          className="rounded-xl"
+          className="rounded-xl text-slate-300 hover:bg-white/5 hover:text-white"
           onClick={() => setTheme(isDark ? "light" : "dark")}
           aria-label={t("theme")}
         >
@@ -135,7 +138,7 @@ export function Header({ onToggleSidebar }: HeaderProps) {
           type="button"
           variant="ghost"
           size="icon"
-          className="rounded-xl"
+          className="rounded-xl text-slate-300 hover:bg-white/5 hover:text-white"
           onClick={switchLocale}
           aria-label={t("language")}
         >
@@ -144,21 +147,21 @@ export function Header({ onToggleSidebar }: HeaderProps) {
 
         <NotificationsDropdown />
 
-        <Separator orientation="vertical" className="mx-1 hidden h-6 sm:block" />
-
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               type="button"
               variant="ghost"
-              className={cn("h-9 gap-2 rounded-xl px-2")}
+              className={cn("h-9 gap-2 rounded-xl px-2 text-slate-200 hover:bg-white/5 hover:text-white")}
               aria-label={t("user.profile")}
             >
-              <Avatar className="size-7">
-                <AvatarFallback className="text-xs">{initials}</AvatarFallback>
+              <Avatar className="size-7 border border-white/10">
+                <AvatarFallback className="bg-white/10 text-xs text-slate-200">
+                  {initials}
+                </AvatarFallback>
               </Avatar>
               <span className="hidden max-w-[120px] truncate text-sm font-medium lg:inline">
-                {user?.firstName ?? t("user.profile")}
+                {user?.firstName ?? "admin"}
               </span>
             </Button>
           </DropdownMenuTrigger>

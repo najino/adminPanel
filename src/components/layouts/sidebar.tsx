@@ -36,7 +36,7 @@ function NavIcon({
     <Icon
       className={cn(
         "size-5 shrink-0 transition-colors",
-        active ? "text-indigo-400" : "text-slate-400 group-hover:text-indigo-300",
+        active ? "text-white" : "text-slate-400 group-hover:text-indigo-300",
       )}
       strokeWidth={1.75}
       aria-hidden
@@ -171,7 +171,7 @@ function NavLink({
       className={cn(
         "group flex items-center gap-3 rounded-xl p-3 text-sm font-medium transition-all duration-150 motion-reduce:transition-none",
         active
-          ? "bg-white/10 text-white"
+          ? "bg-blue-600 text-white shadow-sm shadow-blue-600/25"
           : "text-slate-300 hover:bg-white/5 hover:text-white",
         collapsed && "justify-center",
         nested && "py-2.5",

@@ -61,24 +61,36 @@ const defaultActions: QuickAction[] = [
 export function QuickActions({
   actions = defaultActions,
   className,
+  compact = false,
 }: {
   actions?: QuickAction[];
   className?: string;
+  compact?: boolean;
 }) {
+  const cols =
+    actions.length <= 4
+      ? "sm:grid-cols-2 lg:grid-cols-4"
+      : "sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6";
+
   return (
-    <div className={cn("grid gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6", className)}>
+    <div className={cn("grid gap-3", cols, className)}>
       {actions.map(({ href, label, description, icon: Icon }) => (
         <Link
           key={href}
           href={href}
-          className="group flex flex-col gap-3 rounded-2xl border border-border/70 bg-card p-4 shadow-elevated-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-elevated-md motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+          className={cn(
+            "group flex flex-col items-center justify-center gap-3 rounded-2xl border border-border/60 bg-transparent p-6 text-center transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:bg-white/[0.03] motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:border-white/10",
+            compact ? "min-h-[120px]" : "min-h-[140px]",
+          )}
         >
-          <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-            <Icon className="size-[18px]" aria-hidden />
+          <div className="flex size-12 items-center justify-center rounded-xl border border-border/70 text-slate-300 transition-colors group-hover:border-primary/40 group-hover:text-primary dark:border-white/10">
+            <Icon className="size-5" strokeWidth={1.75} aria-hidden />
           </div>
           <div className="min-w-0 flex flex-col gap-0.5">
-            <span className="text-sm font-medium">{label}</span>
-            <span className="truncate text-xs text-muted-foreground">{description}</span>
+            <span className="text-sm font-semibold text-foreground">{label}</span>
+            {!compact && (
+              <span className="truncate text-xs text-muted-foreground">{description}</span>
+            )}
           </div>
         </Link>
       ))}

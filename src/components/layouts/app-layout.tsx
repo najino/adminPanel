@@ -30,7 +30,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-background">
+      <div className="flex h-screen items-center justify-center bg-[#0b1120]">
         <LoadingSpinner size="lg" />
       </div>
     );
