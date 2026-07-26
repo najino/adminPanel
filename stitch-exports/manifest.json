@@ -1,0 +1,27 @@
+﻿{
+  "projectId": "11076401712557197985",
+  "projectTitle": "Enhanced Admin Sidebar V1",
+  "requestedScreen": {
+    "id": "c84f746d64ff45c2a8bc0cddca4305ab",
+    "title": "Enhanced Admin Sidebar V2",
+    "width": 768,
+    "height": 1376,
+    "deviceType": "DESKTOP",
+    "screenshotFile": "enhanced-admin-sidebar-v2.png",
+    "htmlCode": null,
+    "note": "Stitch returned empty htmlCode for this screen. Closest HTML exports from sibling screens are included."
+  },
+  "siblingExports": [
+    {
+      "id": "506647d13ab54c0789cf54eb14574408",
+      "title": "Simplified Sidebar - Dark Navy Theme",
+      "htmlFile": "simplified-sidebar-dark-navy.html",
+      "screenshotFile": "simplified-sidebar-dark-navy.png"
+    },
+    {
+      "id": "002f84728c494caba640a8d991c97bbb",
+      "title": "Simplified Sidebar - Lighter Background",
+      "htmlFile": "simplified-sidebar-lighter.html"
+    }
+  ]
+}

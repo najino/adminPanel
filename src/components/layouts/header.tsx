@@ -66,7 +66,7 @@ export function Header({ onToggleSidebar }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-3 border-b border-border/60 glass-panel px-4 lg:px-6">
+    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-3 border-b border-border/50 bg-transparent px-4 lg:px-6 dark:border-white/8">
       <Button
         type="button"
         variant="ghost"
@@ -85,7 +85,7 @@ export function Header({ onToggleSidebar }: HeaderProps) {
         />
         <Input
           placeholder={t("searchPlaceholder")}
-          className="h-9 rounded-xl border-border/70 bg-background/60 ps-9 shadow-none"
+          className="h-9 rounded-xl border-border/60 bg-background/40 ps-9 shadow-none dark:border-white/10 dark:bg-white/5"
           aria-label={t("search")}
         />
       </div>

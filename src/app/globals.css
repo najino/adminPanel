@@ -51,20 +51,21 @@
 }
 
 .dark {
-  --background: #0b1220;
-  --foreground: #f1f5f9;
-  --card: #111827;
-  --card-foreground: #f1f5f9;
-  --popover: #111827;
-  --popover-foreground: #f1f5f9;
-  --primary: #3b82f6;
-  --primary-foreground: #eff6ff;
-  --secondary: #1e293b;
-  --secondary-foreground: #f1f5f9;
-  --muted: #1e293b;
-  --muted-foreground: #94a3b8;
-  --accent: #1e3a8a;
-  --accent-foreground: #bfdbfe;
+  /* Stitch glass — deep navy / soft blue */
+  --background: #0b1020;
+  --foreground: #e8eef8;
+  --card: #12182a;
+  --card-foreground: #e8eef8;
+  --popover: #141b2e;
+  --popover-foreground: #e8eef8;
+  --primary: #6ea8ff;
+  --primary-foreground: #0b1020;
+  --secondary: #1a2238;
+  --secondary-foreground: #e8eef8;
+  --muted: #171e32;
+  --muted-foreground: #9aafc7;
+  --accent: #1c2740;
+  --accent-foreground: #c5d8f0;
   --destructive: #f87171;
   --destructive-foreground: #450a0a;
   --success: #4ade80;
@@ -76,24 +77,24 @@
   --info: #38bdf8;
   --info-foreground: #082f49;
   --info-muted: #0c4a6e;
-  --border: rgb(255 255 255 / 8%);
+  --border: rgb(255 255 255 / 10%);
   --input: rgb(255 255 255 / 10%);
-  --ring: #3b82f6;
-  --sidebar: #0f172a;
-  --sidebar-foreground: #94a3b8;
-  --sidebar-border: rgb(255 255 255 / 8%);
-  --sidebar-accent: #1e3a8a;
-  --sidebar-accent-foreground: #bfdbfe;
-  --sidebar-primary: #3b82f6;
-  --sidebar-primary-foreground: #eff6ff;
-  --chart-1: #3b82f6;
+  --ring: #6ea8ff;
+  --sidebar: rgb(18 24 42 / 72%);
+  --sidebar-foreground: #c5d8f0;
+  --sidebar-border: rgb(255 255 255 / 12%);
+  --sidebar-accent: rgb(255 255 255 / 8%);
+  --sidebar-accent-foreground: #e8eef8;
+  --sidebar-primary: #6ea8ff;
+  --sidebar-primary-foreground: #0b1020;
+  --chart-1: #6ea8ff;
   --chart-2: #60a5fa;
   --chart-3: #38bdf8;
   --chart-4: #fbbf24;
   --chart-5: #a78bfa;
-  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);
-  --shadow-md: 0 4px 20px rgb(0 0 0 / 0.4);
-  --shadow-lg: 0 16px 48px rgb(0 0 0 / 0.5);
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.35);
+  --shadow-md: 0 8px 28px rgb(0 0 0 / 0.45);
+  --shadow-lg: 0 20px 56px rgb(0 0 0 / 0.55);
 }
 
 @theme inline {

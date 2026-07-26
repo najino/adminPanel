@@ -37,7 +37,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background p-3 lg:gap-4">
+    <div className="flex h-screen overflow-hidden bg-[#0b1020] p-3 lg:gap-4">
       <div className="hidden shrink-0 lg:block">
         <Sidebar collapsed={collapsed} />
       </div>
@@ -45,13 +45,13 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
         <SheetContent
           side={sheetSide}
-          className="w-[280px] border-0 bg-transparent p-0 shadow-none sm:max-w-[280px]"
+          className="w-[300px] border-0 bg-transparent p-0 shadow-none sm:max-w-[300px]"
         >
           <Sidebar collapsed={false} onNavigate={() => setMobileOpen(false)} />
         </SheetContent>
       </Sheet>
 
-      <div className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-2xl border border-border/50 bg-background/80 shadow-elevated-sm">
+      <div className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-3xl border border-white/5 bg-[#12182a]/80 shadow-elevated-md backdrop-blur-xl">
         <Header
           onToggleSidebar={() => {
             if (window.innerWidth < 1024) {
@@ -61,7 +61,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             }
           }}
         />
-        <main className="scrollbar-premium flex-1 overflow-y-auto surface-muted p-4 lg:p-6">
+        <main className="scrollbar-premium flex-1 overflow-y-auto p-4 lg:p-6">
           <div className={cn("mx-auto w-full max-w-[1440px]")}>{children}</div>
         </main>
       </div>
