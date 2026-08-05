@@ -3,9 +3,10 @@
 ## Setup
 
 - **Library**: [next-intl](https://next-intl-docs.vercel.app/)
-- **Locales**: `en` (English), `fa` (Persian/Farsi)
-- **Default**: `en`
+- **Locales**: `fa` (Persian/Farsi), `en` (English)
+- **Default**: `fa`
 - **URL strategy**: `localePrefix: "never"` — URLs stay `/products`, locale stored in cookie
+- **Detection**: `localeDetection: false` — browser language does not override; default is Persian unless the user switches
 
 ## Message Files
 
