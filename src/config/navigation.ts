@@ -50,6 +50,14 @@ export const navigationGroups: NavGroup[] = [
           { nameKey: "comments", href: "/weblog/comments" },
         ],
       },
+      {
+        nameKey: "projects",
+        children: [
+          { nameKey: "allProjects", href: "/projects" },
+          { nameKey: "addProject", href: "/projects/create" },
+          { nameKey: "projectCategories", href: "/projects/categories" },
+        ],
+      },
     ],
   },
   {

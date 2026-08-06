@@ -765,6 +765,10 @@
     "addPost": "افزودن پست",
     "postCategories": "دسته‌بندی پست‌ها",
     "comments": "نظرات",
+    "projects": "پروژه‌ها",
+    "allProjects": "همه پروژه‌ها",
+    "addProject": "افزودن پروژه",
+    "projectCategories": "دسته‌بندی پروژه‌ها",
     "contactComments": "پیام‌های تماس با ما",
     "context": "Context",
     "contextOverview": "نمای کلی",
@@ -924,6 +928,10 @@
       "addPost": "افزودن پست",
       "postSettings": "تنظیمات پست",
       "allPostsComments": "همه نظرات پست‌ها",
+      "allProjects": "همه پروژه‌ها",
+      "addProject": "افزودن پروژه",
+      "editProject": "ویرایش پروژه",
+      "projectCategories": "دسته‌بندی پروژه‌ها",
       "allContactComments": "همه پیام‌های تماس با ما",
       "seoSettings": "تنظیمات سئو",
       "context": "Context",
@@ -1747,6 +1755,73 @@
           "total": "مجموع",
           "status": "وضعیت"
         }
+      }
+    }
+  },
+  "projects": {
+    "addButton": "افزودن پروژه",
+    "empty": "پروژه‌ای یافت نشد",
+    "notFound": "پروژه یافت نشد",
+    "deleteSuccess": "پروژه حذف شد",
+    "filters": {
+      "searchPlaceholder": "جستجوی پروژه‌ها...",
+      "allCategories": "همه دسته‌ها"
+    },
+    "table": {
+      "columns": {
+        "title": "عنوان",
+        "category": "دسته‌بندی",
+        "location": "موقعیت",
+        "year": "سال اجرا",
+        "actions": "عملیات"
+      }
+    },
+    "categories": {
+      "addCategory": "افزودن دسته‌بندی",
+      "columns": {
+        "title": "عنوان",
+        "slug": "نامک",
+        "actions": "عملیات"
+      },
+      "modal": {
+        "title": "افزودن دسته‌بندی پروژه",
+        "editTitle": "ویرایش دسته‌بندی پروژه",
+        "name": "عنوان",
+        "namePlaceholder": "مثلاً مسکونی",
+        "slug": "نامک",
+        "slugPlaceholder": "residential",
+        "cancel": "انصراف",
+        "save": "ذخیره",
+        "nameRequired": "عنوان دسته‌بندی را وارد کنید"
+      }
+    },
+    "form": {
+      "information": {
+        "title": "اطلاعات پروژه",
+        "projectTitle": "عنوان پروژه",
+        "projectTitlePlaceholder": "عنوان پروژه را وارد کنید",
+        "slug": "نامک",
+        "slugPlaceholder": "project-slug",
+        "slugHelper": "شناسه URL-friendly. در صورت خالی بودن از عنوان ساخته می‌شود.",
+        "category": "دسته‌بندی",
+        "selectCategory": "انتخاب دسته‌بندی",
+        "employer": "کارفرما",
+        "location": "موقعیت",
+        "footage": "متراژ",
+        "year": "سال اجرا",
+        "description": "توضیحات"
+      },
+      "images": {
+        "title": "تصویر پروژه",
+        "dropzone": "تصویر را اینجا رها کنید یا کلیک کنید",
+        "uploadFailed": "آپلود تصویر ناموفق بود"
+      },
+      "actions": {
+        "cancel": "انصراف",
+        "save": "ذخیره پروژه",
+        "update": "ذخیره تغییرات",
+        "createSuccess": "پروژه با موفقیت ایجاد شد",
+        "updateSuccess": "پروژه با موفقیت به‌روزرسانی شد"
       }
     }
   }

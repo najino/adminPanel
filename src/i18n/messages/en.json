@@ -770,6 +770,10 @@
     "addPost": "Add Post",
     "postCategories": "Post Categories",
     "comments": "Comments",
+    "projects": "Projects",
+    "allProjects": "All Projects",
+    "addProject": "Add Project",
+    "projectCategories": "Project Categories",
     "contactComments": "Contact us Comments",
     "context": "Context",
     "contextOverview": "Overview",
@@ -929,6 +933,10 @@
       "addPost": "Add Post",
       "postSettings": "Post Settings",
       "allPostsComments": "All Posts Comments",
+      "allProjects": "All Projects",
+      "addProject": "Add Project",
+      "editProject": "Edit Project",
+      "projectCategories": "Project Categories",
       "allContactComments": "All Contact us Comments",
       "seoSettings": "SEO Settings",
       "context": "Context",
@@ -1750,6 +1758,73 @@
           "total": "Total",
           "status": "Status"
         }
+      }
+    }
+  },
+  "projects": {
+    "addButton": "Add Project",
+    "empty": "No projects found",
+    "notFound": "Project not found",
+    "deleteSuccess": "Project deleted",
+    "filters": {
+      "searchPlaceholder": "Search projects...",
+      "allCategories": "All categories"
+    },
+    "table": {
+      "columns": {
+        "title": "Title",
+        "category": "Category",
+        "location": "Location",
+        "year": "Year",
+        "actions": "Actions"
+      }
+    },
+    "categories": {
+      "addCategory": "Add Category",
+      "columns": {
+        "title": "Title",
+        "slug": "Slug",
+        "actions": "Actions"
+      },
+      "modal": {
+        "title": "Add Project Category",
+        "editTitle": "Edit Project Category",
+        "name": "Title",
+        "namePlaceholder": "e.g. Residential",
+        "slug": "Slug",
+        "slugPlaceholder": "residential",
+        "cancel": "Cancel",
+        "save": "Save",
+        "nameRequired": "Please enter a category title"
+      }
+    },
+    "form": {
+      "information": {
+        "title": "Project Information",
+        "projectTitle": "Project Title",
+        "projectTitlePlaceholder": "Enter project title",
+        "slug": "Slug",
+        "slugPlaceholder": "project-slug",
+        "slugHelper": "URL-friendly identifier. Auto-generated from title if empty.",
+        "category": "Category",
+        "selectCategory": "Select category",
+        "employer": "Employer",
+        "location": "Location",
+        "footage": "Footage",
+        "year": "Implementation Year",
+        "description": "Description"
+      },
+      "images": {
+        "title": "Project Image",
+        "dropzone": "Drop image here or click to upload",
+        "uploadFailed": "Image upload failed"
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "save": "Save Project",
+        "update": "Save Changes",
+        "createSuccess": "Project created successfully",
+        "updateSuccess": "Project updated successfully"
       }
     }
   }
