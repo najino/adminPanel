@@ -8,6 +8,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import Link from "next/link";
 import { PageHeader } from "@/components/shared/page-elements";
 import { PageTransition } from "@/components/shared/page-transition";
 import { FileDropzone } from "@/components/shared/file-dropzone";
@@ -305,8 +306,8 @@ export function ProjectForm({
         </Card>
 
         <div className="flex gap-3">
-          <Button type="button" variant="outline" onClick={() => router.push("/projects")}>
-            {t("form.actions.cancel")}
+          <Button type="button" variant="outline" asChild>
+            <Link href="/projects">{t("form.actions.cancel")}</Link>
           </Button>
           <Button type="submit" disabled={mutation.isPending}>
             {mode === "edit" ? t("form.actions.update") : t("form.actions.save")}

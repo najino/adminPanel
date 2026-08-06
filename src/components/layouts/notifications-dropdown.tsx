@@ -1,8 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import {
   Bell,
   MessageCircleMore,
@@ -80,7 +80,6 @@ function notificationDescription(
 export function NotificationsDropdown() {
   const t = useTranslations("common.notification");
   const tc = useTranslations("common");
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   const { data: notifications = [] } = useQuery({
@@ -112,11 +111,6 @@ export function NotificationsDropdown() {
     mutationFn: markAllNotificationsRead,
     onSuccess: invalidate,
   });
-
-  const handleOpen = (item: AdminNotification) => {
-    if (!item.read) markReadMutation.mutate(item.id);
-    router.push(item.href);
-  };
 
   return (
     <DropdownMenu>
@@ -164,30 +158,23 @@ export function NotificationsDropdown() {
             notifications.map((item) => {
               const Icon = typeIcons[item.type] ?? Bell;
               const description = notificationDescription(item, t);
-              return (
-                <DropdownMenuItem
-                  key={item.id}
-                  className={cn(
-                    "cursor-pointer items-start gap-3 rounded-none px-3 py-3 focus:bg-accent",
-                    !item.read && "bg-primary/5",
-                  )}
-                  onSelect={() => handleOpen(item)}
-                >
+              const title = notificationTitle(item, t);
+              const href = item.href?.trim();
+              const content = (
+                <>
                   <span
                     className={cn(
                       "mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg",
                       item.read ? "bg-muted text-muted-foreground" : "bg-primary/10 text-primary",
                     )}
                   >
-                    <Icon className="size-4" strokeWidth={1.5} />
+                    <Icon className="size-4" strokeWidth={1.5} aria-hidden />
                   </span>
                   <span className="min-w-0 flex-1 space-y-0.5">
                     <span className="flex items-start justify-between gap-2">
-                      <span className="text-sm font-medium leading-snug">
-                        {notificationTitle(item, t)}
-                      </span>
+                      <span className="text-sm font-medium leading-snug">{title}</span>
                       {!item.read && (
-                        <span className="mt-1 size-1.5 shrink-0 rounded-full bg-primary" />
+                        <span className="mt-1 size-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
                       )}
                     </span>
                     {description && (
@@ -199,6 +186,43 @@ export function NotificationsDropdown() {
                       {formatRelativeTime(item.createdAt, t)}
                     </span>
                   </span>
+                </>
+              );
+
+              if (!href) {
+                return (
+                  <DropdownMenuItem
+                    key={item.id}
+                    className={cn(
+                      "cursor-pointer items-start gap-3 rounded-none px-3 py-3 focus:bg-accent",
+                      !item.read && "bg-primary/5",
+                    )}
+                    onSelect={() => {
+                      if (!item.read) markReadMutation.mutate(item.id);
+                    }}
+                  >
+                    {content}
+                  </DropdownMenuItem>
+                );
+              }
+
+              return (
+                <DropdownMenuItem
+                  key={item.id}
+                  asChild
+                  className={cn(
+                    "cursor-pointer items-start gap-3 rounded-none px-3 py-3 focus:bg-accent",
+                    !item.read && "bg-primary/5",
+                  )}
+                >
+                  <Link
+                    href={href}
+                    onClick={() => {
+                      if (!item.read) markReadMutation.mutate(item.id);
+                    }}
+                  >
+                    {content}
+                  </Link>
                 </DropdownMenuItem>
               );
             })

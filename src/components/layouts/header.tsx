@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { useLocale, useTranslations } from "next-intl";
@@ -107,21 +108,29 @@ export function Header({ onToggleSidebar }: HeaderProps) {
           <DropdownMenuContent align="end" className="w-52 rounded-xl">
             <DropdownMenuLabel>{t("quickCreate")}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => router.push("/products/create")} className="gap-2">
-              <PackagePlus className="size-4" />
-              {tNav("addProduct")}
+            <DropdownMenuItem asChild className="gap-2">
+              <Link href="/products/create">
+                <PackagePlus className="size-4" aria-hidden />
+                {tNav("addProduct")}
+              </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => router.push("/orders")} className="gap-2">
-              <ShoppingCart className="size-4" />
-              {tNav("allOrders")}
+            <DropdownMenuItem asChild className="gap-2">
+              <Link href="/orders">
+                <ShoppingCart className="size-4" aria-hidden />
+                {tNav("allOrders")}
+              </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => router.push("/coupons")} className="gap-2">
-              <Ticket className="size-4" />
-              {tNav("coupons")}
+            <DropdownMenuItem asChild className="gap-2">
+              <Link href="/coupons">
+                <Ticket className="size-4" aria-hidden />
+                {tNav("coupons")}
+              </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => router.push("/weblog/create")} className="gap-2">
-              <FileText className="size-4" />
-              {tNav("addPost")}
+            <DropdownMenuItem asChild className="gap-2">
+              <Link href="/weblog/create">
+                <FileText className="size-4" aria-hidden />
+                {tNav("addPost")}
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
