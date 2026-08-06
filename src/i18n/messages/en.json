@@ -1702,10 +1702,13 @@
         "title": "Product Images",
         "mainImage": "Main Image",
         "mainImageDropzone": "Click to upload main image",
-        "dropzone": "Drag & drop images here, or click to upload",
+        "dropzone": "Drag & drop images here, or click to upload (PNG, JPG, WebP)",
         "mainBadge": "MAIN",
         "uploading": "Uploading images…",
-        "uploadFailed": "Failed to upload image. Please try again."
+        "uploadFailed": "Failed to upload image. Please try again.",
+        "altLabel": "Alt text",
+        "altPlaceholder": "e.g. Premium tile adhesive 25kg bag",
+        "altHint": "Describe the image for SEO and accessibility (max 200 characters)."
       },
       "actions": {
         "cancel": "Cancel",

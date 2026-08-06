@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { Info, Loader2, Sparkles, X } from "lucide-react";
+import { Info, Loader2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { PageTransition } from "@/components/shared/page-transition";
 import { PageHeader } from "@/components/shared/page-elements";
@@ -19,6 +19,7 @@ import {
   ProductAttributeFields,
   type ProductAttributeRow,
 } from "@/components/products/product-attribute-fields";
+import { ProductImageAltEditor } from "@/components/products/product-image-alt-editor";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -267,12 +268,17 @@ export default function EditProductPage() {
   const handleImageDrop = async (files: File[]) => {
     setUploadingImages(true);
     try {
+      const productName = (name || "").trim();
       const uploaded: ProductImagePayload[] = [];
       for (const file of files) {
         const result = await uploadProductImage(file);
+        const fromFile = file.name
+          .replace(/\.[^.]+$/, "")
+          .replace(/[_-]+/g, " ")
+          .trim();
         uploaded.push({
           url: result.url,
-          alt_text: file.name.replace(/\.[^.]+$/, ""),
+          alt_text: (productName || fromFile).slice(0, 200),
           sort_order: images.length + uploaded.length,
         });
       }
@@ -686,42 +692,33 @@ export default function EditProductPage() {
           <FileDropzone
             onDrop={handleImageDrop}
             multiple
-            accept={{ "image/*": [".png", ".jpg", ".jpeg", ".webp", ".gif"] }}
+            accept={{
+              "image/webp": [".webp"],
+              "image/jpeg": [".jpg", ".jpeg"],
+              "image/png": [".png"],
+              "image/gif": [".gif"],
+            }}
             label={t("form.images.dropzone")}
             disabled={uploadingImages}
           />
+          <p className="mt-2 text-xs text-muted-foreground">
+            {t("form.images.altHint")}
+          </p>
           {uploadingImages && (
             <div className="mt-3 flex items-center gap-2 text-sm text-muted-foreground">
               <Loader2 className="size-4 animate-spin" />
               {t("form.images.uploading")}
             </div>
           )}
-          {images.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-3">
-              {images.map((img, i) => (
-                <div key={`${img.url}-${i}`} className="group relative">
-                  <img
-                    src={img.url}
-                    alt={img.alt_text ?? ""}
-                    className="size-20 rounded-lg object-cover ring-1 ring-border"
-                  />
-                  {i === 0 && (
-                    <span className="absolute start-1 top-1 rounded bg-primary px-1.5 py-0.5 text-[10px] font-medium text-primary-foreground">
-                      {t("form.images.mainBadge")}
-                    </span>
-                  )}
-                  <button
-                    type="button"
-                    onClick={() => removeImage(img.url)}
-                    className="absolute -end-1.5 -top-1.5 flex size-5 items-center justify-center rounded-full bg-destructive text-destructive-foreground opacity-0 shadow transition-opacity group-hover:opacity-100"
-                    aria-label={tCommon("delete")}
-                  >
-                    <X className="size-3" />
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
+          <ProductImageAltEditor
+            images={images}
+            onChange={setImages}
+            onRemove={removeImage}
+            mainBadgeLabel={t("form.images.mainBadge")}
+            altLabel={t("form.images.altLabel")}
+            altPlaceholder={t("form.images.altPlaceholder")}
+            removeLabel={tCommon("delete")}
+          />
         </SectionCard>
 
         <div className="flex gap-3">
