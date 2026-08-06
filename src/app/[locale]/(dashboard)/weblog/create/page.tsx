@@ -11,8 +11,8 @@ import { toast } from "sonner";
 import { PageHeader } from "@/components/shared/page-elements";
 import { PageTransition } from "@/components/shared/page-transition";
 import { FileDropzone } from "@/components/shared/file-dropzone";
-import { JalaliDatePicker } from "@/components/shared/jalali-date-picker";
-import { RichTextEditor } from "@/components/shared/rich-text-editor";
+import { AppImage } from "@/components/shared/app-image";
+import { JalaliDatePickerLazy, RichTextEditorLazy } from "@/components/shared/lazy-widgets";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -136,7 +136,7 @@ export default function CreatePostPage() {
                 control={form.control}
                 name="publishedDate"
                 render={({ field }) => (
-                  <JalaliDatePicker
+                  <JalaliDatePickerLazy
                     value={field.value}
                     onChange={field.onChange}
                     placeholder={t("form.settings.publishDate")}
@@ -153,7 +153,13 @@ export default function CreatePostPage() {
           </CardHeader>
           <CardContent>
             {featuredImage && (
-              <img src={featuredImage} alt="" className="mb-4 h-40 rounded-lg object-cover" />
+              <AppImage
+                src={featuredImage}
+                alt=""
+                width={640}
+                height={160}
+                className="mb-4 h-40 w-full rounded-lg object-cover"
+              />
             )}
             <FileDropzone onDrop={handleImageUpload} accept={{ "image/*": [] }} label={t("form.images.dropzone")} />
           </CardContent>
@@ -168,7 +174,7 @@ export default function CreatePostPage() {
               control={form.control}
               name="content"
               render={({ field }) => (
-                <RichTextEditor
+                <RichTextEditorLazy
                   value={field.value}
                   onChange={field.onChange}
                   placeholder={t("form.information.descriptionPlaceholder")}

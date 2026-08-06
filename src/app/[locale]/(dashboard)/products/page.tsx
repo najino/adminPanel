@@ -12,6 +12,7 @@ import { PageHeader, StatusBadge } from "@/components/shared/page-elements";
 import { FilterBar } from "@/components/shared/filter-bar";
 import { TableRowActions } from "@/components/shared/table-row-actions";
 import { DataTable } from "@/components/tables/data-table";
+import { AppImage } from "@/components/shared/app-image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -120,9 +121,11 @@ export default function ProductsPage() {
       cell: ({ row }) => (
         <div className="flex items-center gap-3">
           {row.original.images[0] && (
-            <img
+            <AppImage
               src={row.original.images[0]}
               alt={row.original.name}
+              width={40}
+              height={40}
               className="size-10 rounded-lg object-cover ring-1 ring-border"
             />
           )}

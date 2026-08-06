@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { PageHeader } from "@/components/shared/page-elements";
 import { PageTransition } from "@/components/shared/page-transition";
+import { AppImage } from "@/components/shared/app-image";
 import { FileDropzone } from "@/components/shared/file-dropzone";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -86,14 +87,26 @@ export default function GeneralSettingPage() {
             <div className="flex flex-col gap-2">
               <Label>{t("siteInformation.logo")}</Label>
               {form.watch("logo") && (
-                <img src={form.watch("logo")} alt="" className="mb-2 h-16 object-contain" />
+                <AppImage
+                  src={form.watch("logo") ?? ""}
+                  alt=""
+                  width={128}
+                  height={64}
+                  className="mb-2 h-16 w-auto object-contain"
+                />
               )}
               <FileDropzone onDrop={(f) => handleUpload("logo", f)} accept={{ "image/*": [] }} label={t("siteInformation.uploadLogo")} />
             </div>
             <div className="flex flex-col gap-2">
               <Label>{t("siteInformation.favicon")}</Label>
               {form.watch("favicon") && (
-                <img src={form.watch("favicon")} alt="" className="mb-2 h-8 object-contain" />
+                <AppImage
+                  src={form.watch("favicon") ?? ""}
+                  alt=""
+                  width={32}
+                  height={32}
+                  className="mb-2 h-8 w-8 object-contain"
+                />
               )}
               <FileDropzone onDrop={(f) => handleUpload("favicon", f)} accept={{ "image/*": [] }} label={t("siteInformation.uploadFavicon")} />
             </div>

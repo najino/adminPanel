@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { PageHeader, EmptyState } from "@/components/shared/page-elements";
 import { PageTransition } from "@/components/shared/page-transition";
+import { AppImage } from "@/components/shared/app-image";
 import { FormField } from "@/components/shared/form-field";
 import { FileDropzone } from "@/components/shared/file-dropzone";
 import { Button } from "@/components/ui/button";
@@ -189,10 +190,22 @@ export default function ProBannersPage() {
                 ) : null}
                 <div className="grid gap-4 sm:grid-cols-2">
                   {banner.desktop_image_url ? (
-                    <img src={banner.desktop_image_url} alt="" className="h-24 rounded-lg object-cover" />
+                    <AppImage
+                      src={banner.desktop_image_url}
+                      alt=""
+                      width={192}
+                      height={96}
+                      className="h-24 w-auto rounded-lg object-cover"
+                    />
                   ) : null}
                   {banner.mobile_image_url ? (
-                    <img src={banner.mobile_image_url} alt="" className="h-24 rounded-lg object-cover" />
+                    <AppImage
+                      src={banner.mobile_image_url}
+                      alt=""
+                      width={192}
+                      height={96}
+                      className="h-24 w-auto rounded-lg object-cover"
+                    />
                   ) : null}
                 </div>
               </CardContent>
@@ -219,7 +232,13 @@ export default function ProBannersPage() {
               <div className="flex flex-col gap-2">
                 <span className="text-sm font-medium">{t("desktopImage")} *</span>
                 {form.desktop_image_url ? (
-                  <img src={form.desktop_image_url} alt="" className="mb-2 h-20 rounded object-cover" />
+                  <AppImage
+                    src={form.desktop_image_url}
+                    alt=""
+                    width={160}
+                    height={80}
+                    className="mb-2 h-20 w-auto rounded object-cover"
+                  />
                 ) : null}
                 <FileDropzone
                   onDrop={(files) => handleUpload("desktop_image_url", files)}
@@ -230,7 +249,13 @@ export default function ProBannersPage() {
               <div className="flex flex-col gap-2">
                 <span className="text-sm font-medium">{t("mobileImage")}</span>
                 {form.mobile_image_url ? (
-                  <img src={form.mobile_image_url} alt="" className="mb-2 h-20 rounded object-cover" />
+                  <AppImage
+                    src={form.mobile_image_url}
+                    alt=""
+                    width={160}
+                    height={80}
+                    className="mb-2 h-20 w-auto rounded object-cover"
+                  />
                 ) : null}
                 <FileDropzone
                   onDrop={(files) => handleUpload("mobile_image_url", files)}

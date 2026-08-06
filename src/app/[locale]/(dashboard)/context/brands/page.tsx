@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { PageHeader } from "@/components/shared/page-elements";
 import { PageTransition } from "@/components/shared/page-transition";
+import { AppImage } from "@/components/shared/app-image";
 import { FormField } from "@/components/shared/form-field";
 import { FileDropzone } from "@/components/shared/file-dropzone";
 import { Button } from "@/components/ui/button";
@@ -188,7 +189,13 @@ export default function BrandsPage() {
               </CardHeader>
               <CardContent>
                 {brand.logo_url ? (
-                  <img src={brand.logo_url} alt={brand.title} className="h-20 w-full rounded-lg object-contain" />
+                  <AppImage
+                    src={brand.logo_url}
+                    alt={brand.title}
+                    width={320}
+                    height={80}
+                    className="h-20 w-full rounded-lg object-contain"
+                  />
                 ) : (
                   <div className="flex h-20 items-center justify-center rounded-lg border border-dashed border-border text-sm text-muted-foreground">
                     {t("uploadImage")}
@@ -233,7 +240,13 @@ export default function BrandsPage() {
             <div className="flex flex-col gap-2">
               <span className="text-sm font-medium">{t("images")} *</span>
               {form.logo_url ? (
-                <img src={form.logo_url} alt="" className="mb-2 h-16 rounded object-contain" />
+                <AppImage
+                  src={form.logo_url}
+                  alt=""
+                  width={128}
+                  height={64}
+                  className="mb-2 h-16 w-auto rounded object-contain"
+                />
               ) : null}
               <FileDropzone onDrop={handleLogoUpload} accept={{ "image/*": [] }} label={t("uploadImage")} />
             </div>

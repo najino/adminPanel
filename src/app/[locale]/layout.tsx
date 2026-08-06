@@ -5,18 +5,23 @@ import { routing } from "@/i18n/routing";
 import { QueryProvider, ThemeProvider, AuthProvider, ZodI18nProvider } from "@/providers";
 import { Toaster } from "sonner";
 import { Vazirmatn, Inter } from "next/font/google";
+import { getSiteUrl } from "@/config/site";
 import "../globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+  preload: true,
+  adjustFontFallback: true,
 });
 
 const vazirmatn = Vazirmatn({
   subsets: ["arabic"],
   variable: "--font-vazirmatn",
   display: "swap",
+  preload: true,
+  adjustFontFallback: true,
 });
 
 export function generateStaticParams() {
@@ -41,8 +46,26 @@ export default async function LocaleLayout({
   const dir = locale === "fa" ? "rtl" : "ltr";
   const fontClass = locale === "fa" ? vazirmatn.variable : inter.variable;
 
+  const siteUrl = getSiteUrl();
+  let apiOrigin: string | null = null;
+  try {
+    const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL;
+    if (apiBase) apiOrigin = new URL(apiBase).origin;
+  } catch {
+    apiOrigin = null;
+  }
+
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning className={fontClass}>
+      <head>
+        {apiOrigin && (
+          <>
+            <link rel="preconnect" href={apiOrigin} crossOrigin="anonymous" />
+            <link rel="dns-prefetch" href={apiOrigin} />
+          </>
+        )}
+        {siteUrl && siteUrl !== apiOrigin && <link rel="dns-prefetch" href={siteUrl} />}
+      </head>
       <body
         className="min-h-screen bg-background font-sans antialiased"
         suppressHydrationWarning
@@ -53,7 +76,11 @@ export default async function LocaleLayout({
               <QueryProvider>
                 <AuthProvider>
                   {children}
-                  <Toaster richColors position="top-center" toastOptions={{ className: "font-sans" }} />
+                  <Toaster
+                    richColors
+                    position="top-center"
+                    toastOptions={{ className: "font-sans" }}
+                  />
                 </AuthProvider>
               </QueryProvider>
             </ThemeProvider>

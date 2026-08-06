@@ -18,7 +18,8 @@ import { QuickActions } from "@/components/shared/quick-actions";
 import { ActivityTimeline, type ActivityItem } from "@/components/shared/activity-timeline";
 import { SectionCard } from "@/components/shared/section-card";
 import { DataTable } from "@/components/tables/data-table";
-import { SalesChart } from "@/components/charts/sales-chart";
+import { SalesChartLazy } from "@/components/shared/lazy-widgets";
+import { AppImage } from "@/components/shared/app-image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -157,9 +158,11 @@ export default function DashboardPage() {
       cell: ({ row }) => (
         <div className="flex items-center gap-3">
           {row.original.images[0] && (
-            <img
+            <AppImage
               src={row.original.images[0]}
               alt={row.original.name}
+              width={40}
+              height={40}
               className="size-10 rounded-xl object-cover ring-1 ring-border"
             />
           )}
@@ -249,7 +252,7 @@ export default function DashboardPage() {
                   {t("chart.empty")}
                 </p>
               ) : (
-                <SalesChart data={chartData} />
+                <SalesChartLazy data={chartData} />
               )}
             </TabsContent>
           </Tabs>

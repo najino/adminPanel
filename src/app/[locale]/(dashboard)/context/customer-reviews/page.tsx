@@ -8,6 +8,7 @@ import { Check, Plus, Trash2, X } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { PageHeader } from "@/components/shared/page-elements";
 import { PageTransition } from "@/components/shared/page-transition";
+import { AppImage } from "@/components/shared/app-image";
 import { FormField } from "@/components/shared/form-field";
 import { FileDropzone } from "@/components/shared/file-dropzone";
 import { DataTable } from "@/components/tables/data-table";
@@ -301,7 +302,13 @@ export default function CustomerReviewsPage() {
             <div className="flex flex-col gap-2">
               <span className="text-sm font-medium">{t("photo")}</span>
               {form.photo_url ? (
-                <img src={form.photo_url} alt="" className="mb-2 size-16 rounded-full object-cover" />
+                <AppImage
+                  src={form.photo_url}
+                  alt=""
+                  width={64}
+                  height={64}
+                  className="mb-2 size-16 rounded-full object-cover"
+                />
               ) : null}
               <FileDropzone
                 onDrop={handlePhotoUpload}

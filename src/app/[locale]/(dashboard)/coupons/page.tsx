@@ -41,7 +41,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { getCoupons, createCoupon, deleteCoupon } from "@/services/data.service";
-import { JalaliDatePicker } from "@/components/shared/jalali-date-picker";
+import { JalaliDatePickerLazy } from "@/components/shared/lazy-widgets";
 import { formatDate } from "@/lib/utils";
 import { describeApiError } from "@/lib/api-error";
 import type { Coupon } from "@/types";
@@ -225,7 +225,7 @@ export default function CouponsPage() {
                     name="expiryDate"
                     control={control}
                     render={({ field }) => (
-                      <JalaliDatePicker
+                      <JalaliDatePickerLazy
                         id="coupon-expiry"
                         value={field.value}
                         onChange={field.onChange}

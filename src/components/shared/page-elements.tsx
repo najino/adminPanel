@@ -5,7 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { TrendingDown, TrendingUp, Inbox, type LucideIcon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
-import { Sparkline, sparkFromTrend } from "@/components/charts/sparkline";
+import { sparkFromTrend } from "@/components/charts/spark-utils";
+import { SparklineLazy } from "@/components/shared/lazy-widgets";
 
 const statusVariants: Record<
   string,
@@ -82,7 +83,7 @@ export function StatCard({
     >
       {spark && !isLoading && (
         <div className={cn("w-full", isPositive ? "spark-glow" : "spark-glow-down")}>
-          <Sparkline data={spark} positive={isPositive} color="auto" className="h-12" />
+          <SparklineLazy data={spark} positive={isPositive} color="auto" className="h-12" />
         </div>
       )}
 
