@@ -259,7 +259,10 @@ function toBrandRequestBody(
   if (mode === "create") {
     const create = payload as CreateBrandPayload;
     body.name = create.name;
-    body.slug = create.slug || slugify(create.name);
+    body.slug = create.slug?.trim()
+      ? slugify(create.slug, "product")
+      : slugify(create.name, "product");
+
     body.description = create.description ?? "";
     body.is_active = create.is_active ?? true;
     if (create.logo_url?.trim()) body.logo_url = create.logo_url.trim();
@@ -282,7 +285,9 @@ export async function createAdminBrand(payload: CreateBrandPayload): Promise<Adm
     const brand: AdminBrand = {
       id: `brand-${Date.now()}`,
       name: payload.name,
-      slug: payload.slug ?? slugify(payload.name),
+      slug: payload.slug?.trim()
+        ? slugify(payload.slug, "brand")
+        : slugify(payload.name, "brand"),
       description: payload.description,
       logo_url: payload.logo_url,
       is_active: payload.is_active ?? true,
@@ -565,7 +570,7 @@ function mockProductToAdmin(product: (typeof mockProducts)[number]): AdminProduc
   return {
     id: product.id,
     name: product.name,
-    slug: slugify(product.name),
+    slug: slugify(product.name, "product"),
     description: product.description,
     short_description: undefined,
     price: product.price,

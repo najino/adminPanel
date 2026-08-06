@@ -1,5 +1,6 @@
 import { apiClient } from "@/api/client";
 import { IS_MOCK_MODE } from "@/config/mock";
+import { slugify } from "@/lib/utils";
 import type {
   AdminProject,
   AdminProjectCategory,
@@ -34,16 +35,7 @@ function unwrapList(payload: unknown): Record<string, unknown>[] {
 }
 
 export function toProjectSlug(text: string): string {
-  const slug = text
-    .normalize("NFKC")
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, "-")
-    .replace(/[^\p{L}\p{N}-]+/gu, "")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "")
-    .slice(0, 255);
-  return slug || `project-${Date.now()}`;
+  return slugify(text, "project").slice(0, 255);
 }
 
 function mapCategory(item: Record<string, unknown>): AdminProjectCategory {

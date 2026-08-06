@@ -39,7 +39,7 @@ import {
   uploadProductImage,
 } from "@/services/product.service";
 import type { AdminProductStatus, ProductImagePayload } from "@/types/api/products";
-import { cn } from "@/lib/utils";
+import { cn, slugify } from "@/lib/utils";
 
 const productSchema = z.object({
   name: z.string().min(1).max(300),
@@ -57,15 +57,6 @@ const productSchema = z.object({
 });
 
 type ProductForm = z.infer<typeof productSchema>;
-
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/[\s_]+/g, "-")
-    .replace(/-+/g, "-");
-}
 
 export default function CreateProductPage() {
   const t = useTranslations("products");

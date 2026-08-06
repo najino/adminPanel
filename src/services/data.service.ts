@@ -38,6 +38,7 @@ import type {
   SeoSettings,
   AdminNotification,
 } from "@/types";
+import { slugify } from "@/lib/utils";
 
 const USE_MOCK = IS_MOCK_MODE;
 const ADMIN = "/admin";
@@ -420,15 +421,7 @@ export async function createCategory(name: string): Promise<Category> {
     return cat;
   }
   const trimmed = name.trim();
-  const slug =
-    trimmed
-      .normalize("NFKC")
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^\p{L}\p{N}-]+/gu, "")
-      .replace(/-+/g, "-")
-      .replace(/^-|-$/g, "")
-      .slice(0, 200) || `cat-${Date.now()}`;
+  const slug = slugify(trimmed, "cat").slice(0, 200);
 
   const { data } = await apiClient.post<Record<string, unknown>>(`${ADMIN}/categories`, {
     name: trimmed,

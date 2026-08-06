@@ -41,7 +41,7 @@ import {
   uploadProductImage,
 } from "@/services/product.service";
 import type { AdminProductStatus, ProductImagePayload } from "@/types/api/products";
-import { cn } from "@/lib/utils";
+import { cn, slugify } from "@/lib/utils";
 
 const PRODUCT_STATUSES = ["draft", "active", "archived"] as const;
 
@@ -132,15 +132,6 @@ function focusFormField(field: string) {
       target.focus();
     }
   }
-}
-
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/[\s_]+/g, "-")
-    .replace(/-+/g, "-");
 }
 
 export default function EditProductPage() {
