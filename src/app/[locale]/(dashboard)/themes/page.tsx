@@ -3,11 +3,10 @@
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { ExternalLink } from "lucide-react";
+import { Eye } from "lucide-react";
 import { PageHeader } from "@/components/shared/page-elements";
 import { PageTransition } from "@/components/shared/page-transition";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { getThemes } from "@/services/data.service";
 
 export default function ThemesPage() {
@@ -27,33 +26,38 @@ export default function ThemesPage() {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {themes.map((theme: { id: string; name: string; description: string }) => (
-            <article key={theme.id}>
+            <article key={theme.id} className="relative">
               <Card className="overflow-hidden">
-              <div
-                className="h-32"
-                style={{
-                  background:
-                    theme.id === "bold-dark"
-                      ? "linear-gradient(135deg, #1a1a2e, #16213e)"
-                      : theme.id === "minimal-light"
-                        ? "linear-gradient(135deg, #f8fafc, #e2e8f0)"
-                        : "linear-gradient(135deg, #1e3a5f, #3b82f6)",
-                }}
-                aria-hidden
-              />
-              <CardHeader>
-                <CardTitle>{theme.name}</CardTitle>
-                <CardDescription>{theme.description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button asChild variant="outline" className="w-full">
-                  <Link href={`/checkout/themes/${theme.id}`}>
-                    <ExternalLink className="me-2 h-4 w-4" aria-hidden />
+                <div
+                  className="h-32"
+                  style={{
+                    background:
+                      theme.id === "bold-dark"
+                        ? "linear-gradient(135deg, #1a1a2e, #16213e)"
+                        : theme.id === "minimal-light"
+                          ? "linear-gradient(135deg, #f8fafc, #e2e8f0)"
+                          : "linear-gradient(135deg, #1e3a5f, #3b82f6)",
+                  }}
+                  aria-hidden
+                />
+                <CardHeader>
+                  <CardTitle>
+                    <Link
+                      href={`/checkout/themes/${theme.id}`}
+                      className="stretched-link outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    >
+                      {theme.name}
+                    </Link>
+                  </CardTitle>
+                  <CardDescription>{theme.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <span className="inline-flex h-9 w-full items-center justify-center gap-2 rounded-md border border-input bg-background px-4 text-sm font-medium shadow-xs">
+                    <Eye className="size-4" aria-hidden />
                     {t("preview")}
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
+                  </span>
+                </CardContent>
+              </Card>
             </article>
           ))}
         </div>

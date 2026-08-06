@@ -405,8 +405,8 @@ export const mockSeoSettings: SeoSettings = {
   googleAnalyticsId: "G-XXXXXXXXXX",
   gtmId: "GTM-XXXXXXX",
   facebookPixelId: "",
-  hreflangEn: "https://example.com/en",
-  hreflangFa: "https://example.com/fa",
+  hreflangEn: "",
+  hreflangFa: "",
   customJsonLd: "",
 };
 

@@ -26,21 +26,27 @@ export default function ContextOverviewPage() {
     <PageTransition>
       <PageHeader title={tp("titles.context")} description={t("overview.description")} />
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {sections.map((section) => (
-            <article key={section.href}>
-              <Link href={section.href} className="block h-full">
-                <Card className="h-full transition-colors hover:border-primary/50 hover:bg-muted/30">
-                  <CardHeader>
-                    <CardTitle className="flex items-center justify-between text-base">
-                      {t(section.titleKey)}
-                      <ArrowRight className="h-4 w-4 text-muted-foreground" aria-hidden />
-                    </CardTitle>
-                    <CardDescription>{t(section.descKey)}</CardDescription>
-                  </CardHeader>
-                </Card>
-              </Link>
+        {sections.map((section) => {
+          const title = t(section.titleKey);
+          return (
+            <article key={section.href} className="relative">
+              <Card className="h-full transition-colors hover:border-primary/50 hover:bg-muted/30">
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-between gap-2 text-base">
+                    <Link
+                      href={section.href}
+                      className="stretched-link text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                    >
+                      {title}
+                    </Link>
+                    <ArrowRight className="size-4 shrink-0 text-muted-foreground" aria-hidden />
+                  </CardTitle>
+                  <CardDescription>{t(section.descKey)}</CardDescription>
+                </CardHeader>
+              </Card>
             </article>
-          ))}
+          );
+        })}
       </div>
     </PageTransition>
   );

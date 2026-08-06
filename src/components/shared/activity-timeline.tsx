@@ -50,45 +50,48 @@ export function ActivityTimeline({
       {items.map((item, index) => {
         const meta = typeMeta[item.type];
         const Icon = meta.icon;
-        const content = (
-          <div className="flex gap-3">
-            <div className="flex flex-col items-center">
-              <div
-                className={cn(
-                  "flex size-10 shrink-0 items-center justify-center rounded-xl",
-                  meta.className,
-                )}
-              >
-                <Icon className="size-4" aria-hidden />
-              </div>
-              {index < items.length - 1 && (
-                <div className="my-1 w-px flex-1 bg-border" aria-hidden />
-              )}
-            </div>
-            <div className="min-w-0 flex-1 pb-5">
-              <div className="flex items-start justify-between gap-2">
-                <p className="text-sm font-semibold text-foreground">{item.title}</p>
-                <time className="shrink-0 text-xs text-muted-foreground tabular-nums">
-                  {item.time}
-                </time>
-              </div>
-              <p className="mt-0.5 text-sm text-muted-foreground">{item.description}</p>
-            </div>
-          </div>
-        );
 
         return (
-          <li key={item.id}>
-            {item.href ? (
-              <Link
-                href={item.href}
-                className="-mx-2 block rounded-xl px-2 transition-colors hover:bg-muted/40"
-              >
-                {content}
-              </Link>
-            ) : (
-              content
+          <li
+            key={item.id}
+            className={cn(
+              "relative -mx-2 rounded-xl px-2 transition-colors",
+              item.href && "hover:bg-muted/40",
             )}
+          >
+            <div className="flex gap-3">
+              <div className="flex flex-col items-center">
+                <div
+                  className={cn(
+                    "flex size-10 shrink-0 items-center justify-center rounded-xl",
+                    meta.className,
+                  )}
+                >
+                  <Icon className="size-4" aria-hidden />
+                </div>
+                {index < items.length - 1 && (
+                  <div className="my-1 w-px flex-1 bg-border" aria-hidden />
+                )}
+              </div>
+              <div className="min-w-0 flex-1 pb-5">
+                <div className="flex items-start justify-between gap-2">
+                  {item.href ? (
+                    <Link
+                      href={item.href}
+                      className="stretched-link text-sm font-semibold text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    >
+                      {item.title}
+                    </Link>
+                  ) : (
+                    <p className="text-sm font-semibold text-foreground">{item.title}</p>
+                  )}
+                  <time className="relative z-[2] shrink-0 text-xs text-muted-foreground tabular-nums">
+                    {item.time}
+                  </time>
+                </div>
+                <p className="mt-0.5 text-sm text-muted-foreground">{item.description}</p>
+              </div>
+            </div>
           </li>
         );
       })}

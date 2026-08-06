@@ -705,7 +705,7 @@
     },
     "recentOrders": {
       "title": "Recent Orders",
-      "seeAll": "See all",
+      "seeAll": "See all orders",
       "empty": "No orders yet",
       "columns": {
         "products": "Products",
@@ -725,6 +725,7 @@
     },
     "lowStock": {
       "title": "Low Stock Products",
+      "seeAll": "See all products",
       "columns": {
         "product": "Product",
         "stock": "Stock"

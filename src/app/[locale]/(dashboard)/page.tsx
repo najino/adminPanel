@@ -299,7 +299,7 @@ export default function DashboardPage() {
         <SectionCard
           title={t("lowStock.title")}
           href="/products"
-          linkLabel={tCommon("seeAll")}
+          linkLabel={t("lowStock.seeAll")}
         >
           <DataTable
             columns={lowStockColumns}

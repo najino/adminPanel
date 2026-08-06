@@ -10,6 +10,8 @@ import { PageTransition } from "@/components/shared/page-transition";
 import { AppImage } from "@/components/shared/app-image";
 import { FormField } from "@/components/shared/form-field";
 import { FileDropzone } from "@/components/shared/file-dropzone";
+import { SafeExternalLink } from "@/components/shared/safe-external-link";
+import { isAbsoluteHttpUrl } from "@/lib/seo/link-utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -187,7 +189,16 @@ export default function ProBannersPage() {
               </CardHeader>
               <CardContent className="flex flex-col gap-3">
                 {banner.link_url ? (
-                  <p className="text-sm text-muted-foreground">{banner.link_url}</p>
+                  isAbsoluteHttpUrl(banner.link_url) ? (
+                    <SafeExternalLink
+                      href={banner.link_url}
+                      className="relative z-[2] text-sm text-primary hover:underline"
+                    >
+                      {banner.link_url}
+                    </SafeExternalLink>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">{banner.link_url}</p>
+                  )
                 ) : null}
                 <div className="grid gap-4 sm:grid-cols-2">
                   {banner.desktop_image_url ? (

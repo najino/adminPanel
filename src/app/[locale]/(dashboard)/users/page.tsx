@@ -68,8 +68,11 @@ export default function UsersPage() {
       header: t("table.columns.actions"),
       cell: ({ row }) => (
         <Button variant="ghost" size="sm" asChild>
-          <Link href={`/users/${row.original.id}`}>
-            <Eye className="h-4 w-4" />
+          <Link
+            href={`/users/${row.original.id}`}
+            aria-label={`${tCommon("view")}: ${row.original.name}`}
+          >
+            <Eye className="h-4 w-4" aria-hidden />
           </Link>
         </Button>
       ),

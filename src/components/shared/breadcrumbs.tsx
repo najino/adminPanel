@@ -33,6 +33,12 @@ function getLabelForPath(path: string, t: (key: string) => string): string {
   return segment.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+/** Prefer real nav destinations; skip synthetic intermediate segments that only 404. */
+function isNavigableHref(href: string): boolean {
+  if (href === "/") return true;
+  return navFlat.some((n) => n.href === href);
+}
+
 export function Breadcrumbs({ className }: { className?: string }) {
   const pathname = usePathname();
   const t = useTranslations("navigation");
@@ -50,35 +56,43 @@ export function Breadcrumbs({ className }: { className?: string }) {
   return (
     <nav
       aria-label={tCommon("a11y.breadcrumb")}
-      className={cn("mb-4 flex items-center gap-1.5 text-sm", className)}
+      className={cn("mb-4 text-sm", className)}
     >
-      <Link
-        href="/"
-        className="flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-        aria-label={tCommon("home")}
-      >
-        <Home className="size-3.5" aria-hidden />
-      </Link>
-      {crumbs.map((crumb, i) => {
-        const isLast = i === crumbs.length - 1;
-        return (
-          <div key={crumb.href} className="flex items-center gap-1.5">
-            <ChevronRight className="size-3.5 text-muted-foreground/50" aria-hidden />
-            {isLast ? (
-              <span className="font-medium text-foreground" aria-current="page">
-                {crumb.label}
-              </span>
-            ) : (
-              <Link
-                href={crumb.href}
-                className="text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {crumb.label}
-              </Link>
-            )}
-          </div>
-        );
-      })}
+      <ol className="flex flex-wrap items-center gap-1.5">
+        <li>
+          <Link
+            href="/"
+            className="flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            aria-label={tCommon("home")}
+          >
+            <Home className="size-3.5" aria-hidden />
+          </Link>
+        </li>
+        {crumbs.map((crumb, i) => {
+          const isLast = i === crumbs.length - 1;
+          const canLink = !isLast && isNavigableHref(crumb.href);
+
+          return (
+            <li key={crumb.href} className="flex items-center gap-1.5">
+              <ChevronRight className="size-3.5 text-muted-foreground/50" aria-hidden />
+              {isLast ? (
+                <span className="font-medium text-foreground" aria-current="page">
+                  {crumb.label}
+                </span>
+              ) : canLink ? (
+                <Link
+                  href={crumb.href}
+                  className="text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {crumb.label}
+                </Link>
+              ) : (
+                <span className="text-muted-foreground">{crumb.label}</span>
+              )}
+            </li>
+          );
+        })}
+      </ol>
     </nav>
   );
 }

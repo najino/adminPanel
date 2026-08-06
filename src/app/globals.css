@@ -382,4 +382,12 @@
   .jalali-date-picker .rmdp-header-values {
     @apply font-medium text-foreground;
   }
+
+  /* Expand a title link’s hit area across a relative card (Link.md stretched-link). */
+  .stretched-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
 }

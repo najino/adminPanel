@@ -702,7 +702,7 @@
     },
     "recentOrders": {
       "title": "سفارش‌های اخیر",
-      "seeAll": "مشاهده همه",
+      "seeAll": "مشاهده همه سفارش‌ها",
       "columns": {
         "products": "محصولات",
         "category": "دسته‌بندی",
@@ -721,6 +721,7 @@
     },
     "lowStock": {
       "title": "محصولات با موجودی کم",
+      "seeAll": "مشاهده همه محصولات",
       "columns": {
         "product": "محصول",
         "stock": "موجودی"
