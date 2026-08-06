@@ -9,10 +9,13 @@ export default function NotFoundPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-4 text-center">
-      <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-        {t("heading")}
+      <p
+        className="text-7xl font-bold tracking-tight text-muted-foreground/40"
+        aria-hidden
+      >
+        404
       </p>
-      <h1 className="mt-4 text-7xl font-bold tracking-tight">404</h1>
+      <h1 className="mt-4 text-2xl font-bold tracking-tight lg:text-3xl">{t("heading")}</h1>
       <p className="mt-4 max-w-md text-muted-foreground">{t("message")}</p>
       <Button asChild className="mt-8">
         <Link href="/">{t("backButton")}</Link>

@@ -101,9 +101,9 @@ export default function SetStylePage() {
               className="rounded-xl border border-border p-6"
               style={{ fontFamily, borderColor: primaryColor }}
             >
-              <h3 className="text-lg font-bold" style={{ color: primaryColor }}>
+              <p className="text-lg font-bold" style={{ color: primaryColor }}>
                 Store Preview
-              </h3>
+              </p>
               <p className="mt-2 text-sm text-muted-foreground">
                 {t("fontsHint")}
               </p>

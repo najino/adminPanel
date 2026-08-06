@@ -174,7 +174,7 @@ export default function BrandsPage() {
               <Card className="h-full">
               <CardHeader className="flex flex-row items-start justify-between">
                 <div>
-                  <CardTitle>{brand.title}</CardTitle>
+                  <CardTitle as="h3">{brand.title}</CardTitle>
                   {brand.description ? (
                     <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{brand.description}</p>
                   ) : null}

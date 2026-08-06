@@ -41,7 +41,7 @@ export default function ThemesPage() {
                   aria-hidden
                 />
                 <CardHeader>
-                  <CardTitle>
+                  <CardTitle as="h3">
                     <Link
                       href={`/checkout/themes/${theme.id}`}
                       className="stretched-link outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"

@@ -175,7 +175,7 @@ export default function ProBannersPage() {
             <article key={banner.id}>
               <Card>
               <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>
+                <CardTitle as="h3">
                   {t("banner")} {index + 1}
                 </CardTitle>
                 <div className="flex gap-1">

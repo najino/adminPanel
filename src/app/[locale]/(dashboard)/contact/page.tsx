@@ -118,7 +118,9 @@ export default function ContactPage() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-base">Reply</CardTitle>
+                  <CardTitle as="div" className="text-base">
+                    Reply
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-3">
                   <div className="flex flex-col gap-2">

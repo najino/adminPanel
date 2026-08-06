@@ -32,7 +32,7 @@ export default function ContextOverviewPage() {
             <article key={section.href} className="relative">
               <Card className="h-full transition-colors hover:border-primary/50 hover:bg-muted/30">
                 <CardHeader>
-                  <CardTitle className="flex items-center justify-between gap-2 text-base">
+                  <CardTitle as="h3" className="flex items-center justify-between gap-2 text-base">
                     <Link
                       href={section.href}
                       className="stretched-link text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"

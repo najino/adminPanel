@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import { PageTransition } from "@/components/shared/page-transition";
 import { PageHeader } from "@/components/shared/page-elements";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createOrder } from "@/services/data.service";
@@ -50,10 +50,7 @@ export default function CreateOrderPage() {
       <PageHeader title={t("addButton")} />
 
       <Card>
-        <CardHeader>
-          <CardTitle>{t("addButton")}</CardTitle>
-        </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="flex flex-col gap-4">
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="flex flex-col gap-2">
