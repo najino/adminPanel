@@ -296,7 +296,7 @@ export function Sidebar({ collapsed, onNavigate }: SidebarProps) {
 
         <nav
           className="scrollbar-premium flex flex-1 flex-col gap-1 overflow-y-auto overscroll-contain"
-          aria-label="Main"
+          aria-label={tCommon("a11y.mainNavigation")}
         >
           {visibleGroups.map((group, gi) => (
             <div key={group.labelKey ?? `g-${gi}`} className="flex flex-col gap-1">

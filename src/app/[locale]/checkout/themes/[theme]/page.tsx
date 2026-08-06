@@ -58,20 +58,20 @@ export default async function CheckoutThemePreviewPage({
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: theme.bg, color: theme.text }}>
-      <div className="mx-auto max-w-2xl px-4 py-8">
-        <div className="mb-6 flex items-center justify-between">
+      <main className="mx-auto max-w-2xl px-4 py-8">
+        <header className="mb-6 flex items-center justify-between">
           <Button asChild variant="ghost" style={{ color: theme.muted }}>
             <Link href="/themes">
-              <ArrowLeft className="me-2 h-4 w-4" />
+              <ArrowLeft className="me-2 h-4 w-4" aria-hidden />
               {t("backToThemes")}
             </Link>
           </Button>
           <span className="text-sm" style={{ color: theme.muted }}>
             {t("previewMode")}
           </span>
-        </div>
+        </header>
 
-        <div
+        <article
           className="rounded-2xl border p-6 shadow-lg"
           style={{ backgroundColor: theme.card, borderColor: theme.border }}
         >
@@ -139,11 +139,11 @@ export default async function CheckoutThemePreviewPage({
             className="flex w-full items-center justify-center gap-2 rounded-lg py-3 font-semibold transition-opacity hover:opacity-90"
             style={{ backgroundColor: theme.accent, color: themeId === "minimal-light" ? "#fff" : theme.card }}
           >
-            <Lock className="h-4 w-4" />
+            <Lock className="h-4 w-4" aria-hidden />
             Complete Order — $158.00
           </button>
-        </div>
-      </div>
+        </article>
+      </main>
     </div>
   );
 }

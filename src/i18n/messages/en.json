@@ -203,7 +203,19 @@
       }
     },
     "darkMode": "Dark mode",
-    "quickCreate": "Quick create"
+    "quickCreate": "Quick create",
+    "a11y": {
+      "skipToContent": "Skip to main content",
+      "mainNavigation": "Main navigation",
+      "siteHeader": "Site header",
+      "breadcrumb": "Breadcrumb",
+      "pagination": "Pagination",
+      "mainContent": "Main content",
+      "siteFooter": "Site footer",
+      "footerCopyright": "© {year} {appName}",
+      "previousPage": "Previous page",
+      "nextPage": "Next page"
+    }
   },
   "contact": {
     "pageTitle": "All Contact us Comments",
@@ -654,6 +666,7 @@
       "description": "This is React.js Ecommerce Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template"
     },
     "kpi": {
+      "sectionLabel": "Key metrics",
       "totalRevenue": "Total Revenue",
       "totalOrders": "Total Orders",
       "totalCustomers": "Total Customers",

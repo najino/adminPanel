@@ -65,7 +65,10 @@ export function Header({ onToggleSidebar }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-3 border-b border-border/70 bg-card/80 px-4 backdrop-blur-xl lg:px-6 dark:border-white/5 dark:bg-card/60">
+    <header
+      aria-label={t("a11y.siteHeader")}
+      className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-3 border-b border-border/70 bg-card/80 px-4 backdrop-blur-xl lg:px-6 dark:border-white/5 dark:bg-card/60"
+    >
       <Button
         type="button"
         variant="ghost"

@@ -18,7 +18,10 @@ export function AuthLayout({
 }) {
   return (
     <div className="grid min-h-screen lg:grid-cols-2">
-      <div className="relative hidden flex-col justify-between overflow-hidden bg-primary p-10 text-primary-foreground lg:flex">
+      <aside
+        aria-label="Brand"
+        className="relative hidden flex-col justify-between overflow-hidden bg-primary p-10 text-primary-foreground lg:flex"
+      >
         <div className="auth-grid-bg absolute inset-0 opacity-30" aria-hidden />
         <div className="relative z-10">
           <Link href="/" className="flex items-center gap-2.5 font-semibold tracking-tight">
@@ -46,9 +49,9 @@ export function AuthLayout({
         <p className="relative z-10 text-xs text-primary-foreground/60">
           © {new Date().getFullYear()} پنل ادمین فروشگاهی
         </p>
-      </div>
+      </aside>
 
-      <div className="flex flex-col items-center justify-center px-4 py-12 sm:px-8">
+      <main className="flex flex-col items-center justify-center px-4 py-12 sm:px-8">
         <div className="mb-8 flex w-full max-w-[400px] flex-col gap-2 lg:hidden">
           <Link href="/" className="flex items-center gap-2 font-semibold text-primary">
             <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
@@ -59,15 +62,15 @@ export function AuthLayout({
         </div>
 
         <div className="w-full max-w-[400px]">
-          <div className="mb-8 flex flex-col gap-1.5">
+          <header className="mb-8 flex flex-col gap-1.5">
             <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
             {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
-          </div>
+          </header>
           <div className="rounded-xl border border-border bg-card p-6 shadow-elevated-md">
             {children}
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

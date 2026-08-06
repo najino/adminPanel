@@ -199,7 +199,19 @@
       }
     },
     "darkMode": "حالت تاریک",
-    "quickCreate": "ایجاد سریع"
+    "quickCreate": "ایجاد سریع",
+    "a11y": {
+      "skipToContent": "پرش به محتوای اصلی",
+      "mainNavigation": "ناوبری اصلی",
+      "siteHeader": "سربرگ سایت",
+      "breadcrumb": "مسیر راهنما",
+      "pagination": "صفحه‌بندی",
+      "mainContent": "محتوای اصلی",
+      "siteFooter": "پاورقی سایت",
+      "footerCopyright": "© {year} {appName}",
+      "previousPage": "صفحه قبل",
+      "nextPage": "صفحه بعد"
+    }
   },
   "contact": {
     "pageTitle": "همه پیام‌های تماس با ما",
@@ -652,6 +664,7 @@
       "description": "صفحه داشبورد فروشگاه React.js برای TailAdmin - قالب پنل مدیریت React.js با Tailwind CSS"
     },
     "kpi": {
+      "sectionLabel": "شاخص‌های کلیدی",
       "totalRevenue": "درآمد کل",
       "totalOrders": "کل سفارش‌ها",
       "totalCustomers": "کل مشتریان",

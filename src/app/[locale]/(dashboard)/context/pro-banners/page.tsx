@@ -170,7 +170,8 @@ export default function ProBannersPage() {
       ) : (
         <div className="flex flex-col gap-4">
           {banners.map((banner, index) => (
-            <Card key={banner.id}>
+            <article key={banner.id}>
+              <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>
                   {t("banner")} {index + 1}
@@ -210,6 +211,7 @@ export default function ProBannersPage() {
                 </div>
               </CardContent>
             </Card>
+            </article>
           ))}
         </div>
       )}

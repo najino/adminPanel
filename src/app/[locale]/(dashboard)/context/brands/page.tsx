@@ -170,7 +170,8 @@ export default function BrandsPage() {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {brands.map((brand) => (
-            <Card key={brand.id}>
+            <article key={brand.id}>
+              <Card className="h-full">
               <CardHeader className="flex flex-row items-start justify-between">
                 <div>
                   <CardTitle>{brand.title}</CardTitle>
@@ -203,6 +204,7 @@ export default function BrandsPage() {
                 )}
               </CardContent>
             </Card>
+            </article>
           ))}
         </div>
       )}

@@ -36,6 +36,7 @@ function getLabelForPath(path: string, t: (key: string) => string): string {
 export function Breadcrumbs({ className }: { className?: string }) {
   const pathname = usePathname();
   const t = useTranslations("navigation");
+  const tCommon = useTranslations("common");
 
   const cleanPath = pathname.replace(/^\/(en|fa)/, "") || "/";
   if (cleanPath === "/") return null;
@@ -47,11 +48,14 @@ export function Breadcrumbs({ className }: { className?: string }) {
   });
 
   return (
-    <nav aria-label="Breadcrumb" className={cn("mb-4 flex items-center gap-1.5 text-sm", className)}>
+    <nav
+      aria-label={tCommon("a11y.breadcrumb")}
+      className={cn("mb-4 flex items-center gap-1.5 text-sm", className)}
+    >
       <Link
         href="/"
         className="flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-        aria-label="Dashboard"
+        aria-label={tCommon("home")}
       >
         <Home className="size-3.5" aria-hidden />
       </Link>

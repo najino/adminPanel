@@ -27,7 +27,8 @@ export default function ThemesPage() {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {themes.map((theme: { id: string; name: string; description: string }) => (
-            <Card key={theme.id} className="overflow-hidden">
+            <article key={theme.id}>
+              <Card className="overflow-hidden">
               <div
                 className="h-32"
                 style={{
@@ -38,6 +39,7 @@ export default function ThemesPage() {
                         ? "linear-gradient(135deg, #f8fafc, #e2e8f0)"
                         : "linear-gradient(135deg, #1e3a5f, #3b82f6)",
                 }}
+                aria-hidden
               />
               <CardHeader>
                 <CardTitle>{theme.name}</CardTitle>
@@ -46,12 +48,13 @@ export default function ThemesPage() {
               <CardContent>
                 <Button asChild variant="outline" className="w-full">
                   <Link href={`/checkout/themes/${theme.id}`}>
-                    <ExternalLink className="me-2 h-4 w-4" />
+                    <ExternalLink className="me-2 h-4 w-4" aria-hidden />
                     {t("preview")}
                   </Link>
                 </Button>
               </CardContent>
             </Card>
+            </article>
           ))}
         </div>
       )}

@@ -145,7 +145,7 @@ export function PageHeader({
   showBreadcrumbs?: boolean;
 }) {
   return (
-    <header className="mb-8 flex flex-col gap-4">
+    <div className="mb-8 flex flex-col gap-4">
       {showBreadcrumbs && <Breadcrumbs className="mb-0" />}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex flex-col gap-1.5">
@@ -161,7 +161,7 @@ export function PageHeader({
         </div>
         {action && <div className="flex shrink-0 items-center gap-2">{action}</div>}
       </div>
-    </header>
+    </div>
   );
 }
 

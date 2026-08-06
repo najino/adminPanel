@@ -168,7 +168,10 @@ export function DataTable<TData, TValue>({
       </div>
 
       {table.getPageCount() > 1 && (
-        <div className="flex items-center justify-between gap-4">
+        <nav
+          aria-label={t("a11y.pagination")}
+          className="flex items-center justify-between gap-4"
+        >
           <p className="text-sm text-muted-foreground tabular-nums">
             {t("pageOf", {
               current: table.getState().pagination.pageIndex + 1,
@@ -181,7 +184,7 @@ export function DataTable<TData, TValue>({
               size="icon-sm"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
-              aria-label="Previous page"
+              aria-label={t("a11y.previousPage")}
             >
               <ChevronLeft className="size-4" />
             </Button>
@@ -190,12 +193,12 @@ export function DataTable<TData, TValue>({
               size="icon-sm"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
-              aria-label="Next page"
+              aria-label={t("a11y.nextPage")}
             >
               <ChevronRight className="size-4" />
             </Button>
           </div>
-        </div>
+        </nav>
       )}
     </div>
   );

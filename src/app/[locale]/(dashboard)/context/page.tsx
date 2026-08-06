@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import { PageHeader } from "@/components/shared/page-elements";
 import { PageTransition } from "@/components/shared/page-transition";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const sections = [
   { href: "/context/hero", titleKey: "overview.heroCardTitle", descKey: "overview.heroCardDescription" },
@@ -27,18 +27,19 @@ export default function ContextOverviewPage() {
       <PageHeader title={tp("titles.context")} description={t("overview.description")} />
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {sections.map((section) => (
-            <Link key={section.href} href={section.href}>
-              <Card className="h-full transition-colors hover:border-primary/50 hover:bg-muted/30">
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-between text-base">
-                    {t(section.titleKey)}
-                    <ArrowRight className="h-4 w-4 text-muted-foreground" />
-                  </CardTitle>
-                  <CardDescription>{t(section.descKey)}</CardDescription>
-                </CardHeader>
-                <CardContent />
-              </Card>
-            </Link>
+            <article key={section.href}>
+              <Link href={section.href} className="block h-full">
+                <Card className="h-full transition-colors hover:border-primary/50 hover:bg-muted/30">
+                  <CardHeader>
+                    <CardTitle className="flex items-center justify-between text-base">
+                      {t(section.titleKey)}
+                      <ArrowRight className="h-4 w-4 text-muted-foreground" aria-hidden />
+                    </CardTitle>
+                    <CardDescription>{t(section.descKey)}</CardDescription>
+                  </CardHeader>
+                </Card>
+              </Link>
+            </article>
           ))}
       </div>
     </PageTransition>

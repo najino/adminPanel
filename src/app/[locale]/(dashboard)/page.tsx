@@ -189,7 +189,10 @@ export default function DashboardPage() {
         showBreadcrumbs={false}
       />
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <section
+        aria-label={t("kpi.sectionLabel")}
+        className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
+      >
         <StatCard
           title={t("kpi.totalRevenue")}
           value={formatCurrency(stats?.totalRevenue ?? 0)}
@@ -222,7 +225,7 @@ export default function DashboardPage() {
           icon={Package}
           accent="cyan"
         />
-      </div>
+      </section>
 
       <SectionCard title={t("quickActions.title")} className="mt-8">
         <QuickActions actions={quickActions} compact />

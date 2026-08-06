@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useAuth } from "@/providers/auth-provider";
 import { Sidebar } from "./sidebar";
 import { Header } from "./header";
@@ -17,6 +17,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   const { isLoading, isAuthenticated } = useAuth();
   const router = useRouter();
   const locale = useLocale();
+  const t = useTranslations("common");
   const sheetSide = locale === "fa" ? "right" : "left";
 
   useEffect(() => {
@@ -38,6 +39,13 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex h-screen overflow-hidden bg-muted p-3 lg:gap-4 dark:bg-background">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:z-[100] focus:rounded-xl focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground focus:shadow-elevated-md"
+      >
+        {t("a11y.skipToContent")}
+      </a>
+
       <div className="hidden shrink-0 lg:block">
         <Sidebar collapsed={collapsed} />
       </div>
@@ -61,9 +69,23 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             }
           }}
         />
-        <main className="scrollbar-premium flex-1 overflow-y-auto bg-background/40 p-4 lg:p-6 dark:bg-transparent">
+        <main
+          id="main-content"
+          tabIndex={-1}
+          aria-label={t("a11y.mainContent")}
+          className="scrollbar-premium flex-1 overflow-y-auto bg-background/40 p-4 outline-none lg:p-6 dark:bg-transparent"
+        >
           <div className={cn("mx-auto w-full max-w-[1440px]")}>{children}</div>
         </main>
+        <footer
+          aria-label={t("a11y.siteFooter")}
+          className="shrink-0 border-t border-border/70 px-4 py-3 text-center text-xs text-muted-foreground lg:px-6 dark:border-white/5"
+        >
+          {t("a11y.footerCopyright", {
+            year: new Date().getFullYear(),
+            appName: t("appName"),
+          })}
+        </footer>
       </div>
     </div>
   );
