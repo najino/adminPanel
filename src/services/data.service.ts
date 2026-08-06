@@ -800,6 +800,7 @@ export async function getSeoSettings(): Promise<SeoSettings> {
     facebookPixelId: "",
     hreflangEn: "",
     hreflangFa: "",
+    customJsonLd: String(data.custom_json_ld ?? data.json_ld ?? ""),
   };
 }
 
@@ -815,6 +816,10 @@ export async function updateSeoSettings(settings: Partial<SeoSettings>): Promise
     meta_keywords: settings.metaKeywords,
     og_image_url: settings.ogImageUrl,
     google_analytics_id: settings.googleAnalyticsId,
+    // Forwarded when/if the API adds support; ignored by older backends.
+    ...(settings.customJsonLd !== undefined
+      ? { custom_json_ld: settings.customJsonLd }
+      : {}),
   });
   return getSeoSettings();
 }

@@ -1158,6 +1158,13 @@
       "schema": {
         "title": "داده ساختاریافته (Schema.org)",
         "description": "کمک به موتورهای جستجو برای درک موجودیت کسب‌وکار شما",
+        "autoHint": "اسکیمای Organization، Product، Article و Breadcrumb به‌صورت خودکار در فروشگاه از تنظیمات سایت و محتوای صفحات تولید می‌شود.",
+        "customJsonLd": "JSON-LD سفارشی",
+        "customJsonLdPlaceholder": "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"LocalBusiness\",\n  \"name\": \"…\"\n}",
+        "customJsonLdHint": "JSON-LD خام را وارد کنید. JSON نامعتبر ذخیره نمی‌شود. Organization/Product/Article/Breadcrumb را تکرار نکنید — فروشگاه خودش آن‌ها را می‌سازد.",
+        "importFile": "وارد کردن فایل JSON",
+        "invalidJson": "JSON-LD معتبر نیست",
+        "imported": "JSON-LD به ویرایشگر وارد شد",
         "schemaType": "نوع Schema",
         "schemaTypeHint": "نوعی که بهترین توصیف موجودیت شماست. «Organization» برای بیشتر کسب‌وکارها مناسب است.",
         "name": "نام",

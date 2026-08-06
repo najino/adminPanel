@@ -180,6 +180,8 @@ export interface SeoSettings {
   facebookPixelId: string;
   hreflangEn: string;
   hreflangFa: string;
+  /** Raw JSON-LD for specialists (validated before save). */
+  customJsonLd?: string;
 }
 
 export interface PaginatedResponse<T> {

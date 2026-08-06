@@ -407,6 +407,7 @@ export const mockSeoSettings: SeoSettings = {
   facebookPixelId: "",
   hreflangEn: "https://example.com/en",
   hreflangFa: "https://example.com/fa",
+  customJsonLd: "",
 };
 
 export const mockUser: User = {

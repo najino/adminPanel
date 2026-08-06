@@ -1158,6 +1158,13 @@
       "schema": {
         "title": "Structured Data (Schema.org)",
         "description": "Help search engines understand your business entity",
+        "autoHint": "Organization, Product, Article, and Breadcrumb schemas are generated automatically on the storefront from site settings and page content.",
+        "customJsonLd": "Custom JSON-LD",
+        "customJsonLdPlaceholder": "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"LocalBusiness\",\n  \"name\": \"…\"\n}",
+        "customJsonLdHint": "Paste raw JSON-LD. Invalid JSON cannot be saved. Do not duplicate Organization/Product/Article/Breadcrumb — those are emitted by the storefront.",
+        "importFile": "Import JSON file",
+        "invalidJson": "JSON-LD is not valid JSON",
+        "imported": "JSON-LD imported into the editor",
         "schemaType": "Schema Type",
         "schemaTypeHint": "The type that best describes your entity. 'Organization' works for most businesses.",
         "name": "Name",
