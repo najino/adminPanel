@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
+import { ADMIN_ROBOTS } from "@/lib/seo/metadata";
 import { AppLayout } from "@/components/layouts/app-layout";
 
 export const metadata: Metadata = {
-  robots: {
-    index: false,
-    follow: false,
-    nocache: true,
-  },
+  robots: ADMIN_ROBOTS,
 };
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {

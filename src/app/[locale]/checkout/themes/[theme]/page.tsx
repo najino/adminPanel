@@ -4,13 +4,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { ArrowLeft, CreditCard, Lock, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-export const metadata: Metadata = {
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
+import { ADMIN_ROBOTS } from "@/lib/seo/metadata";
 
 const themes = {
   "bold-dark": {
@@ -43,6 +37,19 @@ const themes = {
 } as const;
 
 type ThemeId = keyof typeof themes;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ theme: string }>;
+}): Promise<Metadata> {
+  const { theme: themeId } = await params;
+  const theme = themes[themeId as ThemeId];
+  return {
+    title: theme ? `Checkout preview: ${theme.name}` : "Checkout preview",
+    robots: ADMIN_ROBOTS,
+  };
+}
 
 export default async function CheckoutThemePreviewPage({
   params,

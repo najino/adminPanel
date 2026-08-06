@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { TrendingDown, TrendingUp, Inbox, type LucideIcon } from "lucide-react";
@@ -144,6 +146,17 @@ export function PageHeader({
   eyebrow?: string;
   showBreadcrumbs?: boolean;
 }) {
+  const tCommon = useTranslations("common");
+
+  // Client pages cannot export generateMetadata — sync tab title to H1 (Metadata.md).
+  useEffect(() => {
+    const previous = document.title;
+    document.title = `${title} | ${tCommon("appName")}`;
+    return () => {
+      document.title = previous;
+    };
+  }, [title, tCommon]);
+
   return (
     <div className="mb-8 flex flex-col gap-4">
       {showBreadcrumbs && <Breadcrumbs className="mb-0" />}

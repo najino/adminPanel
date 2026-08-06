@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
+import { ADMIN_ROBOTS } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = {
-  robots: {
-    index: false,
-    follow: false,
-    nocache: true,
-  },
+  robots: ADMIN_ROBOTS,
 };
 
 export default function AuthGroupLayout({ children }: { children: React.ReactNode }) {

@@ -175,11 +175,21 @@ export interface SeoSettings {
   ogTitle: string;
   ogDescription: string;
   ogImageUrl: string;
+  /** Storefront robots: allow indexing */
+  robotsIndex: boolean;
+  /** Storefront robots: follow links */
+  robotsFollow: boolean;
+  robotsMaxImagePreview: "none" | "standard" | "large";
+  twitterCard: "summary" | "summary_large_image";
+  twitterTitle: string;
+  twitterDescription: string;
+  twitterImageUrl: string;
   googleAnalyticsId: string;
   gtmId: string;
   facebookPixelId: string;
   hreflangEn: string;
   hreflangFa: string;
+  hreflangXDefault: string;
   /** Raw JSON-LD for specialists (validated before save). */
   customJsonLd?: string;
 }

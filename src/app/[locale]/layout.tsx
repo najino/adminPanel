@@ -1,11 +1,13 @@
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { routing } from "@/i18n/routing";
 import { QueryProvider, ThemeProvider, AuthProvider, ZodI18nProvider } from "@/providers";
 import { Toaster } from "sonner";
 import { Vazirmatn, Inter } from "next/font/google";
 import { getSiteUrl } from "@/config/site";
+import { ADMIN_ROBOTS } from "@/lib/seo/metadata";
 import "../globals.css";
 
 const inter = Inter({
@@ -26,6 +28,26 @@ const vazirmatn = Vazirmatn({
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "common" });
+  const siteUrl = getSiteUrl();
+
+  return {
+    ...(siteUrl ? { metadataBase: new URL(siteUrl) } : {}),
+    title: {
+      default: t("meta.dashboardTitle"),
+      template: `%s | ${t("appName")}`,
+    },
+    description: t("meta.dashboardDescription"),
+    robots: ADMIN_ROBOTS,
+  };
 }
 
 export default async function LocaleLayout({

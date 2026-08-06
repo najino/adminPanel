@@ -1116,7 +1116,7 @@
         "metaKeywordsPlaceholder": "کلمه۱, کلمه۲, کلمه۳",
         "metaKeywordsHint": "کلمات کلیدی با ویرگول جدا شوند. بیشتر موتورهای جستجوی مدرن این را نادیده می‌گیرند.",
         "canonicalUrl": "آدرس کانonical",
-        "canonicalUrlPlaceholder": "https://example.com",
+        "canonicalUrlPlaceholder": "https://www.your-domain.com",
         "canonicalUrlHint": "به موتورهای جستجو آدرس ترجیحی این صفحه را می‌گوید تا از محتوای تکراری جلوگیری شود.",
         "siteLanguage": "زبان سایت",
         "siteLanguageHint": "ویژگی lang را روی عنصر HTML تنظیم می‌کند و به موتورهای جستجو کمک می‌کند مخاطب مناسب را سرویس دهند.",
@@ -1142,7 +1142,14 @@
         "noArchive": "بدون بایگانی (جلوگیری از نسخه کش‌شده)",
         "noArchiveHint": "noarchive اضافه می‌شود — موتورهای جستجو نسخه کش‌شده صفحات را ذخیره نمی‌کنند.",
         "noSnippet": "بدون Snippet (مخفی کردن توضیحات متا)",
-        "noSnippetHint": "nosnippet اضافه می‌شود — گوگل snippet متنی یا پیش‌نمایش ویدیو در نتایج جستجو نشان نمی‌دهد."
+        "noSnippetHint": "nosnippet اضافه می‌شود — گوگل snippet متنی یا پیش‌نمایش ویدیو در نتایج جستجو نشان نمی‌دهد.",
+        "maxImagePreview": "حداکثر پیش‌نمایش تصویر",
+        "maxImagePreviewHint": "دستور robots مربوط به max-image-preview برای صفحات فروشگاه را کنترل می‌کند.",
+        "maxImagePreviewOptions": {
+          "none": "none",
+          "standard": "standard",
+          "large": "large"
+        }
       },
       "openGraph": {
         "title": "Open Graph (فیسبوک / لینکدین)",
@@ -1156,7 +1163,7 @@
         "ogDescriptionPlaceholder": "توضیحی که در کارت اشتراک‌گذاری نمایش داده می‌شود",
         "ogDescriptionHint": "زیر عنوان در پیش‌نمایش اشتراک اجتماعی نمایش داده می‌شود. ۱۰۰–۲۰۰ کاراکتر هدف باشد.",
         "ogImageUrl": "آدرس تصویر OG",
-        "ogImagePlaceholder": "https://example.com/og-image.jpg",
+        "ogImagePlaceholder": "https://www.your-domain.com/og-image.jpg",
         "ogImageHint": "اندازه پیشنهادی: ۱۲۰۰×۶۳۰ پیکسل. این تصویر در کارت‌های اشتراک اجتماعی نمایش داده می‌شود.",
         "ogLocale": "Locale OG",
         "ogLocaleHint": "به فیسبوک زبان و منطقه محتوای شما را می‌گوید.",
@@ -1168,6 +1175,35 @@
           "video": "video",
           "music": "music"
         }
+      },
+      "twitter": {
+        "title": "کارت توییتر",
+        "description": "ظاهر لینک هنگام اشتراک در X (توییتر)",
+        "card": "نوع کارت",
+        "cardHint": "برای پیش‌نمایش برند، summary_large_image توصیه می‌شود.",
+        "titleLabel": "عنوان توییتر",
+        "titlePlaceholder": "خالی بگذارید تا از عنوان OG / SEO استفاده شود",
+        "descriptionLabel": "توضیحات توییتر",
+        "descriptionPlaceholder": "خالی بگذارید تا از توضیحات OG / SEO استفاده شود",
+        "imageUrl": "آدرس تصویر توییتر",
+        "imagePlaceholder": "خالی بگذارید تا از تصویر OG استفاده شود",
+        "cards": {
+          "summary": "summary",
+          "summary_large_image": "summary_large_image"
+        }
+      },
+      "hreflang": {
+        "title": "Hreflang",
+        "description": "نسخه‌های زبانی صفحات فروشگاه",
+        "en": "آدرس hreflang EN",
+        "fa": "آدرس hreflang FA",
+        "xDefault": "آدرس hreflang x-default",
+        "xDefaultHint": "آدرس زبان پیش‌فرض برای لوکیل‌های نامشخص (معمولاً فروشگاه اصلی).",
+        "urlPlaceholder": "https://www.your-domain.com/…"
+      },
+      "validation": {
+        "invalidUrl": "یک آدرس http(s) معتبر وارد کنید",
+        "placeholderUrl": "دامنه‌های نمونه (example.com) مجاز نیستند"
       },
       "schema": {
         "title": "داده ساختاریافته (Schema.org)",

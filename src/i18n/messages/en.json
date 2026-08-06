@@ -1121,7 +1121,7 @@
         "metaKeywordsPlaceholder": "keyword1, keyword2, keyword3",
         "metaKeywordsHint": "Comma-separated keywords. Most modern search engines ignore this, but some still use it.",
         "canonicalUrl": "Canonical URL",
-        "canonicalUrlPlaceholder": "https://example.com",
+        "canonicalUrlPlaceholder": "https://www.your-domain.com",
         "canonicalUrlHint": "Tells search engines the preferred URL for this page to avoid duplicate content.",
         "siteLanguage": "Site Language",
         "siteLanguageHint": "Sets the lang attribute on your HTML element, helping search engines serve the right audience.",
@@ -1142,7 +1142,14 @@
         "noArchive": "No Archive (Prevent Cached Copies)",
         "noArchiveHint": "Adds noarchive — search engines won't store a cached version of your pages.",
         "noSnippet": "No Snippet (Hide Meta Descriptions)",
-        "noSnippetHint": "Adds nosnippet — Google will not show text snippets or video previews in search results."
+        "noSnippetHint": "Adds nosnippet — Google will not show text snippets or video previews in search results.",
+        "maxImagePreview": "Max image preview",
+        "maxImagePreviewHint": "Controls Google’s max-image-preview robots directive for storefront pages.",
+        "maxImagePreviewOptions": {
+          "none": "none",
+          "standard": "standard",
+          "large": "large"
+        }
       },
       "openGraph": {
         "title": "Open Graph (Facebook / LinkedIn)",
@@ -1156,7 +1163,7 @@
         "ogDescriptionPlaceholder": "Description shown on share cards",
         "ogDescriptionHint": "Shown below the title in social share previews. Aim for 100–200 characters.",
         "ogImageUrl": "OG Image URL",
-        "ogImagePlaceholder": "https://example.com/og-image.jpg",
+        "ogImagePlaceholder": "https://www.your-domain.com/og-image.jpg",
         "ogImageHint": "Recommended size: 1200×630 px. This image appears in social share cards.",
         "ogLocale": "OG Locale",
         "ogLocaleHint": "Tells Facebook the language and region of your content.",
@@ -1168,6 +1175,35 @@
           "video": "video",
           "music": "music"
         }
+      },
+      "twitter": {
+        "title": "Twitter Card",
+        "description": "How links appear when shared on X (Twitter)",
+        "card": "Card type",
+        "cardHint": "summary_large_image is recommended for branded previews.",
+        "titleLabel": "Twitter title",
+        "titlePlaceholder": "Leave empty to use OG / SEO title",
+        "descriptionLabel": "Twitter description",
+        "descriptionPlaceholder": "Leave empty to use OG / SEO description",
+        "imageUrl": "Twitter image URL",
+        "imagePlaceholder": "Leave empty to use OG image",
+        "cards": {
+          "summary": "summary",
+          "summary_large_image": "summary_large_image"
+        }
+      },
+      "hreflang": {
+        "title": "Hreflang",
+        "description": "Language alternates for multilingual storefront pages",
+        "en": "hreflang EN URL",
+        "fa": "hreflang FA URL",
+        "xDefault": "hreflang x-default URL",
+        "xDefaultHint": "Fallback language URL for unmatched locales (usually the primary storefront).",
+        "urlPlaceholder": "https://www.your-domain.com/…"
+      },
+      "validation": {
+        "invalidUrl": "Enter a valid http(s) URL",
+        "placeholderUrl": "Placeholder domains (example.com) are not allowed"
       },
       "schema": {
         "title": "Structured Data (Schema.org)",
