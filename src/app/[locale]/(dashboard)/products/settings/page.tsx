@@ -30,11 +30,13 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { getCategories, createCategory, deleteCategory } from "@/services/data.service";
+import { describeApiError } from "@/lib/api-error";
 import type { Category } from "@/types";
 
 export default function ProductSettingsPage() {
   const t = useTranslations("products");
   const tCommon = useTranslations("common");
+  const tApi = useTranslations("common.apiErrors");
   const queryClient = useQueryClient();
 
   const [newCategory, setNewCategory] = useState("");
@@ -52,9 +54,12 @@ export default function ProductSettingsPage() {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
       setNewCategory("");
       setDialogOpen(false);
-      toast.success(t("categories.modal.save"));
+      toast.success(t("categories.modal.createSuccess"));
     },
-    onError: () => toast.error("Failed to create category"),
+    onError: (err: Error) => {
+      const { title, description } = describeApiError(err, tApi, "validation");
+      toast.error(title, description ? { description } : undefined);
+    },
   });
 
   const deleteMutation = useMutation({
@@ -62,10 +67,22 @@ export default function ProductSettingsPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
       setDeleteId(null);
-      toast.success(tCommon("delete"));
+      toast.success(t("categories.modal.deleteSuccess"));
     },
-    onError: () => toast.error("Failed to delete category"),
+    onError: (err: Error) => {
+      const { title, description } = describeApiError(err, tApi, "unexpected");
+      toast.error(title, description ? { description } : undefined);
+    },
   });
+
+  const handleCreate = () => {
+    const name = newCategory.trim();
+    if (!name) {
+      toast.error(t("categories.modal.nameRequired"));
+      return;
+    }
+    createMutation.mutate(name);
+  };
 
   const columns: ColumnDef<Category>[] = [
     {
@@ -108,14 +125,20 @@ export default function ProductSettingsPage() {
                 placeholder={t("categories.modal.placeholder")}
                 value={newCategory}
                 onChange={(e) => setNewCategory(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handleCreate();
+                  }
+                }}
               />
               <DialogFooter>
                 <Button variant="outline" onClick={() => setDialogOpen(false)}>
                   {t("categories.modal.cancel")}
                 </Button>
                 <Button
-                  onClick={() => newCategory && createMutation.mutate(newCategory)}
-                  disabled={!newCategory || createMutation.isPending}
+                  onClick={handleCreate}
+                  disabled={!newCategory.trim() || createMutation.isPending}
                 >
                   {t("categories.modal.save")}
                 </Button>

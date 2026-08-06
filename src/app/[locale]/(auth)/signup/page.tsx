@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signUp } from "@/services/auth.service";
 import { useAuth } from "@/providers/auth-provider";
+import { describeApiError } from "@/lib/api-error";
 
 const signUpSchema = z.object({
   firstName: z.string().min(1),
@@ -27,6 +28,7 @@ type SignUpForm = z.infer<typeof signUpSchema>;
 
 export default function SignUpPage() {
   const t = useTranslations("auth");
+  const tApi = useTranslations("common.apiErrors");
   const router = useRouter();
   const { setUser } = useAuth();
 
@@ -45,8 +47,11 @@ export default function SignUpPage() {
       toast.success(t("signUp.title"));
       router.push("/");
     },
-    onError: () => {
-      toast.error("Sign up failed");
+    onError: (err: Error) => {
+      const { title, description } = describeApiError(err, tApi, "unexpected");
+      toast.error(t("signUp.error"), {
+        description: description || title,
+      });
     },
   });
 

@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { resetPassword } from "@/services/auth.service";
+import { describeApiError } from "@/lib/api-error";
 
 const resetSchema = z.object({
   email: z.string().email(),
@@ -22,6 +23,7 @@ type ResetForm = z.infer<typeof resetSchema>;
 
 export default function ResetPasswordPage() {
   const t = useTranslations("auth");
+  const tApi = useTranslations("common.apiErrors");
 
   const {
     register,
@@ -34,10 +36,13 @@ export default function ResetPasswordPage() {
   const mutation = useMutation({
     mutationFn: (data: ResetForm) => resetPassword(data.email),
     onSuccess: () => {
-      toast.success("Reset link sent to your email");
+      toast.success(t("resetPassword.success"));
     },
-    onError: () => {
-      toast.error("Failed to send reset link");
+    onError: (err: Error) => {
+      const { title, description } = describeApiError(err, tApi, "unexpected");
+      toast.error(t("resetPassword.error"), {
+        description: description || title,
+      });
     },
   });
 

@@ -43,6 +43,7 @@ import {
 import { getCoupons, createCoupon, deleteCoupon } from "@/services/data.service";
 import { JalaliDatePicker } from "@/components/shared/jalali-date-picker";
 import { formatDate } from "@/lib/utils";
+import { describeApiError } from "@/lib/api-error";
 import type { Coupon } from "@/types";
 
 const couponSchema = z.object({
@@ -59,6 +60,7 @@ type CouponForm = z.infer<typeof couponSchema>;
 export default function CouponsPage() {
   const t = useTranslations("coupons");
   const tCommon = useTranslations("common");
+  const tApi = useTranslations("common.apiErrors");
   const queryClient = useQueryClient();
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -92,7 +94,10 @@ export default function CouponsPage() {
       setDialogOpen(false);
       toast.success(t("modal.createCoupon"));
     },
-    onError: () => toast.error("Failed to create coupon"),
+    onError: (err: Error) => {
+      const { title, description } = describeApiError(err, tApi, "validation");
+      toast.error(title, description ? { description } : undefined);
+    },
   });
 
   const deleteMutation = useMutation({
@@ -102,7 +107,10 @@ export default function CouponsPage() {
       setDeleteId(null);
       toast.success(t("deleteModal.delete"));
     },
-    onError: () => toast.error("Failed to delete coupon"),
+    onError: (err: Error) => {
+      const { title, description } = describeApiError(err, tApi, "unexpected");
+      toast.error(title, description ? { description } : undefined);
+    },
   });
 
   const columns: ColumnDef<Coupon>[] = [

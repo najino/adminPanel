@@ -20,12 +20,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { getOrder, updateOrderStatus } from "@/services/data.service";
+import { describeApiError } from "@/lib/api-error";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import type { OrderItem, OrderStatus } from "@/types";
 
 export default function OrderDetailPage() {
   const t = useTranslations("orders");
   const tCommon = useTranslations("common");
+  const tApi = useTranslations("common.apiErrors");
   const params = useParams();
   const orderId = params.id as string;
   const queryClient = useQueryClient();
@@ -43,7 +45,10 @@ export default function OrderDetailPage() {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
       toast.success(t("detail.actions.changeStatus"));
     },
-    onError: () => toast.error("Failed to update status"),
+    onError: (err: Error) => {
+      const { title, description } = describeApiError(err, tApi, "unexpected");
+      toast.error(title, description ? { description } : undefined);
+    },
   });
 
   const itemColumns: ColumnDef<OrderItem>[] = [

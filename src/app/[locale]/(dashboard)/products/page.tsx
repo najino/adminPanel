@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { getProducts, getCategories, deleteProduct } from "@/services/data.service";
 import { getProductRatingSummaries } from "@/services/product.service";
+import { describeApiError } from "@/lib/api-error";
 import { formatCurrency } from "@/lib/utils";
 import type { Product } from "@/types";
 
@@ -71,6 +72,7 @@ function ProductRatingCell({
 export default function ProductsPage() {
   const t = useTranslations("products");
   const tCommon = useTranslations("common");
+  const tApi = useTranslations("common.apiErrors");
   const queryClient = useQueryClient();
 
   const [search, setSearch] = useState("");
@@ -105,7 +107,10 @@ export default function ProductsPage() {
       toast.success(tCommon("delete"));
       setDeleteId(null);
     },
-    onError: () => toast.error("Failed to delete product"),
+    onError: (err: Error) => {
+      const { title, description } = describeApiError(err, tApi, "unexpected");
+      toast.error(title, description ? { description } : undefined);
+    },
   });
 
   const columns: ColumnDef<Product>[] = [

@@ -118,14 +118,36 @@ apiClient.interceptors.response.use(
       }
     }
 
-    const maybeMessage =
-      typeof error.response?.data === "object" &&
-      error.response?.data !== null &&
-      "message" in error.response.data
-        ? String((error.response.data as { message?: unknown }).message ?? "")
-        : "";
+    const data = error.response?.data as unknown;
+    let message = "";
+    let code: string | undefined;
+    const detailParts: string[] = [];
 
-    const message = maybeMessage || error.message || "An unexpected error occurred";
+    if (data && typeof data === "object") {
+      const root = data as Record<string, unknown>;
+      const body =
+        root.error && typeof root.error === "object"
+          ? (root.error as Record<string, unknown>)
+          : root;
+
+      if (body.message != null) message = String(body.message);
+      if (body.code != null) code = String(body.code);
+
+      if (body.details && typeof body.details === "object" && !Array.isArray(body.details)) {
+        for (const [field, value] of Object.entries(body.details as Record<string, unknown>)) {
+          if (value != null && value !== "") detailParts.push(`${field}: ${String(value)}`);
+        }
+      }
+    }
+
+    if (!message) message = error.message || "An unexpected error occurred";
+    if (detailParts.length > 0) {
+      message = `${message} (${detailParts.join(", ")})`;
+    }
+    if (code && !message.includes(code)) {
+      // keep code on the error object via data; message stays human-readable
+    }
+
     throw new ApiError(message, error.response?.status, error.response?.data);
   },
 );

@@ -419,8 +419,27 @@ export async function createCategory(name: string): Promise<Category> {
     mockCategories.push(cat);
     return cat;
   }
-  const { data } = await apiClient.post<Record<string, unknown>>(`${ADMIN}/categories`, { name });
-  return { id: String(data.id ?? ""), name: String(data.name ?? name) };
+  const trimmed = name.trim();
+  const slug =
+    trimmed
+      .normalize("NFKC")
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^\p{L}\p{N}-]+/gu, "")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "")
+      .slice(0, 200) || `cat-${Date.now()}`;
+
+  const { data } = await apiClient.post<Record<string, unknown>>(`${ADMIN}/categories`, {
+    name: trimmed,
+    slug,
+    is_active: true,
+  });
+  const raw = unwrapRecord(data);
+  return {
+    id: String(raw.id ?? ""),
+    name: String(raw.name ?? trimmed),
+  };
 }
 
 export async function deleteCategory(id: string): Promise<void> {
